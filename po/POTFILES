@@ -1,0 +1,6 @@
+data/com.github.sidecuter.gciphers.desktop.in
+data/com.github.sidecuter.gciphers.metainfo.xml.in
+data/com.github.sidecuter.gciphers.gschema.xml
+src/main.vala
+src/window.vala
+src/window.ui
