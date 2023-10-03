@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="GCiphersAtbash" parent="AdwBin">
+    <property name="name">Atbash</property>
+    <property name="margin-bottom">20</property>
+    <property name="margin-end">20</property>
+    <property name="margin-start">20</property>
+    <property name="margin-top">20</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Enter you text</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="text">
+            <property name="height-request">200</property>
+            <property name="margin-top">10</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="hexpand">True</property>
+            <property name="margin-top">10</property>
+            <property name="valign">start</property>
+            <child>
+              <object class="GtkButton" id="encrypt">
+                <property name="label">Encrypt</property>
+                <property name="valign">center</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="hexpand">True</property>
+                <property name="valign">center</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="decrypt">
+                <property name="label">Decrypt</property>
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+

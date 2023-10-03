@@ -6,7 +6,7 @@
     <property name="width-request">360</property>
     <property name="height-request">200</property>
     <property name="default-width">800</property>
-    <property name="default-height">800</property>
+    <property name="default-height">400</property>
     <child>
       <object class="AdwBreakpoint">
         <condition>max-width: 400sp</condition>
@@ -18,23 +18,33 @@
         <child>
           <object class="AdwOverlaySplitView" id="split_view">
             <property name="sidebar">
-             <object class="AdwToolbarView" id="split_view_sidebar">
+              <object class="AdwToolbarView" id="split_view_sidebar">
+                <property name="content">
+                  <object class="AdwBin">
+                    <child>
+                      <object class="GtkScrolledWindow">
+                        <child>
+                          <object class="GtkListBox" id="list_rows"/>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
                 <child type="top">
                   <object class="AdwHeaderBar">
-                    <property name="show-title">false</property>
+                    <property name="show-title">False</property>
                   </object>
                 </child>
               </object>
             </property>
             <property name="content">
-              <object class="AdwToolbarView">
+              <object class="AdwToolbarView" id="content">
                 <child type="top">
                   <object class="AdwHeaderBar">
-                    <property name="show-title">true</property>
-                    <property name="show-back-button">true</property>
+                    <property name="show-title">True</property>
+                    <property name="show-back-button">True</property>
                     <child type="start">
-                      <object class="GtkButton">
-                        <property name="action-name">win.show_sidebar</property>
+                      <object class="GtkToggleButton" id="show_sidebar_button">
                         <property name="icon-name">sidebar-show-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Show sidebar</property>
                       </object>
@@ -49,6 +59,10 @@
                     </child>
                   </object>
                 </child>
+                <property name="content">
+                  <object class="AdwViewStack" id="stack">
+                  </object>
+                </property>
               </object>
             </property>
           </object>

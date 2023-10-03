@@ -2,6 +2,8 @@ gciphers_sources = [
   'main.vala',
   'application.vala',
   'window.vala',
+  'menu_entry.vala',
+  'pages/atbash.vala',
 ]
 
 gciphers_deps = [
@@ -14,7 +16,7 @@ gciphers_sources += gnome.compile_resources('gciphers-resources',
   c_name: 'gciphers'
 )
 
-executable('ciphers', gciphers_sources,
+executable('gciphers', gciphers_sources,
   dependencies: gciphers_deps,
        install: true,
 )
