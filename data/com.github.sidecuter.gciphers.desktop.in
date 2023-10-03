@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=ciphers
-Exec=ciphers
+Name=gciphers
+Exec=gciphers
 Icon=com.github.sidecuter.gciphers
 Terminal=false
 Type=Application
