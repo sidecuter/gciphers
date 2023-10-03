@@ -42,6 +42,7 @@ public class GCiphers.Window : Adw.ApplicationWindow {
     }
 
     construct {
+        list_rows.get_style_context ().add_class ("navigation-sidebar");
         for (int i = 0; i < labels.length; i++) {
             list_rows.append (new GCiphers.Menu_entry(labels[i]));
         }
@@ -55,24 +56,5 @@ public class GCiphers.Window : Adw.ApplicationWindow {
             stack.set_visible_child (stack.get_child_by_name (this.get_title ()));
         });
         list_rows.select_row (list_rows.get_row_at_index (0));
-
-        /*<child>
-          <object class="AdwViewStackPage">
-            <property name="name">atbash</property>
-            <property name="title">Atbash</property>
-            <property name="child">
-              <object class="GCiphersAtbash"/>
-            </property>
-          </object>
-        </child>*/
-        /*ActionEntry[] action_entries = {
-            { "show_sidebar", this.on_show_sidebar_action }
-        };
-        this.add_action_entries (action_entries, this);*/
     }
-
-    /*private void on_show_sidebar_action () {
-
-        this.show_sidebar_button.set_active (!this.show_sidebar_button.get_active ());
-    }*/
 }
