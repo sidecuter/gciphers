@@ -21,6 +21,7 @@
 errordomain Errors.ValidateError {
     LETTERS_NOT_IN_STRING,
     NOT_NUMBER,
+    NUMBER_BELOW_ZERO,
     EMPTY_STRING
 }
 

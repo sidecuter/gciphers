@@ -1,4 +1,5 @@
 encryption_files = files(
     'alphabet.vala',
-    'atbash.vala'
+    'atbash.vala',
+    'caesar.vala'
 )
