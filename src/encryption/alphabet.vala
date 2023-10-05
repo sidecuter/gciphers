@@ -38,7 +38,7 @@ class Encryption.Alphabets : Object {
 
 class Encryption.Alphabet : Object {
     public string alphabet { get; construct; }
-    public long length { get; construct; }
+    public int length { get; construct; }
 
     public Alphabet(string alphabet) {
         Object (
@@ -47,16 +47,16 @@ class Encryption.Alphabet : Object {
         );
     }
 
-    public unichar get_letter_by_index (long index) throws Encryption.OOBError {
+    public unichar get_letter_by_index (int index) throws Encryption.OOBError {
         if (index > alphabet.char_count ()) throw new Encryption.OOBError.CODE_OUT ("Index bigger then string size");
-        for (long i = 0; i < alphabet.char_count (); i++) {
+        for (int i = 0; i < alphabet.char_count (); i++) {
             if ( index == i) return alphabet.get_char (alphabet.index_of_nth_char (i));
         }
         throw new Encryption.OOBError.CODE_NOT_FOUND ("Index not found");
     }
 
-    public long get_letter_index (unichar letter) throws Encryption.OOBError {
-        for (long i = 0; i < alphabet.char_count (); i++) {
+    public int get_letter_index (unichar letter) throws Encryption.OOBError {
+        for (int i = 0; i < alphabet.char_count (); i++) {
             if ( alphabet.get_char (alphabet.index_of_nth_char (i)) == letter) return i;
         }
         throw new Encryption.OOBError.CODE_NOT_FOUND ("Index not found");

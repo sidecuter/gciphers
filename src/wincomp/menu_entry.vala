@@ -1,4 +1,4 @@
-/* atbash.vala
+/* menu_entry.vala
  *
  * Copyright 2023 Alexander Svobodov
  *

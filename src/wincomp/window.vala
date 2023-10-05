@@ -40,11 +40,15 @@ public class GCiphers.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.ListBox list_rows;
 
+    private List<Adw.Bin> pages;
+
     public Window (Gtk.Application app) {
         Object (application: app);
     }
 
     construct {
+        pages.append (new GCiphers.Atbash (toast));
+        pages.append (new GCiphers.Caesar (toast));
         for (int i = 0; i < labels.length; i++) {
             list_rows.append (new GCiphers.Menu_entry(labels[i]));
         }
@@ -52,10 +56,10 @@ public class GCiphers.Window : Adw.ApplicationWindow {
         this.show_sidebar_button.toggled.connect (e => {
             this.split_view.set_show_sidebar (!this.split_view.get_show_sidebar ());
         });
-        stack.add_named (new GCiphers.Atbash (toast), labels[0]);
+        pages.foreach ((page) => { stack.add_named (page, page.name); });
         list_rows.row_selected.connect (row => {
             this.set_title (labels [row.get_index ()]);
-            stack.set_visible_child (stack.get_child_by_name (this.get_title ()));
+            stack.set_visible_child (stack.get_child_by_name (pages.nth (row.get_index ()).data.name));
         });
         list_rows.select_row (list_rows.get_row_at_index (0));
     }

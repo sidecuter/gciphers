@@ -1,4 +1,4 @@
-/* atbash.vala
+/* caesar.vala
  *
  * Copyright 2023 Alexander Svobodov
  *
@@ -20,8 +20,8 @@
 
 using Encryption;
 
-[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/atbash.ui")]
-public class GCiphers.Atbash : Adw.Bin {
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/caesar.ui")]
+public class GCiphers.Caesar : Adw.Bin {
 
     private unowned Adw.ToastOverlay toast_overlay;
 
@@ -29,12 +29,15 @@ public class GCiphers.Atbash : Adw.Bin {
     private unowned Gtk.Entry text;
 
     [GtkChild]
+    private unowned Gtk.Entry key;
+
+    [GtkChild]
     private unowned Gtk.Button encrypt;
 
     [GtkChild]
     private unowned Gtk.Button decrypt;
 
-    public Atbash (Adw.ToastOverlay toast) {
+    public Caesar (Adw.ToastOverlay toast) {
         this.toast_overlay = toast;
     }
 
@@ -42,19 +45,20 @@ public class GCiphers.Atbash : Adw.Bin {
         this.encrypt.clicked.connect (e => {
             try {
                 unowned string letters = text.get_buffer ().get_text ();
+                unowned string key = key.get_buffer ().get_text ();
                 Alphabets alphabets = new Alphabets ();
                 Alphabet alphabet = new Alphabet (alphabets.ru);
-                Validate(alphabet, letters.down ());
-                text.set_text (Encryption.Atbash.encrypt (alphabet, letters.down ()));
+                Validate(alphabet, letters.down (), key);
+                text.set_text (Encryption.Caesar.encrypt (alphabet, letters.down (), int.parse (key)));
             }
             catch (OOBError ex) {
                 Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (10);
+                toast.set_timeout (2);
                 toast_overlay.add_toast (toast);
             }
             catch (Errors.ValidateError ex) {
                 Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (10);
+                toast.set_timeout (2);
                 toast_overlay.add_toast (toast);
             }
         });
@@ -62,25 +66,30 @@ public class GCiphers.Atbash : Adw.Bin {
         this.decrypt.clicked.connect (e => {
             try {
                 unowned string letters = text.get_buffer ().get_text ();
+                unowned string key = key.get_buffer ().get_text ();
                 Alphabets alphabets = new Alphabets ();
                 Alphabet alphabet = new Alphabet (alphabets.ru);
-                Validate(alphabet, letters.down ());
-                text.set_text (Encryption.Atbash.encrypt (alphabet, letters.down ()));
+                Validate(alphabet, letters.down (), key);
+                text.set_text (Encryption.Caesar.decrypt (alphabet, letters.down (), int.parse (key)));
             }
             catch (OOBError ex) {
                 Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (10);
+                toast.set_timeout (2);
                 toast_overlay.add_toast (toast);
             }
             catch (Errors.ValidateError ex) {
                 Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (10);
+                toast.set_timeout (2);
                 toast_overlay.add_toast (toast);
             }
         });
     }
 
-    private void Validate (Alphabet alphabet, string text) throws Errors.ValidateError {
+    private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
+        int num;
+        if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Key is empty");
+        if (!int.try_parse (key, out num)) throw new Errors.ValidateError.NOT_NUMBER ("Key is not a valid number");
+        if (num < 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO ("Number is below zero");
         if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Text field is empty");
         for (long i = 0; i < text.char_count (); i++){
             try {

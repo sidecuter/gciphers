@@ -5,6 +5,7 @@
     <file preprocess="xml-stripblanks">ui/menu_entry.ui</file>
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/atbash.ui</file>
+    <file preprocess="xml-stripblanks">ui/caesar.ui</file>
   </gresource>
 </gresources>
 
