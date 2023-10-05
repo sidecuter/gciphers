@@ -3,4 +3,8 @@ data/com.github.sidecuter.gciphers.metainfo.xml.in
 data/com.github.sidecuter.gciphers.gschema.xml
 src/main.vala
 src/window.vala
+src/pages/atbash.vala
+src/menu_entry.vala
+src/menu_entry.ui
 src/window.ui
+src/ui/atbash.ui

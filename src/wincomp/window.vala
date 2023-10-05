@@ -18,12 +18,15 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/com/github/sidecuter/gciphers/window.ui")]
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/window.ui")]
 public class GCiphers.Window : Adw.ApplicationWindow {
     private string[] labels = {
         "Atbash",
         "Caesar"
     };
+
+    [GtkChild]
+    private unowned Adw.ToastOverlay toast;
 
     [GtkChild]
     private unowned Adw.OverlaySplitView split_view;
@@ -42,7 +45,6 @@ public class GCiphers.Window : Adw.ApplicationWindow {
     }
 
     construct {
-        list_rows.get_style_context ().add_class ("navigation-sidebar");
         for (int i = 0; i < labels.length; i++) {
             list_rows.append (new GCiphers.Menu_entry(labels[i]));
         }
@@ -50,7 +52,7 @@ public class GCiphers.Window : Adw.ApplicationWindow {
         this.show_sidebar_button.toggled.connect (e => {
             this.split_view.set_show_sidebar (!this.split_view.get_show_sidebar ());
         });
-        stack.add_named (new GCiphers.Atbash (), labels[0]);
+        stack.add_named (new GCiphers.Atbash (toast), labels[0]);
         list_rows.row_selected.connect (row => {
             this.set_title (labels [row.get_index ()]);
             stack.set_visible_child (stack.get_child_by_name (this.get_title ()));

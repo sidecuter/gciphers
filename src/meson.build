@@ -1,10 +1,13 @@
-gciphers_sources = [
+gciphers_sources = files(
   'main.vala',
   'application.vala',
-  'window.vala',
-  'menu_entry.vala',
-  'pages/atbash.vala',
-]
+)
+
+subdir('encryption')
+subdir('wincomp')
+
+gciphers_sources += wincomp_files
+gciphers_sources += encryption_files
 
 gciphers_deps = [
   dependency('gtk4'),
