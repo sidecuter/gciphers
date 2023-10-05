@@ -18,29 +18,22 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/atbash.ui")]
-public class GCiphers.Atbash : Adw.Bin {
-
-    [GtkChild]
-    private unowned Gtk.Entry text;
-
-    [GtkChild]
-    private unowned Gtk.Button encrypt;
-
-    [GtkChild]
-    private unowned Gtk.Button decrypt;
-
-    public Atbash () {
-        Object (
-        );
-    }
-
-    construct {
-        this.encrypt.clicked.connect (e => {
-            unowned var letters = text.get_buffer ().get_text ();
-            for (int i = 0; i < letters.char_count (); i++) {
-                message(letters.get_char (i).to_string ());
+class Encryption.Atbash : Object {
+    public static string encrypt(Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
+        string result = "";
+        unichar buffer;
+        for (long i = 0; i < phrase.char_count(); i++) {
+            try {
+                buffer = alphabet.get_letter_by_index(alphabet.length - 1 -
+                    alphabet.get_letter_index(phrase.get_char(phrase.index_of_nth_char (i)))
+                );
+                result = @"$result$(buffer.to_string())";
             }
-        });
+            catch (Encryption.OOBError ex) {
+                throw ex;
+            }
+        }
+        return result;
     }
 }
+

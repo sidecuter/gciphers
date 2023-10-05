@@ -1,4 +1,4 @@
-/* atbash.vala
+/* pages_errors.vala
  *
  * Copyright 2023 Alexander Svobodov
  *
@@ -18,13 +18,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/com/github/sidecuter/gciphers/menu_entry.ui")]
-public class GCiphers.Menu_entry : Gtk.ListBoxRow {
-
-    [GtkChild]
-    private unowned Gtk.Label label;
-
-    public Menu_entry (string name) {
-        label.label = name;
-    }
+errordomain Errors.ValidateError {
+    LETTERS_NOT_IN_STRING,
+    NOT_NUMBER,
+    EMPTY_STRING
 }
+
