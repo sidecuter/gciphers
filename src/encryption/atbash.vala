@@ -17,23 +17,23 @@
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
-
-class Encryption.Atbash : Object {
-    public static string encrypt(Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
-        string result = "";
-        unichar buffer;
-        for (long i = 0; i < phrase.char_count(); i++) {
-            try {
-                buffer = alphabet.get_letter_by_index(alphabet.length - 1 -
-                    alphabet.get_letter_index(phrase.get_char(phrase.index_of_nth_char (i)))
-                );
-                result = @"$result$(buffer.to_string())";
+namespace Encryption {
+    class Atbash : Object {
+        public static string encrypt(Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
+            string result = "";
+            unichar buffer;
+            for (long i = 0; i < phrase.char_count(); i++) {
+                try {
+                    buffer = alphabet.get_letter_by_index(alphabet.length - 1 -
+                        alphabet.get_letter_index(phrase.get_char(phrase.index_of_nth_char (i)))
+                    );
+                    result = @"$result$(buffer.to_string())";
+                }
+                catch (Encryption.OOBError ex) {
+                    throw ex;
+                }
             }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
+            return result;
         }
-        return result;
     }
 }
-

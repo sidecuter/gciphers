@@ -18,11 +18,13 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-errordomain Errors.ValidateError {
-    LETTERS_NOT_IN_STRING,
-    NOT_NUMBER,
-    NUMBER_BELOW_ZERO,
-    EMPTY_STRING,
-    INCORRECT_NUMBER
+namespace Errors {
+    errordomain ValidateError {
+        LETTERS_NOT_IN_STRING,
+        NOT_NUMBER,
+        NUMBER_BELOW_ZERO,
+        EMPTY_STRING,
+        INCORRECT_NUMBER
+    }
 }
 

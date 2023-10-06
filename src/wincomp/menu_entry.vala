@@ -18,13 +18,16 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/menu_entry.ui")]
-public class GCiphers.Menu_entry : Gtk.ListBoxRow {
+namespace GCiphers {
+    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/menu_entry.ui")]
+    public class Menu_entry : Gtk.ListBoxRow {
 
-    [GtkChild]
-    private unowned Gtk.Label label;
+        [GtkChild]
+        private unowned Gtk.Label label;
 
-    public Menu_entry (string name) {
-        label.label = name;
+        public Menu_entry (string name) {
+            label.label = name;
+        }
     }
 }
+

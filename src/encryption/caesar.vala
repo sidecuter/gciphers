@@ -18,59 +18,61 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-class Encryption.Caesar : Object {
-    public static string encrypt(Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
-        string result = "";
-        unichar buffer;
-        for (long i = 0; i < phrase.char_count(); i++) {
-            try {
-                buffer = alphabet.get_letter_by_index(
-                    get_index (
-                        alphabet.get_letter_index(
-                            phrase.get_char(phrase.index_of_nth_char (i))
-                        ),
-                        shift,
-                        alphabet.length
-                    )
-                );
-                result = @"$result$(buffer.to_string())";
+namespace Encryption {
+    class Caesar : Object {
+        public static string encrypt(Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
+            string result = "";
+            unichar buffer;
+            for (long i = 0; i < phrase.char_count(); i++) {
+                try {
+                    buffer = alphabet.get_letter_by_index(
+                        get_index (
+                            alphabet.get_letter_index(
+                                phrase.get_char(phrase.index_of_nth_char (i))
+                            ),
+                            shift,
+                            alphabet.length
+                        )
+                    );
+                    result = @"$result$(buffer.to_string())";
+                }
+                catch (Encryption.OOBError ex) {
+                    throw ex;
+                }
             }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
+            return result;
         }
-        return result;
-    }
 
-    public static string decrypt(Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
-        string result = "";
-        unichar buffer;
-        for (long i = 0; i < phrase.char_count(); i++) {
-            try {
-                buffer = alphabet.get_letter_by_index(
-                    get_index (
-                        alphabet.get_letter_index(
-                            phrase.get_char(phrase.index_of_nth_char (i))
-                        ),
-                        -shift,
-                        alphabet.length
-                    )
-                );
-                result = @"$result$(buffer.to_string())";
+        public static string decrypt(Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
+            string result = "";
+            unichar buffer;
+            for (long i = 0; i < phrase.char_count(); i++) {
+                try {
+                    buffer = alphabet.get_letter_by_index(
+                        get_index (
+                            alphabet.get_letter_index(
+                                phrase.get_char(phrase.index_of_nth_char (i))
+                            ),
+                            -shift,
+                            alphabet.length
+                        )
+                    );
+                    result = @"$result$(buffer.to_string())";
+                }
+                catch (Encryption.OOBError ex) {
+                    throw ex;
+                }
             }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
+            return result;
         }
-        return result;
-    }
 
-    private static int get_index(int index, int shift, int length) {
-        int result = index;
-        result += shift;
-        if ( result >= length ) result -= length;
-        if ( result < 0 ) result += length;
-        return result;
+        private static int get_index(int index, int shift, int length) {
+            int result = index;
+            result += shift;
+            if ( result >= length ) result -= length;
+            if ( result < 0 ) result += length;
+            return result;
+        }
     }
 }
 
