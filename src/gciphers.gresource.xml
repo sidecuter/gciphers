@@ -6,7 +6,8 @@
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/atbash.ui</file>
     <file preprocess="xml-stripblanks">ui/caesar.ui</file>
-     <file preprocess="xml-stripblanks">ui/polybius.ui</file>
+    <file preprocess="xml-stripblanks">ui/polybius.ui</file>
+    <file preprocess="xml-stripblanks">ui/trithemium.ui</file>
   </gresource>
 </gresources>
 

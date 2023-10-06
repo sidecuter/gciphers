@@ -19,13 +19,13 @@
  */
 namespace Encryption {
     class Atbash : Object {
-        public static string encrypt(Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
+        public static string encrypt (Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
             string result = "";
             unichar buffer;
-            for (long i = 0; i < phrase.char_count(); i++) {
+            for (long i = 0; i < phrase.char_count (); i++) {
                 try {
-                    buffer = alphabet.get_letter_by_index(alphabet.length - 1 -
-                        alphabet.get_letter_index(phrase.get_char(phrase.index_of_nth_char (i)))
+                    buffer = alphabet.get_letter_by_index (alphabet.length - 1 -
+                        alphabet.get_letter_index (phrase.get_char (phrase.index_of_nth_char (i)))
                     );
                     result = @"$result$(buffer.to_string())";
                 }

@@ -29,7 +29,7 @@ namespace Encryption {
         public string ru_full { get; construct; }
         public string en { get; construct; }
 
-        public Alphabets() {
+        public Alphabets () {
             Object (
                 ru: "абвгдежзийклмнопрстуфхцчшщъыьэюя",
                 ru_full: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
@@ -41,7 +41,7 @@ namespace Encryption {
         public string alphabet { get; construct; }
         public int length { get; construct; }
 
-        public Alphabet(string alphabet) {
+        public Alphabet (string alphabet) {
             Object (
                 alphabet: alphabet,
                 length: alphabet.char_count ()
@@ -49,9 +49,10 @@ namespace Encryption {
         }
 
         public unichar get_letter_by_index (int index) throws Encryption.OOBError {
-            if (index > alphabet.char_count ()) throw new Encryption.OOBError.CODE_OUT ("Index bigger then string size");
+            if (index > alphabet.char_count ())
+                throw new Encryption.OOBError.CODE_OUT ("Index bigger then string size");
             for (int i = 0; i < alphabet.char_count (); i++) {
-                if ( index == i) return alphabet.get_char (alphabet.index_of_nth_char (i));
+                if (index == i) return alphabet.get_char (alphabet.index_of_nth_char (i));
             }
             throw new Encryption.OOBError.CODE_NOT_FOUND ("Index not found");
         }

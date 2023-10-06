@@ -1,4 +1,4 @@
-/* caesar.vala
+/* multi_alphabetic.vala
  *
  * Copyright 2023 Alexander Svobodov
  *
@@ -19,18 +19,24 @@
  */
 
 namespace Encryption {
-    class Caesar : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
+    class MultiAlphabetic : Object {
+        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key) 
+            throws Encryption.OOBError
+        {
             string result = "";
             unichar buffer;
+            long k = 0;
             for (long i = 0; i < phrase.char_count (); i++) {
+                k %= key.char_count ();
                 try {
                     buffer = alphabet.get_letter_by_index (
                         get_index (
                             alphabet.get_letter_index (
                                 phrase.get_char (phrase.index_of_nth_char (i))
                             ),
-                            shift,
+                            alphabet.get_letter_index(
+                                key.get_char (key.index_of_nth_char (k))
+                            ),
                             alphabet.length
                         )
                     );
@@ -39,21 +45,28 @@ namespace Encryption {
                 catch (Encryption.OOBError ex) {
                     throw ex;
                 }
+                k++;
             }
             return result;
         }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
+        public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
+            throws Encryption.OOBError
+        {
             string result = "";
             unichar buffer;
+            long k = 0;
             for (long i = 0; i < phrase.char_count (); i++) {
+                k %= key.char_count ();
                 try {
                     buffer = alphabet.get_letter_by_index (
                         get_index (
                             alphabet.get_letter_index (
                                 phrase.get_char (phrase.index_of_nth_char (i))
                             ),
-                            -shift,
+                            -alphabet.get_letter_index (
+                                key.get_char (key.index_of_nth_char (k))
+                            ),
                             alphabet.length
                         )
                     );
@@ -62,6 +75,7 @@ namespace Encryption {
                 catch (Encryption.OOBError ex) {
                     throw ex;
                 }
+                k++;
             }
             return result;
         }

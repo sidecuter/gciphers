@@ -26,11 +26,11 @@ namespace Encryption {
         public int last_column { get; construct; }
         public Encryption.Alphabet alphabet { get; construct; }
 
-        public PolybiusTable (Encryption.Alphabet alphabet_in, int rows_in, int columns_in) throws Encryption.OOBError{
-            if (rows_in*columns_in < alphabet_in.length)
+        public PolybiusTable (Encryption.Alphabet alphabet_in, int rows_in, int columns_in) throws Encryption.OOBError {
+            if (rows_in * columns_in < alphabet_in.length)
                 throw new Encryption.OOBError.CODE_OUT ("Columns*Rows must be bigger than length of alphabet");
             int last_r = alphabet_in.length / columns_in == 0 ? alphabet_in.length / columns_in : alphabet_in.length / columns_in + 1;
-            int last_c = columns_in - (last_r*columns_in - alphabet_in.length);
+            int last_c = columns_in - (last_r * columns_in - alphabet_in.length);
             Object (
                 rows: rows_in,
                 columns: columns_in,
@@ -41,14 +41,14 @@ namespace Encryption {
         }
 
         public PolybiusIndexes get_letter_indexes (unichar letter) throws Encryption.OOBError{
-            PolybiusIndexes indexes = new PolybiusIndexes();
+            PolybiusIndexes indexes = new PolybiusIndexes ();
             for (int i = 0; i < this.rows; i++) {
-                if (i+1 > this.last_row) continue;
+                if (i + 1 > this.last_row) continue;
                 for (int j = 0; j < this.columns; j++) {
-                    if (i+1 == this.last_row && j+1 > this.last_column) break;
-                    if (this.alphabet.alphabet.get_char(
+                    if (i + 1 == this.last_row && j + 1 > this.last_column) break;
+                    if (this.alphabet.alphabet.get_char (
                             this.alphabet.alphabet.index_of_nth_char (
-                                i*this.columns+j
+                                i * this.columns + j
                             )
                         ) == letter
                     ) {
@@ -71,7 +71,7 @@ namespace Encryption {
             if (indexes.column > this.last_column && indexes.row == this.last_row)
                 throw new Encryption.OOBError.CODE_OUT ("Column index bigger than maximum for last row");
             return this.alphabet.alphabet.get_char (
-                this.alphabet.alphabet.index_of_nth_char(
+                this.alphabet.alphabet.index_of_nth_char (
                     (indexes.row - 1) * this.columns + (indexes.column - 1)
                 )
             );
@@ -97,7 +97,7 @@ namespace Encryption {
             for (long i = 0; i < phrase.char_count(); i++) {
                 try {
                     indexes = table.get_letter_indexes (
-                        phrase.get_char(
+                        phrase.get_char (
                             phrase.index_of_nth_char (i)
                         )
                     );
@@ -123,10 +123,10 @@ namespace Encryption {
             catch (Encryption.OOBError ex) {
                 throw ex;
             }
-            for (long i = 0; i < phrase.char_count(); i = i + 2) {
+            for (long i = 0; i < phrase.char_count (); i = i + 2) {
                 try {
-                    indexes.row = int.parse(phrase.get_char(phrase.index_of_nth_char (i)).to_string ());
-                    indexes.column = int.parse(phrase.get_char(phrase.index_of_nth_char (i+1)).to_string ());
+                    indexes.row = int.parse(phrase.get_char (phrase.index_of_nth_char (i)).to_string ());
+                    indexes.column = int.parse(phrase.get_char (phrase.index_of_nth_char (i + 1)).to_string ());
                     buffer = table.get_letter_by_indexes (indexes).to_string ();
                     result = @"$result$buffer";
                 }

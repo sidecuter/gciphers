@@ -2,3 +2,5 @@
 com.github.sidecuter.gciphers.json
 build
 *.cmb*
+*.cfg
+.vscode/

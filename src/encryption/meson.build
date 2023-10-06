@@ -3,4 +3,6 @@ encryption_files = files(
     'atbash.vala',
     'caesar.vala',
     'polybius.vala',
+    'multi_alphabetic.vala',
+    'trithemium.vala'
 )

@@ -26,7 +26,8 @@ namespace GCiphers {
         private string[] labels = {
             "Atbash",
             "Caesar",
-            "Polybius"
+            "Polybius",
+            "Trithemium"
         };
 
         [GtkChild]
@@ -54,8 +55,9 @@ namespace GCiphers {
             pages.append (new GCiphers.Atbash (toast));
             pages.append (new GCiphers.Caesar (toast));
             pages.append (new GCiphers.Polybius (toast));
+            pages.append (new GCiphers.Trithemium (toast));
             for (int i = 0; i < labels.length; i++) {
-                list_rows.append (new GCiphers.Menu_entry(labels[i]));
+                list_rows.append (new GCiphers.Menu_entry (labels[i]));
             }
             this.show_sidebar_button.set_active (true);
             this.show_sidebar_button.toggled.connect (e => {
@@ -63,8 +65,10 @@ namespace GCiphers {
             });
             pages.foreach ((page) => { stack.add_named (page, page.name); });
             list_rows.row_selected.connect (row => {
-                this.set_title (labels [row.get_index ()]);
-                stack.set_visible_child (stack.get_child_by_name (pages.nth (row.get_index ()).data.name));
+                if (row != null) {
+                    this.set_title (labels [row.get_index ()]);
+                    stack.set_visible_child (stack.get_child_by_name (pages.nth (row.get_index ()).data.name));
+                }
             });
             list_rows.select_row (list_rows.get_row_at_index (0));
         }
