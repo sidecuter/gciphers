@@ -4,4 +4,7 @@ pages_files = files(
     'polybius.vala',
     'pages_errors.vala',
     'trithemium.vala',
+    'belazo.vala',
+    'vigenere.vala',
+    'vigenereii.vala',
 )

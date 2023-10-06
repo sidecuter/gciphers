@@ -42,11 +42,11 @@ namespace GCiphers {
         construct {
             this.encrypt.clicked.connect (e => {
                 try {
-                    unowned string letters = text.get_buffer ().get_text ();
+                    string letters = text.get_buffer ().get_text ().down ();
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate(alphabet, letters.down ());
-                    text.set_text (Encryption.Atbash.encrypt (alphabet, letters.down ()));
+                    Validate(alphabet, letters);
+                    text.set_text (Encryption.Atbash.encrypt (alphabet, letters));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);
@@ -62,11 +62,11 @@ namespace GCiphers {
 
             this.decrypt.clicked.connect (e => {
                 try {
-                    unowned string letters = text.get_buffer ().get_text ();
+                    string letters = text.get_buffer ().get_text ().down ();
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate(alphabet, letters.down ());
-                    text.set_text (Encryption.Atbash.encrypt (alphabet, letters.down ()));
+                    Validate(alphabet, letters);
+                    text.set_text (Encryption.Atbash.encrypt (alphabet, letters));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);

@@ -8,6 +8,9 @@
     <file preprocess="xml-stripblanks">ui/caesar.ui</file>
     <file preprocess="xml-stripblanks">ui/polybius.ui</file>
     <file preprocess="xml-stripblanks">ui/trithemium.ui</file>
+    <file preprocess="xml-stripblanks">ui/belazo.ui</file>
+    <file preprocess="xml-stripblanks">ui/vigenere.ui</file>
+    <file preprocess="xml-stripblanks">ui/vigenereii.ui</file>
   </gresource>
 </gresources>
 

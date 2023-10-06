@@ -12,13 +12,8 @@
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Enter key</property>
-          </object>
-        </child>
-        <child>
           <object class="GtkEntry" id="key">
-            <property name="margin-top">10</property>
+            <property name="placeholder_text">Enter key</property>
           </object>
         </child>
         <child>

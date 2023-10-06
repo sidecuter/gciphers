@@ -1,4 +1,4 @@
-/* trithemium.vala
+/* belazo.vala
  *
  * Copyright 2023 Alexander Svobodov
  *
@@ -19,12 +19,12 @@
  */
 
  namespace Encryption {
-    class Trithemium : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase)
+    class Belazo : Object {
+        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
             try {
-                string result = Encryption.MultiAlphabetic.encrypt(alphabet, phrase, alphabet.alphabet);
+                string result = Encryption.MultiAlphabetic.encrypt(alphabet, phrase, key);
                 return result;
             }
             catch (Encryption.OOBError ex) {
@@ -32,11 +32,11 @@
             }
         }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase)
+        public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
             try {
-                string result = Encryption.MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
+                string result = Encryption.MultiAlphabetic.decrypt(alphabet, phrase, key);
                 return result;
             }
             catch (Encryption.OOBError ex) {

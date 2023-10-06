@@ -45,12 +45,12 @@ namespace GCiphers {
         construct {
             this.encrypt.clicked.connect (e => {
                 try {
-                    unowned string letters = text.get_buffer ().get_text ();
-                    unowned string key = key.get_buffer ().get_text ();
+                    string letters = text.get_buffer ().get_text ().down ();
+                    string key = key.get_buffer ().get_text ();
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate(alphabet, letters.down (), key);
-                    text.set_text (Encryption.Caesar.encrypt (alphabet, letters.down (), int.parse (key)));
+                    Validate(alphabet, letters, key);
+                    text.set_text (Encryption.Caesar.encrypt (alphabet, letters, int.parse (key)));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);
@@ -66,12 +66,12 @@ namespace GCiphers {
 
             this.decrypt.clicked.connect (e => {
                 try {
-                    unowned string letters = text.get_buffer ().get_text ();
-                    unowned string key = key.get_buffer ().get_text ();
+                    string letters = text.get_buffer ().get_text ().down ();
+                    string key = key.get_buffer ().get_text ();
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate(alphabet, letters.down (), key);
-                    text.set_text (Encryption.Caesar.decrypt (alphabet, letters.down (), int.parse (key)));
+                    Validate(alphabet, letters, key);
+                    text.set_text (Encryption.Caesar.decrypt (alphabet, letters, int.parse (key)));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);

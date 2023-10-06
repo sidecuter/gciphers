@@ -4,5 +4,8 @@ encryption_files = files(
     'caesar.vala',
     'polybius.vala',
     'multi_alphabetic.vala',
-    'trithemium.vala'
+    'trithemium.vala',
+    'belazo.vala',
+    'vigenere.vala',
+    'vigenereii.vala'
 )

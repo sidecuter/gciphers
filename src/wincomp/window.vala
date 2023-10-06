@@ -27,7 +27,10 @@ namespace GCiphers {
             "Atbash",
             "Caesar",
             "Polybius",
-            "Trithemium"
+            "Trithemium",
+            "Belazo",
+            "Vigenere",
+            "VigenereII"
         };
 
         [GtkChild]
@@ -56,6 +59,9 @@ namespace GCiphers {
             pages.append (new GCiphers.Caesar (toast));
             pages.append (new GCiphers.Polybius (toast));
             pages.append (new GCiphers.Trithemium (toast));
+            pages.append (new GCiphers.Belazo (toast));
+            pages.append (new GCiphers.Vigenere (toast));
+            pages.append (new GCiphers.Vigenereii (toast));
             for (int i = 0; i < labels.length; i++) {
                 list_rows.append (new GCiphers.Menu_entry (labels[i]));
             }

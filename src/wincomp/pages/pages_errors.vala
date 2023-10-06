@@ -24,7 +24,8 @@ namespace Errors {
         NOT_NUMBER,
         NUMBER_BELOW_ZERO,
         EMPTY_STRING,
-        INCORRECT_NUMBER
+        INCORRECT_NUMBER,
+        WRONG_STRING_LENGTH
     }
 }
 

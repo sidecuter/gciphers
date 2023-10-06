@@ -48,13 +48,13 @@ namespace GCiphers {
         construct {
             this.encrypt.clicked.connect (e => {
                 try {
-                    unowned string letters = text.get_buffer ().get_text ();
+                    string letters = text.get_buffer ().get_text ().down ();
                     unowned string row = rows.get_buffer ().get_text ();
                     unowned string column = columns.get_buffer ().get_text ();
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate_string(alphabet, letters.down (), row, column);
-                    text.set_text (Encryption.Polybius.encrypt (alphabet, letters.down (), int.parse (row), int.parse (column)));
+                    Validate_string(alphabet, letters, row, column);
+                    text.set_text (Encryption.Polybius.encrypt (alphabet, letters, int.parse (row), int.parse (column)));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);
@@ -70,7 +70,7 @@ namespace GCiphers {
 
             this.decrypt.clicked.connect (e => {
                 try {
-                    unowned string letters = text.get_buffer ().get_text ();
+                    string letters = text.get_buffer ().get_text ().down ();
                     unowned string row = rows.get_buffer ().get_text ();
                     unowned string column = columns.get_buffer ().get_text ();
                     int row_int;

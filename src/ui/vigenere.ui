@@ -2,8 +2,8 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
-  <template class="GCiphersPolybius" parent="AdwBin">
-    <property name="name">Polybius</property>
+  <template class="GCiphersVigenere" parent="AdwBin">
+    <property name="name">Vigenere</property>
     <property name="margin-bottom">20</property>
     <property name="margin-end">20</property>
     <property name="margin-start">20</property>
@@ -12,21 +12,8 @@
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkBox">
-            <property name="orientation">horizontal</property>
-             <child>
-              <object class="GtkEntry" id="rows">
-                <property name="placeholder_text">Enter rows count</property>
-                <property name="margin-end">10</property>
-                <property name="hexpand">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkEntry" id="columns">
-                <property name="hexpand">True</property>
-                <property name="placeholder_text">Enter columns count</property>
-              </object>
-            </child>
+          <object class="GtkEntry" id="key">
+            <property name="placeholder_text">Enter key</property>
           </object>
         </child>
         <child>
@@ -70,4 +57,3 @@
     </child>
   </template>
 </interface>
-
