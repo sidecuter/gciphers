@@ -49,12 +49,12 @@ public class GCiphers.Atbash : Adw.Bin {
             }
             catch (OOBError ex) {
                 Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (10);
+                toast.set_timeout (timeout);
                 toast_overlay.add_toast (toast);
             }
             catch (Errors.ValidateError ex) {
                 Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (10);
+                toast.set_timeout (timeout);
                 toast_overlay.add_toast (toast);
             }
         });
@@ -69,12 +69,12 @@ public class GCiphers.Atbash : Adw.Bin {
             }
             catch (OOBError ex) {
                 Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (10);
+                toast.set_timeout (timeout);
                 toast_overlay.add_toast (toast);
             }
             catch (Errors.ValidateError ex) {
                 Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (10);
+                toast.set_timeout (timeout);
                 toast_overlay.add_toast (toast);
             }
         });
