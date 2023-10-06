@@ -20,84 +20,87 @@
 
 using Encryption;
 
-[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/caesar.ui")]
-public class GCiphers.Caesar : Adw.Bin {
+namespace GCiphers {
+    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/caesar.ui")]
+    public class Caesar : Adw.Bin {
 
-    private unowned Adw.ToastOverlay toast_overlay;
+        private unowned Adw.ToastOverlay toast_overlay;
 
-    [GtkChild]
-    private unowned Gtk.Entry text;
+        [GtkChild]
+        private unowned Gtk.Entry text;
 
-    [GtkChild]
-    private unowned Gtk.Entry key;
+        [GtkChild]
+        private unowned Gtk.Entry key;
 
-    [GtkChild]
-    private unowned Gtk.Button encrypt;
+        [GtkChild]
+        private unowned Gtk.Button encrypt;
 
-    [GtkChild]
-    private unowned Gtk.Button decrypt;
+        [GtkChild]
+        private unowned Gtk.Button decrypt;
 
-    public Caesar (Adw.ToastOverlay toast) {
-        this.toast_overlay = toast;
-    }
+        public Caesar (Adw.ToastOverlay toast) {
+            this.toast_overlay = toast;
+        }
 
-    construct {
-        this.encrypt.clicked.connect (e => {
-            try {
-                unowned string letters = text.get_buffer ().get_text ();
-                unowned string key = key.get_buffer ().get_text ();
-                Alphabets alphabets = new Alphabets ();
-                Alphabet alphabet = new Alphabet (alphabets.ru);
-                Validate(alphabet, letters.down (), key);
-                text.set_text (Encryption.Caesar.encrypt (alphabet, letters.down (), int.parse (key)));
-            }
-            catch (OOBError ex) {
-                Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (2);
-                toast_overlay.add_toast (toast);
-            }
-            catch (Errors.ValidateError ex) {
-                Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (2);
-                toast_overlay.add_toast (toast);
-            }
-        });
+        construct {
+            this.encrypt.clicked.connect (e => {
+                try {
+                    string letters = text.get_buffer ().get_text ().down ();
+                    string key = key.get_buffer ().get_text ();
+                    Alphabets alphabets = new Alphabets ();
+                    Alphabet alphabet = new Alphabet (alphabets.ru);
+                    Validate(alphabet, letters, key);
+                    text.set_text (Encryption.Caesar.encrypt (alphabet, letters, int.parse (key)));
+                }
+                catch (OOBError ex) {
+                    Adw.Toast toast = new Adw.Toast (ex.message);
+                    toast.set_timeout (timeout);
+                    toast_overlay.add_toast (toast);
+                }
+                catch (Errors.ValidateError ex) {
+                    Adw.Toast toast = new Adw.Toast (ex.message);
+                    toast.set_timeout (timeout);
+                    toast_overlay.add_toast (toast);
+                }
+            });
 
-        this.decrypt.clicked.connect (e => {
-            try {
-                unowned string letters = text.get_buffer ().get_text ();
-                unowned string key = key.get_buffer ().get_text ();
-                Alphabets alphabets = new Alphabets ();
-                Alphabet alphabet = new Alphabet (alphabets.ru);
-                Validate(alphabet, letters.down (), key);
-                text.set_text (Encryption.Caesar.decrypt (alphabet, letters.down (), int.parse (key)));
-            }
-            catch (OOBError ex) {
-                Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (2);
-                toast_overlay.add_toast (toast);
-            }
-            catch (Errors.ValidateError ex) {
-                Adw.Toast toast = new Adw.Toast (ex.message);
-                toast.set_timeout (2);
-                toast_overlay.add_toast (toast);
-            }
-        });
-    }
+            this.decrypt.clicked.connect (e => {
+                try {
+                    string letters = text.get_buffer ().get_text ().down ();
+                    string key = key.get_buffer ().get_text ();
+                    Alphabets alphabets = new Alphabets ();
+                    Alphabet alphabet = new Alphabet (alphabets.ru);
+                    Validate(alphabet, letters, key);
+                    text.set_text (Encryption.Caesar.decrypt (alphabet, letters, int.parse (key)));
+                }
+                catch (OOBError ex) {
+                    Adw.Toast toast = new Adw.Toast (ex.message);
+                    toast.set_timeout (timeout);
+                    toast_overlay.add_toast (toast);
+                }
+                catch (Errors.ValidateError ex) {
+                    Adw.Toast toast = new Adw.Toast (ex.message);
+                    toast.set_timeout (timeout);
+                    toast_overlay.add_toast (toast);
+                }
+            });
+        }
 
-    private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
-        int num;
-        if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Key is empty");
-        if (!int.try_parse (key, out num)) throw new Errors.ValidateError.NOT_NUMBER ("Key is not a valid number");
-        if (num < 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO ("Number is below zero");
-        if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Text field is empty");
-        for (long i = 0; i < text.char_count (); i++){
-            try {
-                alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
-            }
-            catch (OOBError ex) {
-                throw new Errors.ValidateError.LETTERS_NOT_IN_STRING ("No such letter in alphabet");
+        private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
+            int num;
+            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Key is empty");
+            if (!int.try_parse (key, out num)) throw new Errors.ValidateError.NOT_NUMBER ("Key is not a valid number");
+            if (num < 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO ("Number is below zero");
+            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Text field is empty");
+            for (long i = 0; i < text.char_count (); i++){
+                try {
+                    alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
+                }
+                catch (OOBError ex) {
+                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING ("No such letter in alphabet");
+                }
             }
         }
     }
 }
+

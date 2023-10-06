@@ -1,4 +1,4 @@
-/* atbash.vala
+/* trithemium.vala
  *
  * Copyright 2023 Alexander Svobodov
  *
@@ -21,8 +21,8 @@
 using Encryption;
 
 namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/atbash.ui")]
-    public class Atbash : Adw.Bin {
+    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/trithemium.ui")]
+    public class Trithemium : Adw.Bin {
 
         private unowned Adw.ToastOverlay toast_overlay;
 
@@ -35,7 +35,7 @@ namespace GCiphers {
         [GtkChild]
         private unowned Gtk.Button decrypt;
 
-        public Atbash (Adw.ToastOverlay toast) {
+        public Trithemium (Adw.ToastOverlay toast) {
             this.toast_overlay = toast;
         }
 
@@ -46,7 +46,7 @@ namespace GCiphers {
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
                     Validate(alphabet, letters);
-                    text.set_text (Encryption.Atbash.encrypt (alphabet, letters));
+                    text.set_text (Encryption.Trithemium.encrypt (alphabet, letters));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);
@@ -66,7 +66,7 @@ namespace GCiphers {
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
                     Validate(alphabet, letters);
-                    text.set_text (Encryption.Atbash.encrypt (alphabet, letters));
+                    text.set_text (Encryption.Trithemium.decrypt (alphabet, letters));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);
@@ -94,4 +94,4 @@ namespace GCiphers {
         }
     }
 }
-
+  

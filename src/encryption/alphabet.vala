@@ -18,48 +18,51 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-errordomain Encryption.OOBError {
-    CODE_OUT,
-    CODE_NOT_FOUND
-}
-
-class Encryption.Alphabets : Object {
-    public string ru { get; construct; }
-    public string ru_full { get; construct; }
-    public string en { get; construct; }
-
-    public Alphabets() {
-        Object (
-            ru: "абвгдежзийклмнопрстуфхцчшщъыьэюя",
-            ru_full: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-        );
-    }
-}
-
-class Encryption.Alphabet : Object {
-    public string alphabet { get; construct; }
-    public int length { get; construct; }
-
-    public Alphabet(string alphabet) {
-        Object (
-            alphabet: alphabet,
-            length: alphabet.char_count ()
-        );
+namespace Encryption {
+    errordomain OOBError {
+        CODE_OUT,
+        CODE_NOT_FOUND
     }
 
-    public unichar get_letter_by_index (int index) throws Encryption.OOBError {
-        if (index > alphabet.char_count ()) throw new Encryption.OOBError.CODE_OUT ("Index bigger then string size");
-        for (int i = 0; i < alphabet.char_count (); i++) {
-            if ( index == i) return alphabet.get_char (alphabet.index_of_nth_char (i));
+    class Alphabets : Object {
+        public string ru { get; construct; }
+        public string ru_full { get; construct; }
+        public string en { get; construct; }
+
+        public Alphabets () {
+            Object (
+                ru: "абвгдежзийклмнопрстуфхцчшщъыьэюя",
+                ru_full: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+            );
         }
-        throw new Encryption.OOBError.CODE_NOT_FOUND ("Index not found");
     }
 
-    public int get_letter_index (unichar letter) throws Encryption.OOBError {
-        for (int i = 0; i < alphabet.char_count (); i++) {
-            if ( alphabet.get_char (alphabet.index_of_nth_char (i)) == letter) return i;
+    class Alphabet : Object {
+        public string alphabet { get; construct; }
+        public int length { get; construct; }
+
+        public Alphabet (string alphabet) {
+            Object (
+                alphabet: alphabet,
+                length: alphabet.char_count ()
+            );
         }
-        throw new Encryption.OOBError.CODE_NOT_FOUND ("Index not found");
+
+        public unichar get_letter_by_index (int index) throws Encryption.OOBError {
+            if (index > alphabet.char_count ())
+                throw new Encryption.OOBError.CODE_OUT ("Index bigger then string size");
+            for (int i = 0; i < alphabet.char_count (); i++) {
+                if (index == i) return alphabet.get_char (alphabet.index_of_nth_char (i));
+            }
+            throw new Encryption.OOBError.CODE_NOT_FOUND ("Index not found");
+        }
+
+        public int get_letter_index (unichar letter) throws Encryption.OOBError {
+            for (int i = 0; i < alphabet.char_count (); i++) {
+                if ( alphabet.get_char (alphabet.index_of_nth_char (i)) == letter) return i;
+            }
+            throw new Encryption.OOBError.CODE_NOT_FOUND ("Index not found");
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-/* caesar.vala
+/* vigenere.vala
  *
  * Copyright 2023 Alexander Svobodov
  *
@@ -18,52 +18,44 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption {
-    class Caesar : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
-            string result = "";
-            unichar buffer;
-            for (long i = 0; i < phrase.char_count (); i++) {
-                try {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
-                                phrase.get_char (phrase.index_of_nth_char (i))
-                            ),
-                            shift,
-                            alphabet.length
-                        )
-                    );
-                    result = @"$result$(buffer.to_string())";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
+ namespace Encryption {
+    class Vigenere : Object {
+        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
+            throws Encryption.OOBError
+        {
+            try {
+                string key_phrase = @"$key$phrase";
+                string result = Encryption.MultiAlphabetic.encrypt(alphabet, phrase, key_phrase);
+                return result;
             }
-            return result;
+            catch (Encryption.OOBError ex) {
+                throw ex;
+            }
         }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
-            string result = "";
-            unichar buffer;
-            for (long i = 0; i < phrase.char_count (); i++) {
-                try {
+        public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
+            throws Encryption.OOBError
+        {
+            try {
+                string result = "";
+                unichar buffer = key.get_char (key.index_of_nth_char (0));
+                for (long i = 0; i < phrase.char_count (); i++) {
                     buffer = alphabet.get_letter_by_index (
                         get_index (
                             alphabet.get_letter_index (
                                 phrase.get_char (phrase.index_of_nth_char (i))
                             ),
-                            -shift,
+                            -alphabet.get_letter_index (buffer),
                             alphabet.length
                         )
                     );
-                    result = @"$result$(buffer.to_string())";
+                    result = @"$result$(buffer.to_string ())";
                 }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
+                return result;
             }
-            return result;
+            catch (Encryption.OOBError ex) {
+                throw ex;
+            }
         }
 
         private static int get_index (int index, int shift, int length) {
