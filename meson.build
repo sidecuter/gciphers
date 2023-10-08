@@ -8,8 +8,16 @@ i18n = import('i18n')
 gnome = import('gnome')
 
 subdir('data')
+
+gciphers_resources = gnome.compile_resources('gciphers-resources',
+  'data/gciphers.gresource.xml',
+  source_dir: 'data',
+  c_name: 'gciphers'
+)
+
 subdir('src')
 subdir('po')
+subdir('tests')
 
 gnome.post_install(
      glib_compile_schemas: true,

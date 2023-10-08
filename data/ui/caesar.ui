@@ -2,8 +2,8 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
-  <template class="GCiphersTrithemium" parent="AdwBin">
-    <property name="name">Trithemium</property>
+  <template class="GCiphersCaesar" parent="AdwBin">
+    <property name="name">Caesar</property>
     <property name="margin-bottom">20</property>
     <property name="margin-end">20</property>
     <property name="margin-start">20</property>
@@ -12,14 +12,28 @@
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Enter you text</property>
+          <object class="GtkEntry" id="key">
+            <property name="placeholder_text">Enter key</property>
           </object>
         </child>
         <child>
-          <object class="GtkEntry" id="text">
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Enter you text</property>
+            <property name="margin-top">10</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkTextView">
             <property name="height-request">150</property>
             <property name="margin-top">10</property>
+            <property name="left-margin">10</property>
+            <property name="top-margin">10</property>
+            <property name="right-margin">10</property>
+            <property name="bottom-margin">10</property>
+            <property name="wrap-mode">3</property>
+            <property name="buffer">
+              <object class="GtkTextBuffer" id="text"/>
+            </property>
           </object>
         </child>
         <child>

@@ -1,4 +1,4 @@
-/* vigenere.vala
+/* vigenereii.vala
 *
 * Copyright 2023 Alexander Svobodov
 *
@@ -21,13 +21,13 @@
 using Encryption;
 
 namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/vigenere.ui")]
-    public class Vigenere : Adw.Bin {
+    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/vigenereii.ui")]
+    public class Vigenereii : Adw.Bin {
 
         private unowned Adw.ToastOverlay toast_overlay;
 
         [GtkChild]
-        private unowned Gtk.Entry text;
+        private unowned Gtk.TextBuffer text;
 
         [GtkChild]
         private unowned Gtk.Entry key;
@@ -38,19 +38,23 @@ namespace GCiphers {
         [GtkChild]
         private unowned Gtk.Button decrypt;
 
-        public Vigenere (Adw.ToastOverlay toast) {
+        public Vigenereii (Adw.ToastOverlay toast) {
             this.toast_overlay = toast;
         }
 
         construct {
             this.encrypt.clicked.connect (e => {
                 try {
-                    string letters = text.get_buffer ().get_text ().down ();
+                   string letters = text.text.down ()
+                        .replace (" ", "")
+                        .replace(".", "тчк")
+                        .replace(",", "зпт")
+                        .replace("-", "тире");;
                     string key = key.get_buffer ().get_text ().down ();
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
                     Validate(alphabet, letters, key);
-                    text.set_text (Encryption.Vigenere.encrypt (alphabet, letters, key));
+                    text.set_text (Encryption.VigenereII.encrypt (alphabet, letters, key));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);
@@ -66,12 +70,12 @@ namespace GCiphers {
 
             this.decrypt.clicked.connect (e => {
                 try {
-                    string letters = text.get_buffer ().get_text ().down ();
+                    string letters = text.text.down ().replace (" ", "");
                     string key = key.get_buffer ().get_text ().down ();
                     Alphabets alphabets = new Alphabets ();
                     Alphabet alphabet = new Alphabet (alphabets.ru);
                     Validate(alphabet, letters, key);
-                    text.set_text (Encryption.Vigenere.decrypt (alphabet, letters, key));
+                    text.set_text (Encryption.VigenereII.decrypt (alphabet, letters, key));
                 }
                 catch (OOBError ex) {
                     Adw.Toast toast = new Adw.Toast (ex.message);

@@ -23,9 +23,17 @@
           </object>
         </child>
         <child>
-          <object class="GtkEntry" id="text">
+          <object class="GtkTextView">
             <property name="height-request">150</property>
             <property name="margin-top">10</property>
+            <property name="left-margin">10</property>
+            <property name="top-margin">10</property>
+            <property name="right-margin">10</property>
+            <property name="bottom-margin">10</property>
+            <property name="wrap-mode">3</property>
+            <property name="buffer">
+              <object class="GtkTextBuffer" id="text"/>
+            </property>
           </object>
         </child>
         <child>

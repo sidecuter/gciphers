@@ -27,7 +27,7 @@ namespace GCiphers {
         private unowned Adw.ToastOverlay toast_overlay;
 
         [GtkChild]
-        private unowned Gtk.Entry text;
+        private unowned Gtk.TextBuffer text;
 
         [GtkChild]
         private unowned Gtk.Entry rows;
@@ -48,7 +48,11 @@ namespace GCiphers {
         construct {
             this.encrypt.clicked.connect (e => {
                 try {
-                    string letters = text.get_buffer ().get_text ().down ();
+                   string letters = text.text.down ()
+                        .replace (" ", "")
+                        .replace(".", "тчк")
+                        .replace(",", "зпт")
+                        .replace("-", "тире");;
                     unowned string row = rows.get_buffer ().get_text ();
                     unowned string column = columns.get_buffer ().get_text ();
                     Alphabets alphabets = new Alphabets ();
@@ -70,7 +74,7 @@ namespace GCiphers {
 
             this.decrypt.clicked.connect (e => {
                 try {
-                    string letters = text.get_buffer ().get_text ().down ();
+                    string letters = text.text.down ().replace (" ", "");
                     unowned string row = rows.get_buffer ().get_text ();
                     unowned string column = columns.get_buffer ().get_text ();
                     int row_int;

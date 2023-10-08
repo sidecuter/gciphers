@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
+	<name>GCiphers</name>
+	<display_name>GCiphers</display_name>
 	<id>com.github.sidecuter.gciphers.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
+	<content_rating type="oars-1.1" />
+	<summary>Encoding and decoding text in various ciphers</summary>
 	<description>
 	  <p>No description</p>
 	</description>
