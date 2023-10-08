@@ -11,6 +11,25 @@ unit_tests = {
         meson.project_source_root() + '/src/encryption/polybius.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
+    'belazo': files (
+        meson.project_source_root() + '/src/encryption/belazo.vala',
+        meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
+    'trithemium': files (
+        meson.project_source_root() + '/src/encryption/trithemium.vala',
+        meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
+    'vigenere': files (
+        meson.project_source_root() + '/src/encryption/vigenere.vala',
+        meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
+    'vigenereii': files (
+        meson.project_source_root() + '/src/encryption/vigenereii.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
 }
 
 foreach name, t_sources : unit_tests

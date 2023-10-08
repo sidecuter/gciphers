@@ -2,8 +2,8 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
-  <template class="GCiphersVigenere" parent="AdwBin">
-    <property name="name">Vigenere</property>
+  <template class="GCiphersBelazo" parent="AdwBin">
+    <property name="name">Belazo</property>
     <property name="margin-bottom">20</property>
     <property name="margin-end">20</property>
     <property name="margin-start">20</property>
@@ -23,9 +23,17 @@
           </object>
         </child>
         <child>
-          <object class="GtkEntry" id="text">
+          <object class="GtkTextView">
             <property name="height-request">150</property>
             <property name="margin-top">10</property>
+            <property name="left-margin">10</property>
+            <property name="top-margin">10</property>
+            <property name="right-margin">10</property>
+            <property name="bottom-margin">10</property>
+            <property name="wrap-mode">3</property>
+            <property name="buffer">
+              <object class="GtkTextBuffer" id="text"/>
+            </property>
           </object>
         </child>
         <child>

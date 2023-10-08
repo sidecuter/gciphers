@@ -1,6 +1,2 @@
-.flatpak-builder/
-com.github.sidecuter.gciphers.json
-build
-*.cmb*
-*.cfg
+uncrustify.cfg
 .vscode/

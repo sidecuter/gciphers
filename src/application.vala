@@ -41,6 +41,11 @@ namespace GCiphers {
                 win = new GCiphers.Window (this);
             }
             win.present ();
+            var provider = new Gtk.CssProvider ();
+		    provider.load_from_resource ("/com/github/sidecuter/gciphers/styles/style.css");
+		    Gtk.StyleContext.add_provider_for_display (
+			    Gdk.Display.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+			);
         }
 
         private void on_about_action () {
