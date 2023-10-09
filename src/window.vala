@@ -57,12 +57,12 @@ namespace GCiphers {
 
         construct {
             pages.append (new GCiphers.Atbash (this.toaster));
-            pages.append (new GCiphers.Caesar (toast));
-            pages.append (new GCiphers.Polybius (toast));
-            pages.append (new GCiphers.Trithemium (toast));
-            pages.append (new GCiphers.Belazo (toast));
-            pages.append (new GCiphers.Vigenere (toast));
-            pages.append (new GCiphers.Vigenereii (toast));
+            pages.append (new GCiphers.Caesar (this.toaster));
+            pages.append (new GCiphers.Polybius (this.toaster));
+            pages.append (new GCiphers.Trithemium (this.toaster));
+            pages.append (new GCiphers.Belazo (this.toaster));
+            pages.append (new GCiphers.Vigenere (this.toaster));
+            pages.append (new GCiphers.Vigenereii (this.toaster));
             for (int i = 0; i < labels.length; i++) {
                 list_rows.append (new GCiphers.Menu_entry (labels[i]));
             }

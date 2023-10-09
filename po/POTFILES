@@ -15,6 +15,7 @@ src/pages/trithemium.vala
 src/pages/vigenere.vala
 src/pages/vigenereii.vala
 
+data/ui/window.ui
 data/ui/atbash.ui
 data/ui/caesar.ui
 data/ui/belazo.ui
@@ -22,6 +23,7 @@ data/ui/polybius.ui
 data/ui/trithemium.ui
 data/ui/vigenere.ui
 data/ui/vigenereii.ui
+data/gtk/help-overlay.ui
 
 src/encryption/atbash.vala
 src/encryption/caesar.vala
