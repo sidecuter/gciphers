@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.sidecuter.gciphers package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.sidecuter.gciphers\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-09 00:46+0300\n"
+"PO-Revision-Date: 2023-10-09 13:14+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: data/com.github.sidecuter.gciphers.metainfo.xml.in:3
+msgid "GCiphers"
+msgstr "GCiphers"
+
+#: data/com.github.sidecuter.gciphers.metainfo.xml.in:9
+msgid "Encoding and decoding text in various ciphers"
+msgstr "Шифруем и дешифруем текст используя разные шифры"
+
+#: data/com.github.sidecuter.gciphers.metainfo.xml.in:11
+msgid "No description"
+msgstr ""
+
+#: src/window.vala:28
+msgid "Atbash"
+msgstr "Атбаш"
+
+#: src/window.vala:29
+msgid "Caesar"
+msgstr "Цезарь"
+
+#: src/window.vala:30
+msgid "Polybius"
+msgstr "Полибий"
+
+#: src/window.vala:31
+msgid "Trithemium"
+msgstr "Тритемий"
+
+#: src/window.vala:32
+msgid "Belazo"
+msgstr "Белазо"
+
+#: src/window.vala:33
+msgid "Vigenere"
+msgstr "Виженер"
+
+#: src/window.vala:34
+msgid "VigenereII"
+msgstr "ВиженерII"
+
+#: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
+#: data/ui/polybius.ui:34 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
+#: data/ui/vigenereii.ui:21
+msgid "Enter you text"
+msgstr "Введите фразу"
+
+#: data/ui/atbash.ui:40 data/ui/caesar.ui:46 data/ui/belazo.ui:46
+#: data/ui/polybius.ui:59 data/ui/trithemium.ui:40 data/ui/vigenere.ui:46
+#: data/ui/vigenereii.ui:46
+msgid "Encrypt"
+msgstr "Зашифровать"
+
+#: data/ui/atbash.ui:52 data/ui/caesar.ui:58 data/ui/belazo.ui:58
+#: data/ui/polybius.ui:71 data/ui/trithemium.ui:52 data/ui/vigenere.ui:58
+#: data/ui/vigenereii.ui:58
+msgid "Decrypt"
+msgstr "Расшифровать"
+
+#: data/ui/caesar.ui:16 data/ui/belazo.ui:16 data/ui/vigenere.ui:16
+#: data/ui/vigenereii.ui:16
+msgid "Enter key"
+msgstr "Введите ключ"
+
+#: data/ui/polybius.ui:19
+msgid "Enter rows count"
+msgstr "Введите количество строк"
+
+#: data/ui/polybius.ui:27
+msgid "Enter columns count"
+msgstr "Введите количество столбцов"

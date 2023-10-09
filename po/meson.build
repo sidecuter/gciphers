@@ -1,1 +1,1 @@
-i18n.gettext('gciphers', preset: 'glib')
+i18n.gettext(app_id, preset: 'glib')

@@ -1,4 +1,4 @@
-pages_files = files(
+gciphers_sources += files(
     'atbash.vala',
     'caesar.vala',
     'polybius.vala',

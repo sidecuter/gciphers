@@ -1,4 +1,4 @@
-encryption_files = files(
+gciphers_sources += files(
     'alphabet.vala',
     'atbash.vala',
     'caesar.vala',

@@ -36,7 +36,7 @@ namespace GCiphers {
         private unowned Gtk.Button decrypt;
 
         public Trithemium (Adw.ToastOverlay toast) {
-            this.toast_overlay = toast;
+            
         }
 
         construct {

@@ -42,7 +42,7 @@ namespace GCiphers {
         private unowned Gtk.Button decrypt;
 
         public Polybius (Adw.ToastOverlay toast) {
-            this.toast_overlay = toast;
+            
         }
 
         construct {

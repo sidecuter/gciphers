@@ -6,7 +6,7 @@
     "sdk-extensions" : [
         "org.freedesktop.Sdk.Extension.vala"
     ],
-    "command" : "gciphers",
+    "command" : "com.github.sidecuter.gciphers",
     "finish-args" : [
         "--share=network",
         "--share=ipc",
@@ -32,7 +32,7 @@
     ],
     "modules" : [
         {
-            "name" : "ciphers",
+            "name" : "gciphers",
             "builddir" : true,
             "buildsystem" : "meson",
             "sources" : [

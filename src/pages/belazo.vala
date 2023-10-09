@@ -39,7 +39,7 @@ namespace GCiphers {
         private unowned Gtk.Button decrypt;
 
         public Belazo (Adw.ToastOverlay toast) {
-            this.toast_overlay = toast;
+            
         }
 
         construct {

@@ -50,7 +50,7 @@ namespace Encryption {
 
         public unichar get_letter_by_index (int index) throws Encryption.OOBError {
             if (index > alphabet.char_count ())
-                throw new Encryption.OOBError.CODE_OUT ("Index bigger then string size");
+                throw new Encryption.OOBError.CODE_OUT ("Index bigger than string size");
             for (int i = 0; i < alphabet.char_count (); i++) {
                 if (index == i) return alphabet.get_char (alphabet.index_of_nth_char (i));
             }

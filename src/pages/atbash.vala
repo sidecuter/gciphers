@@ -24,8 +24,6 @@ namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/atbash.ui")]
     public class Atbash : Adw.Bin {
 
-        private unowned Adw.ToastOverlay toast_overlay;
-
         [GtkChild]
         private unowned Gtk.TextBuffer text;
 
@@ -35,8 +33,10 @@ namespace GCiphers {
         [GtkChild]
         private unowned Gtk.Button decrypt;
 
-        public Atbash (Adw.ToastOverlay toast) {
-            this.toast_overlay = toast;
+        private unowned spawn_toast toast_spawner;
+
+        public Atbash (spawn_toast toaster) {
+            toast_spawner = toaster;
         }
 
         construct {
@@ -53,14 +53,10 @@ namespace GCiphers {
                     text.set_text (Encryption.Atbash.encrypt (alphabet, letters));
                 }
                 catch (OOBError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
                 catch (Errors.ValidateError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
             });
 
@@ -73,14 +69,10 @@ namespace GCiphers {
                     text.set_text (Encryption.Atbash.encrypt (alphabet, letters));
                 }
                 catch (OOBError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
                 catch (Errors.ValidateError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
             });
         }
