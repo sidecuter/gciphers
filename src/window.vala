@@ -20,17 +20,18 @@
 
 namespace GCiphers {
     int timeout = 2;
+    public delegate void spawn_toast (string message);
 
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/window.ui")]
     public class Window : Adw.ApplicationWindow {
         private string[] labels = {
-            "Atbash",
-            "Caesar",
-            "Polybius",
-            "Trithemium",
-            "Belazo",
-            "Vigenere",
-            "VigenereII"
+            _("Atbash"),
+            _("Caesar"),
+            _("Polybius"),
+            _("Trithemium"),
+            _("Belazo"),
+            _("Vigenere"),
+            _("VigenereII")
         };
 
         [GtkChild]
@@ -55,13 +56,13 @@ namespace GCiphers {
         }
 
         construct {
-            pages.append (new GCiphers.Atbash (toast));
-            pages.append (new GCiphers.Caesar (toast));
-            pages.append (new GCiphers.Polybius (toast));
-            pages.append (new GCiphers.Trithemium (toast));
-            pages.append (new GCiphers.Belazo (toast));
-            pages.append (new GCiphers.Vigenere (toast));
-            pages.append (new GCiphers.Vigenereii (toast));
+            pages.append (new GCiphers.Atbash (this.toaster));
+            pages.append (new GCiphers.Caesar (this.toaster));
+            pages.append (new GCiphers.Polybius (this.toaster));
+            pages.append (new GCiphers.Trithemium (this.toaster));
+            pages.append (new GCiphers.Belazo (this.toaster));
+            pages.append (new GCiphers.Vigenere (this.toaster));
+            pages.append (new GCiphers.Vigenereii (this.toaster));
             for (int i = 0; i < labels.length; i++) {
                 list_rows.append (new GCiphers.Menu_entry (labels[i]));
             }
@@ -77,6 +78,12 @@ namespace GCiphers {
                 }
             });
             list_rows.select_row (list_rows.get_row_at_index (0));
+        }
+
+        public void toaster (string message) {
+            Adw.Toast toast_message = new Adw.Toast (message);
+            toast_message.set_timeout (timeout);
+            toast.add_toast (toast_message);
         }
     }
 }

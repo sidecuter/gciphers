@@ -24,8 +24,6 @@ namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/polybius.ui")]
     public class Polybius : Adw.Bin {
 
-        private unowned Adw.ToastOverlay toast_overlay;
-
         [GtkChild]
         private unowned Gtk.TextBuffer text;
 
@@ -41,8 +39,10 @@ namespace GCiphers {
         [GtkChild]
         private unowned Gtk.Button decrypt;
 
-        public Polybius (Adw.ToastOverlay toast) {
-            this.toast_overlay = toast;
+        private unowned spawn_toast toast_spawner;
+
+        public Polybius (spawn_toast toaster) {
+            toast_spawner = toaster;
         }
 
         construct {
@@ -61,14 +61,10 @@ namespace GCiphers {
                     text.set_text (Encryption.Polybius.encrypt (alphabet, letters, int.parse (row), int.parse (column)));
                 }
                 catch (OOBError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
                 catch (Errors.ValidateError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
             });
 
@@ -85,53 +81,49 @@ namespace GCiphers {
                     text.set_text (Encryption.Polybius.decrypt (alphabet, letters, row_int, column_int));
                 }
                 catch (OOBError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
                 catch (Errors.ValidateError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
             });
         }
 
         private void Validate_string (Alphabet alphabet, string text, string rows, string columns) throws Errors.ValidateError {
             int num;
-            if (rows.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Rows count is empty");
-            if (!int.try_parse (rows, out num)) throw new Errors.ValidateError.NOT_NUMBER ("Rows count is not a valid number");
-            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO ("Rows count is below or equal zero");
-            if (columns.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Columns count is empty");
-            if (!int.try_parse (columns, out num)) throw new Errors.ValidateError.NOT_NUMBER ("Columns count is not a valid number");
-            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO ("Columns count is below or equal zero");
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Text field is empty");
+            if (rows.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Rows count is empty"));
+            if (!int.try_parse (rows, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("Rows count is not a valid number"));
+            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Rows count is below or equal zero"));
+            if (columns.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Columns count is empty"));
+            if (!int.try_parse (columns, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("Columns count is not a valid number"));
+            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Columns count is below or equal zero"));
+            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
             for (long i = 0; i < text.char_count (); i++){
                 try {
                     alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
                 }
                 catch (OOBError ex) {
-                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING ("No such letter in alphabet");
+                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter in alphabet"));
                 }
             }
         }
 
         private void Validate_int (string text, string rows, string columns, out int row, out int column) throws Errors.ValidateError {
             int num;
-            if (rows.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Rows count is empty");
-            if (!int.try_parse (rows, out row)) throw new Errors.ValidateError.NOT_NUMBER ("Rows count is not a valid number");
-            if (row <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO ("Rows count is below or equal zero");
-            if (columns.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Columns count is empty");
-            if (!int.try_parse (columns, out column)) throw new Errors.ValidateError.NOT_NUMBER ("Columns count is not a valid number");
-            if (column <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO ("Columns count is below or equal zero");
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Text field is empty");
+            if (rows.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Rows count is empty"));
+            if (!int.try_parse (rows, out row)) throw new Errors.ValidateError.NOT_NUMBER (_("Rows count is not a valid number"));
+            if (row <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Rows count is below or equal zero"));
+            if (columns.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Columns count is empty"));
+            if (!int.try_parse (columns, out column)) throw new Errors.ValidateError.NOT_NUMBER (_("Columns count is not a valid number"));
+            if (column <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Columns count is below or equal zero"));
+            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
             for (long i = 0; i < text.char_count (); i++){
                 if (!int.try_parse (text.get_char(text.index_of_nth_char (i)).to_string (), out num))
-                    throw new Errors.ValidateError.NOT_NUMBER ("Phrase should be only consist of numbers");
+                    throw new Errors.ValidateError.NOT_NUMBER (_("Phrase should be only consist of numbers"));
                 if (i%2 == 0 && num > row)
-                    throw new Errors.ValidateError.INCORRECT_NUMBER ("Row in string cannot be bigger than table rows count");
+                    throw new Errors.ValidateError.INCORRECT_NUMBER (_("Row in string cannot be bigger than table rows count"));
                 if (i%2 == 1 && num > column)
-                    throw new Errors.ValidateError.INCORRECT_NUMBER ("Column in string cannot be bigger than table columns count");
+                    throw new Errors.ValidateError.INCORRECT_NUMBER (_("Column in string cannot be bigger than table columns count"));
             }
         }
     }

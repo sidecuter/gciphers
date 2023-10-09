@@ -28,7 +28,7 @@ namespace Encryption {
 
         public PolybiusTable (Encryption.Alphabet alphabet_in, int rows_in, int columns_in) throws Encryption.OOBError {
             if (rows_in * columns_in < alphabet_in.length)
-                throw new Encryption.OOBError.CODE_OUT ("Columns*Rows must be bigger than length of alphabet");
+                throw new Encryption.OOBError.CODE_OUT (_("Columns*Rows must be bigger than length of alphabet"));
             int last_r = alphabet_in.length / columns_in == 0 ? alphabet_in.length / columns_in : alphabet_in.length / columns_in + 1;
             int last_c = columns_in - (last_r * columns_in - alphabet_in.length);
             Object (
@@ -58,18 +58,18 @@ namespace Encryption {
                     }
                 }
             }
-            throw new Encryption.OOBError.CODE_NOT_FOUND ("No such letter in table");
+            throw new Encryption.OOBError.CODE_NOT_FOUND (_("No such letter in table"));
         }
 
         public unichar get_letter_by_indexes (PolybiusIndexes indexes) throws Encryption.OOBError {
             if (indexes.row <= 0 || indexes.column <= 0)
-                throw new Encryption.OOBError.CODE_OUT ("Indexes must be bigger than 0");
+                throw new Encryption.OOBError.CODE_OUT (_("Indexes must be bigger than 0"));
             if (indexes.row > this.rows || indexes.row > this.last_row)
-                throw new Encryption.OOBError.CODE_OUT ("Row index is higher than maximum");
+                throw new Encryption.OOBError.CODE_OUT (_("Row index is higher than maximum"));
             if (indexes.column > this.columns && indexes.row < this.last_row)
-                throw new Encryption.OOBError.CODE_OUT ("Column index bigger than maximum");
+                throw new Encryption.OOBError.CODE_OUT (_("Column index bigger than maximum"));
             if (indexes.column > this.last_column && indexes.row == this.last_row)
-                throw new Encryption.OOBError.CODE_OUT ("Column index bigger than maximum for last row");
+                throw new Encryption.OOBError.CODE_OUT (_("Column index bigger than maximum for last row"));
             return this.alphabet.alphabet.get_char (
                 this.alphabet.alphabet.index_of_nth_char (
                     (indexes.row - 1) * this.columns + (indexes.column - 1)
@@ -112,7 +112,7 @@ namespace Encryption {
 
         public static string decrypt(Encryption.Alphabet alphabet, string phrase, int rows, int columns) throws Encryption.OOBError {
             if (phrase.char_count () % 2 != 0)
-                throw new Encryption.OOBError.CODE_OUT ("Letters count in text for decryption must be a multiple of two");
+                throw new Encryption.OOBError.CODE_OUT (_("Letters count in text for decryption must be a multiple of two"));
             string result = "";
             PolybiusIndexes indexes = new PolybiusIndexes ();
             PolybiusTable table;

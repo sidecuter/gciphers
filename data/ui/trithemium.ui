@@ -37,7 +37,7 @@
             <property name="valign">start</property>
             <child>
               <object class="GtkButton" id="encrypt">
-                <property name="label">Encrypt</property>
+                <property name="label" translatable="yes">Encrypt</property>
                 <property name="valign">center</property>
               </object>
             </child>
@@ -49,7 +49,7 @@
             </child>
             <child>
               <object class="GtkButton" id="decrypt">
-                <property name="label">Decrypt</property>
+                <property name="label" translatable="yes">Decrypt</property>
                 <property name="valign">center</property>
               </object>
             </child>

@@ -24,8 +24,6 @@ namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/belazo.ui")]
     public class Belazo : Adw.Bin {
 
-        private unowned Adw.ToastOverlay toast_overlay;
-
         [GtkChild]
         private unowned Gtk.TextBuffer text;
 
@@ -38,8 +36,10 @@ namespace GCiphers {
         [GtkChild]
         private unowned Gtk.Button decrypt;
 
-        public Belazo (Adw.ToastOverlay toast) {
-            this.toast_overlay = toast;
+        private unowned spawn_toast toast_spawner;
+
+        public Belazo (spawn_toast toaster) {
+            toast_spawner = toaster;
         }
 
         construct {
@@ -57,14 +57,10 @@ namespace GCiphers {
                     text.set_text (Encryption.Belazo.encrypt (alphabet, letters, key));
                 }
                 catch (OOBError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
                 catch (Errors.ValidateError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
             });
 
@@ -78,27 +74,23 @@ namespace GCiphers {
                     text.set_text (Encryption.Belazo.decrypt (alphabet, letters, key));
                 }
                 catch (OOBError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
                 catch (Errors.ValidateError ex) {
-                    Adw.Toast toast = new Adw.Toast (ex.message);
-                    toast.set_timeout (timeout);
-                    toast_overlay.add_toast (toast);
+                    toast_spawner(ex.message);
                 }
             });
         }
 
         private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
-            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Key is empty");
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING ("Text field is empty");
+            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
+            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
             for (long i = 0; i < text.char_count (); i++){
                 try {
                     alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
                 }
                 catch (OOBError ex) {
-                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING ("No such letter from phrase in alphabet");
+                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter from phrase in alphabet"));
                 }
             }
             for (long i = 0; i < key.char_count (); i++){
@@ -106,7 +98,7 @@ namespace GCiphers {
                     alphabet.get_letter_index (key.get_char (key.index_of_nth_char (i)));
                 }
                 catch (OOBError ex) {
-                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING ("No such letter from key in alphabet");
+                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter from key in alphabet"));
                 }
             }
         }

@@ -1,0 +1,241 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.sidecuter.gciphers package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.sidecuter.gciphers\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-09 22:36+0300\n"
+"PO-Revision-Date: 2023-10-09 22:44+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: data/com.github.sidecuter.gciphers.metainfo.xml.in:3
+msgid "GCiphers"
+msgstr "GCiphers"
+
+#: data/com.github.sidecuter.gciphers.metainfo.xml.in:9
+msgid "Encoding and decoding text in various ciphers"
+msgstr "Шифруем и дешифруем текст используя разные шифры"
+
+#: data/com.github.sidecuter.gciphers.metainfo.xml.in:11
+msgid "No description"
+msgstr "Нет описания"
+
+#: src/window.vala:28
+msgid "Atbash"
+msgstr "Атбаш"
+
+#: src/window.vala:29
+msgid "Caesar"
+msgstr "Цезарь"
+
+#: src/window.vala:30
+msgid "Polybius"
+msgstr "Полибий"
+
+#: src/window.vala:31
+msgid "Trithemium"
+msgstr "Тритемий"
+
+#: src/window.vala:32
+msgid "Belazo"
+msgstr "Белазо"
+
+#: src/window.vala:33
+msgid "Vigenere"
+msgstr "Виженер"
+
+#: src/window.vala:34
+msgid "VigenereII"
+msgstr "ВиженерII"
+
+#: src/pages/atbash.vala:81 src/pages/caesar.vala:90 src/pages/belazo.vala:87
+#: src/pages/polybius.vala:100 src/pages/polybius.vala:119
+#: src/pages/trithemium.vala:81 src/pages/vigenere.vala:88
+#: src/pages/vigenereii.vala:88
+msgid "Text field is empty"
+msgstr "Фраза отсутствует"
+
+#: src/pages/atbash.vala:87 src/pages/caesar.vala:96
+#: src/pages/polybius.vala:106 src/pages/trithemium.vala:87
+msgid "No such letter in alphabet"
+msgstr "Нет такой буквы в алфавите"
+
+#: src/pages/caesar.vala:87 src/pages/belazo.vala:86 src/pages/vigenere.vala:86
+#: src/pages/vigenereii.vala:86
+msgid "Key is empty"
+msgstr "Ключ отсутствует"
+
+#: src/pages/caesar.vala:88
+msgid "Key is not a valid number"
+msgstr "Ключ не является корректным числом"
+
+#: src/pages/caesar.vala:89
+msgid "Number is below zero"
+msgstr "Ключ не может быть меньше нуля"
+
+#: src/pages/belazo.vala:93
+msgid "No such letter from phrase in alphabet"
+msgstr "В фразе содержится некорректный символ"
+
+#: src/pages/belazo.vala:101
+msgid "No such letter from key in alphabet"
+msgstr "В ключе содержится некорректный символ"
+
+#: src/pages/polybius.vala:94 src/pages/polybius.vala:113
+msgid "Rows count is empty"
+msgstr "Количество строк не указано"
+
+#: src/pages/polybius.vala:95 src/pages/polybius.vala:114
+msgid "Rows count is not a valid number"
+msgstr "Количество строк не является корректным числом"
+
+#: src/pages/polybius.vala:96 src/pages/polybius.vala:115
+msgid "Rows count is below or equal zero"
+msgstr "Количество строк не может быть меньше либо равно нулю"
+
+#: src/pages/polybius.vala:97 src/pages/polybius.vala:116
+msgid "Columns count is empty"
+msgstr "Количество столбцов не указано"
+
+#: src/pages/polybius.vala:98 src/pages/polybius.vala:117
+msgid "Columns count is not a valid number"
+msgstr "Количество столбцов не является корректным числом"
+
+#: src/pages/polybius.vala:99 src/pages/polybius.vala:118
+msgid "Columns count is below or equal zero"
+msgstr "Количество столбцов не может быть меньше либо равно нулю"
+
+#: src/pages/polybius.vala:122
+msgid "Phrase should be only consist of numbers"
+msgstr "Фраза должна состоять из цифр"
+
+#: src/pages/polybius.vala:124
+msgid "Row in string cannot be bigger than table rows count"
+msgstr "Показатель строки не должен быть больше количества строк"
+
+#: src/pages/polybius.vala:126
+msgid "Column in string cannot be bigger than table columns count"
+msgstr "Показатель столбца не должен быть больше количества столбцов"
+
+#: src/pages/vigenere.vala:87 src/pages/vigenereii.vala:87
+msgid "Key length is bigger than 1"
+msgstr "Длина ключа превышает один символ"
+
+#: src/pages/vigenere.vala:93 src/pages/vigenereii.vala:93
+msgid "No such key letter in alphabet"
+msgstr "Ключ содержит некорректный символ"
+
+#: src/pages/vigenere.vala:100 src/pages/vigenereii.vala:100
+msgid "No such phrase letter in alphabet"
+msgstr "Фраза содержит некорректный символ"
+
+#: data/ui/window.ui:53
+msgid "Show sidebar"
+msgstr "Показать боковую панель"
+
+#: data/ui/window.ui:60
+msgid "Menu"
+msgstr "Меню"
+
+#: data/ui/window.ui:80
+msgid "_Preferences"
+msgstr "Настройки"
+
+#: data/ui/window.ui:84
+msgid "_Keyboard Shortcuts"
+msgstr "Горячие клавиши"
+
+#: data/ui/window.ui:88
+msgid "_About GCiphers"
+msgstr "О GCiphers"
+
+#: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
+#: data/ui/polybius.ui:34 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
+#: data/ui/vigenereii.ui:21
+msgid "Enter you text"
+msgstr "Введите фразу"
+
+#: data/ui/atbash.ui:40 data/ui/caesar.ui:46 data/ui/belazo.ui:46
+#: data/ui/polybius.ui:59 data/ui/trithemium.ui:40 data/ui/vigenere.ui:46
+#: data/ui/vigenereii.ui:46
+msgid "Encrypt"
+msgstr "Зашифровать"
+
+#: data/ui/atbash.ui:52 data/ui/caesar.ui:58 data/ui/belazo.ui:58
+#: data/ui/polybius.ui:71 data/ui/trithemium.ui:52 data/ui/vigenere.ui:58
+#: data/ui/vigenereii.ui:58
+msgid "Decrypt"
+msgstr "Расшифровать"
+
+#: data/ui/caesar.ui:16 data/ui/belazo.ui:16 data/ui/vigenere.ui:16
+#: data/ui/vigenereii.ui:16
+msgid "Enter key"
+msgstr "Введите ключ"
+
+#: data/ui/polybius.ui:19
+msgid "Enter rows count"
+msgstr "Введите количество строк"
+
+#: data/ui/polybius.ui:27
+msgid "Enter columns count"
+msgstr "Введите количество столбцов"
+
+#: data/gtk/help-overlay.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Общее"
+
+#: data/gtk/help-overlay.ui:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Показать горячие клавиши"
+
+#: data/gtk/help-overlay.ui:20
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Закрыть"
+
+#: src/encryption/polybius.vala:31
+msgid "Columns*Rows must be bigger than length of alphabet"
+msgstr "Произведение количества строк на столбцов должно превышать длину алфавит"
+
+#: src/encryption/polybius.vala:61
+msgid "No such letter in table"
+msgstr "Такого символа нет в таблице"
+
+#: src/encryption/polybius.vala:66
+msgid "Indexes must be bigger than 0"
+msgstr "Индексы не могут быть нулевыми"
+
+#: src/encryption/polybius.vala:68
+msgid "Row index is higher than maximum"
+msgstr "Индекс строки превышает максимальный"
+
+#: src/encryption/polybius.vala:70
+msgid "Column index bigger than maximum"
+msgstr "Индекс столбца превышает максимальный"
+
+#: src/encryption/polybius.vala:72
+msgid "Column index bigger than maximum for last row"
+msgstr "Индекс столбца превышает максимальный для последней строки"
+
+#: src/encryption/polybius.vala:115
+msgid "Letters count in text for decryption must be a multiple of two"
+msgstr "Количество символов должно быть кратно двум"
+
+#: src/encryption/alphabet.vala:53
+msgid "Index bigger than string size"
+msgstr "Индекс выходит за пределы алфавита"
+
+#: src/encryption/alphabet.vala:57 src/encryption/alphabet.vala:64
+msgid "Index not found"
+msgstr "Индекс не найден"

@@ -49,7 +49,7 @@
                     <property name="show-back-button">True</property>
                     <child type="start">
                       <object class="GtkToggleButton" id="show_sidebar_button">
-                        <property name="icon-name">sidebar-show-symbolic</property>
+                        <property name="icon-name">view-dual-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Show sidebar</property>
                       </object>
                     </child>

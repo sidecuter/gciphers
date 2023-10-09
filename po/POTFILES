@@ -1,28 +1,29 @@
-data/com.github.sidecuter.gciphers.desktop.in
 data/com.github.sidecuter.gciphers.metainfo.xml.in
 data/com.github.sidecuter.gciphers.gschema.xml
 
 src/main.vala
 src/application.vala
 
-src/wincomp/window.vala
-src/wincomp/menu_entry.vala
-src/wincomp/pages/atbash.vala
-src/wincomp/pages/caesar.vala
-src/wincomp/pages/belazo.vala
-src/wincomp/pages/pages_errors.vala
-src/wincomp/pages/polybius.vala
-src/wincomp/pages/trithemium.vala
-src/wincomp/pages/vigenere.vala
-src/wincomp/pages/vigenereii.vala
+src/window.vala
+src/menu_entry.vala
+src/pages/atbash.vala
+src/pages/caesar.vala
+src/pages/belazo.vala
+src/pages/pages_errors.vala
+src/pages/polybius.vala
+src/pages/trithemium.vala
+src/pages/vigenere.vala
+src/pages/vigenereii.vala
 
-src/ui/atbash.ui
-src/ui/caesar.ui
-src/ui/belazo.ui
-src/ui/polybius.ui
-src/ui/trithemium.ui
-src/ui/vigenere.ui
-src/ui/vigenereii.ui
+data/ui/window.ui
+data/ui/atbash.ui
+data/ui/caesar.ui
+data/ui/belazo.ui
+data/ui/polybius.ui
+data/ui/trithemium.ui
+data/ui/vigenere.ui
+data/ui/vigenereii.ui
+data/gtk/help-overlay.ui
 
 src/encryption/atbash.vala
 src/encryption/caesar.vala
