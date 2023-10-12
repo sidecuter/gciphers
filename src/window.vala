@@ -41,6 +41,8 @@ namespace GCiphers {
 
         private List<Adw.Bin> pages;
 
+        private Encryption.Alphabets alphabets;
+
         [GtkChild]
         private unowned Adw.ToastOverlay toast;
 
@@ -54,10 +56,7 @@ namespace GCiphers {
         private unowned Gtk.ListBox list_rows;
 
         [GtkChild]
-        private unowned Gtk.ComboBox combobox;
-
-        [GtkChild]
-        private unowned Gtk.ListStore liststore1;
+        private unowned Gtk.DropDown dropdown;
 
         [GtkCallback]
         private void on_sidebar_button_toggle (Gtk.ToggleButton self) {
@@ -77,6 +76,7 @@ namespace GCiphers {
         }
 
         construct {
+            alphabets = new Encryption.Alphabets ();
             pages.append (new GCiphers.Atbash (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Caesar (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Polybius (this.toaster, this.alphabet_getter));
@@ -89,10 +89,6 @@ namespace GCiphers {
             }
             pages.foreach ((page) => { stack.add_named (page, page.name); });
             list_rows.select_row (list_rows.get_row_at_index (0));
-            Gtk.CellRendererText renderer = new Gtk.CellRendererText ();
-            combobox.pack_start (renderer, true);
-            combobox.add_attribute (renderer, "text", 0);
-            combobox.active = 0;
         }
 
         public void toaster (string message) {
@@ -102,11 +98,15 @@ namespace GCiphers {
         }
 
         public string alphabet_getter () {
-            Value val;
-            Gtk.TreeIter iter;
-            combobox.get_active_iter (out iter);
-			liststore1.get_value (iter, 1, out val);
-            return (string)val;
+            string value = ((Gtk.StringObject)dropdown.get_selected_item ()).get_string ();
+            switch (value) {
+                case "ru":
+                    return alphabets.ru;
+                case "ru_full":
+                    return alphabets.ru_full;
+                default:
+                    return alphabets.en;
+            }
         }
     }
 }

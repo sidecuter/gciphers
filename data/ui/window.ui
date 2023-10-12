@@ -59,27 +59,14 @@
                     <child type="end">
                       <object class="GtkBox">
                         <child>
-                          <object class="GtkComboBox" id="combobox">
+                          <object class="GtkDropDown" id="dropdown">
                             <property name="model">
-                              <object class="GtkListStore" id="liststore1">
-                                <columns>
-                                  <column type="gchararray"/>
-                                  <column type="gchararray"/>
-                                </columns>
-                                <data>
-                                  <row>
-                                    <col id="0">ru</col>
-                                    <col id="1">абвгдежзийклмнопрстуфхцчшщъыьэюя</col>
-                                  </row>
-                                  <row>
-                                    <col id="0">ru_full</col>
-                                    <col id="1">абвгдеёжзийклмнопрстуфхцчшщъыьэюя</col>
-                                  </row>
-                                  <row>
-                                    <col id="0">en</col>
-                                    <col id="1">abcdefghijklmnopqrstuvwxyz</col>
-                                  </row>
-                                </data>
+                              <object class="GtkStringList">
+                                <items>
+                                  <item>ru</item>
+                                  <item>ru_full</item>
+                                  <item>en</item>
+                                </items>
                               </object>
                             </property>
                           </object>
