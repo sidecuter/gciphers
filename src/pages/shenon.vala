@@ -92,12 +92,15 @@ namespace GCiphers {
             if (t0.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("T0 is empty"));
             if (!int.try_parse (t0, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("T0 is not a valid number"));
             if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("T0 is below or equal zero"));
+            if (num > alphabet.length) throw new Errors.ValidateError.INCORRECT_NUMBER (_("T0 is bigger than alphabet length"));
             if (a.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("A is empty"));
             if (!int.try_parse (a, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("A is not a valid number"));
             if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("A is below or equal zero"));
+            if (num % 4 != 1) throw new Errors.ValidateError.INCORRECT_NUMBER (_("The remainder of A divided by 4 is not equal to 1"));
             if (c.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("C is empty"));
             if (!int.try_parse (c, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("C is not a valid number"));
             if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("C is below or equal zero"));
+            if (num % 2 == 0) throw new Errors.ValidateError.INCORRECT_NUMBER (_("C is not odd"));
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
             for (long i = 0; i < text.char_count (); i++){
                 try {
