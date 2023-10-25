@@ -24,62 +24,57 @@ namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/vigenereii.ui")]
     public class Vigenereii : Adw.Bin {
 
+        private unowned spawn_toast toast_spawner;
+
+        private unowned get_alphabet alphabet_getter;
+
         [GtkChild]
         private unowned Gtk.TextBuffer text;
 
         [GtkChild]
         private unowned Gtk.Entry key;
 
-        [GtkChild]
-        private unowned Gtk.Button encrypt;
-
-        [GtkChild]
-        private unowned Gtk.Button decrypt;
-
-        private unowned spawn_toast toast_spawner;
-
-        public Vigenereii (spawn_toast toaster) {
-            toast_spawner = toaster;
+        [GtkCallback]
+        private void on_encrypt_click (Gtk.Button self) {
+            try {
+                string letters = text.text.down ()
+                    .replace (" ", "")
+                    .replace(".", "тчк")
+                    .replace(",", "зпт")
+                    .replace("-", "тире");;
+                string key = key.get_buffer ().get_text ().down ();
+                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Validate(alphabet, letters, key);
+                text.set_text (Encryption.VigenereII.encrypt (alphabet, letters, key));
+             }
+             catch (OOBError ex) {
+                 toast_spawner(ex.message);
+             }
+             catch (Errors.ValidateError ex) {
+                 toast_spawner(ex.message);
+             }
         }
 
-        construct {
-            this.encrypt.clicked.connect (e => {
-                try {
-                   string letters = text.text.down ()
-                        .replace (" ", "")
-                        .replace(".", "тчк")
-                        .replace(",", "зпт")
-                        .replace("-", "тире");;
-                    string key = key.get_buffer ().get_text ().down ();
-                    Alphabets alphabets = new Alphabets ();
-                    Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate(alphabet, letters, key);
-                    text.set_text (Encryption.VigenereII.encrypt (alphabet, letters, key));
-                }
-                catch (OOBError ex) {
-                    toast_spawner(ex.message);
-                }
-                catch (Errors.ValidateError ex) {
-                    toast_spawner(ex.message);
-                }
-            });
+        [GtkCallback]
+        private void on_decrypt_click (Gtk.Button self) {
+            try {
+                string letters = text.text.down ().replace (" ", "");
+                string key = key.get_buffer ().get_text ().down ();
+                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Validate(alphabet, letters, key);
+                text.set_text (Encryption.VigenereII.decrypt (alphabet, letters, key));
+            }
+            catch (OOBError ex) {
+                toast_spawner(ex.message);
+            }
+            catch (Errors.ValidateError ex) {
+                toast_spawner(ex.message);
+            }
+        }
 
-            this.decrypt.clicked.connect (e => {
-                try {
-                    string letters = text.text.down ().replace (" ", "");
-                    string key = key.get_buffer ().get_text ().down ();
-                    Alphabets alphabets = new Alphabets ();
-                    Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate(alphabet, letters, key);
-                    text.set_text (Encryption.VigenereII.decrypt (alphabet, letters, key));
-                }
-                catch (OOBError ex) {
-                    toast_spawner(ex.message);
-                }
-                catch (Errors.ValidateError ex) {
-                    toast_spawner(ex.message);
-                }
-            });
+        public Vigenereii (spawn_toast toaster, get_alphabet alphabet_get) {
+            toast_spawner = toaster;
+            alphabet_getter = alphabet_get;
         }
 
         private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {

@@ -19,11 +19,16 @@
  */
 
 namespace GCiphers {
+
     int timeout = 2;
+    
     public delegate void spawn_toast (string message);
+
+    public delegate string get_alphabet ();
 
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/window.ui")]
     public class Window : Adw.ApplicationWindow {
+
         private string[] labels = {
             _("Atbash"),
             _("Caesar"),
@@ -31,8 +36,13 @@ namespace GCiphers {
             _("Trithemium"),
             _("Belazo"),
             _("Vigenere"),
-            _("VigenereII")
+            _("VigenereII"),
+            _("Shenon"),
         };
+
+        private List<Adw.Bin> pages;
+
+        private Encryption.Alphabets alphabets;
 
         [GtkChild]
         private unowned Adw.ToastOverlay toast;
@@ -44,39 +54,42 @@ namespace GCiphers {
         private unowned Adw.ViewStack stack;
 
         [GtkChild]
-        private unowned Gtk.ToggleButton show_sidebar_button;
-
-        [GtkChild]
         private unowned Gtk.ListBox list_rows;
 
-        private List<Adw.Bin> pages;
+        [GtkChild]
+        private unowned Gtk.DropDown dropdown;
+
+        [GtkCallback]
+        private void on_sidebar_button_toggle (Gtk.ToggleButton self) {
+            this.split_view.set_show_sidebar (!this.split_view.get_show_sidebar ());
+        }
+
+        [GtkCallback]
+        private void on_row_selected (Gtk.ListBoxRow? row) {
+            if (row != null) {
+                this.set_title (labels [row.get_index ()]);
+                stack.set_visible_child (stack.get_child_by_name (pages.nth (row.get_index ()).data.name));
+            }
+        }
 
         public Window (Gtk.Application app) {
             Object (application: app);
         }
 
         construct {
-            pages.append (new GCiphers.Atbash (this.toaster));
-            pages.append (new GCiphers.Caesar (this.toaster));
-            pages.append (new GCiphers.Polybius (this.toaster));
-            pages.append (new GCiphers.Trithemium (this.toaster));
-            pages.append (new GCiphers.Belazo (this.toaster));
-            pages.append (new GCiphers.Vigenere (this.toaster));
-            pages.append (new GCiphers.Vigenereii (this.toaster));
+            alphabets = new Encryption.Alphabets ();
+            pages.append (new GCiphers.Atbash (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Caesar (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Polybius (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Trithemium (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Belazo (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Vigenere (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Vigenereii (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Shenon (this.toaster, this.alphabet_getter));
             for (int i = 0; i < labels.length; i++) {
                 list_rows.append (new GCiphers.Menu_entry (labels[i]));
             }
-            this.show_sidebar_button.set_active (true);
-            this.show_sidebar_button.toggled.connect (e => {
-                this.split_view.set_show_sidebar (!this.split_view.get_show_sidebar ());
-            });
             pages.foreach ((page) => { stack.add_named (page, page.name); });
-            list_rows.row_selected.connect (row => {
-                if (row != null) {
-                    this.set_title (labels [row.get_index ()]);
-                    stack.set_visible_child (stack.get_child_by_name (pages.nth (row.get_index ()).data.name));
-                }
-            });
             list_rows.select_row (list_rows.get_row_at_index (0));
         }
 
@@ -84,6 +97,18 @@ namespace GCiphers {
             Adw.Toast toast_message = new Adw.Toast (message);
             toast_message.set_timeout (timeout);
             toast.add_toast (toast_message);
+        }
+
+        public string alphabet_getter () {
+            string value = ((Gtk.StringObject)dropdown.get_selected_item ()).get_string ();
+            switch (value) {
+                case "ru":
+                    return alphabets.ru;
+                case "ru_full":
+                    return alphabets.ru_full;
+                default:
+                    return alphabets.en;
+            }
         }
     }
 }

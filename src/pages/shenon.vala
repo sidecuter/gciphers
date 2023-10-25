@@ -1,4 +1,4 @@
-/* caesar.vala
+/* shenon.vala
  *
  * Copyright 2023 Alexander Svobodov
  *
@@ -21,8 +21,8 @@
 using Encryption;
 
 namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/caesar.ui")]
-    public class Caesar : Adw.Bin {
+    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/shenon.ui")]
+    public class Shenon : Adw.Bin {
 
         private unowned spawn_toast toast_spawner;
 
@@ -32,7 +32,13 @@ namespace GCiphers {
         private unowned Gtk.TextBuffer text;
 
         [GtkChild]
-        private unowned Gtk.Entry key;
+        private unowned Gtk.Entry t0;
+        
+        [GtkChild]
+        private unowned Gtk.Entry a;
+        
+        [GtkChild]
+        private unowned Gtk.Entry c;
 
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
@@ -42,10 +48,12 @@ namespace GCiphers {
                     .replace(".", "тчк")
                     .replace(",", "зпт")
                     .replace("-", "тире");;
-                string key = key.get_buffer ().get_text ();
+                unowned string t0 = t0.get_buffer ().get_text ();
+                unowned string a = a.get_buffer ().get_text ();
+                unowned string c = c.get_buffer ().get_text ();
                 Alphabet alphabet = new Alphabet (alphabet_getter ());
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Caesar.encrypt (alphabet, letters, int.parse (key)));
+                Validate (alphabet, letters, t0, a, c);
+                text.set_text (Encryption.Shenon.encrypt (alphabet, letters, int.parse (t0), int.parse (a), int.parse (c)));
              }
              catch (OOBError ex) {
                  toast_spawner(ex.message);
@@ -59,10 +67,12 @@ namespace GCiphers {
         private void on_decrypt_click (Gtk.Button self) {
             try {
                 string letters = text.text.down ().replace (" ", "");
-                string key = key.get_buffer ().get_text ();
+                unowned string t0 = t0.get_buffer ().get_text ();
+                unowned string a = a.get_buffer ().get_text ();
+                unowned string c = c.get_buffer ().get_text ();
                 Alphabet alphabet = new Alphabet (alphabet_getter ());
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Caesar.decrypt (alphabet, letters, int.parse (key)));
+                Validate (alphabet, letters, t0, a, c);
+                text.set_text (Encryption.Shenon.decrypt (alphabet, letters, int.parse (t0), int.parse (a), int.parse (c)));
             }
             catch (OOBError ex) {
                 toast_spawner(ex.message);
@@ -72,16 +82,25 @@ namespace GCiphers {
             }
         }
 
-        public Caesar (spawn_toast toaster, get_alphabet alphabet_get) {
+        public Shenon (spawn_toast toaster, get_alphabet alphabet_get) {
             toast_spawner = toaster;
             alphabet_getter = alphabet_get;
         }
 
-        private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
+        private void Validate (Alphabet alphabet, string text, string t0, string a, string c) throws Errors.ValidateError {
             int num;
-            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
-            if (!int.try_parse (key, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("Key is not a valid number"));
-            if (num < 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Number is below zero"));
+            if (t0.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("T0 is empty"));
+            if (!int.try_parse (t0, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("T0 is not a valid number"));
+            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("T0 is below or equal zero"));
+            if (num > alphabet.length) throw new Errors.ValidateError.INCORRECT_NUMBER (_("T0 is bigger than alphabet length"));
+            if (a.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("A is empty"));
+            if (!int.try_parse (a, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("A is not a valid number"));
+            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("A is below or equal zero"));
+            if (num % 4 != 1) throw new Errors.ValidateError.INCORRECT_NUMBER (_("The remainder of A divided by 4 is not equal to 1"));
+            if (c.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("C is empty"));
+            if (!int.try_parse (c, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("C is not a valid number"));
+            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("C is below or equal zero"));
+            if (num % 2 == 0) throw new Errors.ValidateError.INCORRECT_NUMBER (_("C is not odd"));
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
             for (long i = 0; i < text.char_count (); i++){
                 try {

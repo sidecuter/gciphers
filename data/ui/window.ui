@@ -25,6 +25,7 @@
                       <object class="GtkScrolledWindow">
                         <child>
                           <object class="GtkListBox" id="list_rows">
+                            <signal name="row_selected" handler="on_row_selected"/>
                             <style>
                               <class name="navigation-sidebar"/>
                             </style>
@@ -48,17 +49,36 @@
                     <property name="show-title">True</property>
                     <property name="show-back-button">True</property>
                     <child type="start">
-                      <object class="GtkToggleButton" id="show_sidebar_button">
+                      <object class="GtkToggleButton">
+                        <signal name="toggled" handler="on_sidebar_button_toggle"/>
+                        <property name="active">true</property>
                         <property name="icon-name">view-dual-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Show sidebar</property>
                       </object>
                     </child>
                     <child type="end">
-                      <object class="GtkMenuButton">
-                        <property name="primary">True</property>
-                        <property name="icon-name">open-menu-symbolic</property>
-                        <property name="tooltip-text" translatable="yes">Menu</property>
-                        <property name="menu-model">primary_menu</property>
+                      <object class="GtkBox">
+                        <child>
+                          <object class="GtkDropDown" id="dropdown">
+                            <property name="model">
+                              <object class="GtkStringList">
+                                <items>
+                                  <item>ru</item>
+                                  <item>ru_full</item>
+                                  <item>en</item>
+                                </items>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkMenuButton">
+                            <property name="primary">True</property>
+                            <property name="icon-name">open-menu-symbolic</property>
+                            <property name="tooltip-text" translatable="yes">Menu</property>
+                            <property name="menu-model">primary_menu</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>

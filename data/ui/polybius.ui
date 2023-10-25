@@ -55,7 +55,8 @@
             <property name="margin-top">10</property>
             <property name="valign">start</property>
             <child>
-              <object class="GtkButton" id="encrypt">
+              <object class="GtkButton">
+                <signal name="clicked" handler="on_encrypt_click"/>
                 <property name="label" translatable="yes">Encrypt</property>
                 <property name="valign">center</property>
               </object>
@@ -67,7 +68,8 @@
               </object>
             </child>
             <child>
-              <object class="GtkButton" id="decrypt">
+              <object class="GtkButton">
+                <signal name="clicked" handler="on_decrypt_click"/>
                 <property name="label" translatable="yes">Decrypt</property>
                 <property name="valign">center</property>
               </object>

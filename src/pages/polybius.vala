@@ -24,6 +24,10 @@ namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/polybius.ui")]
     public class Polybius : Adw.Bin {
 
+        private unowned spawn_toast toast_spawner;
+
+        private unowned get_alphabet alphabet_getter;
+
         [GtkChild]
         private unowned Gtk.TextBuffer text;
 
@@ -33,60 +37,51 @@ namespace GCiphers {
         [GtkChild]
         private unowned Gtk.Entry columns;
 
-        [GtkChild]
-        private unowned Gtk.Button encrypt;
-
-        [GtkChild]
-        private unowned Gtk.Button decrypt;
-
-        private unowned spawn_toast toast_spawner;
-
-        public Polybius (spawn_toast toaster) {
-            toast_spawner = toaster;
+        [GtkCallback]
+        private void on_encrypt_click (Gtk.Button self) {
+            try {
+                string letters = text.text.down ()
+                    .replace (" ", "")
+                    .replace(".", "тчк")
+                    .replace(",", "зпт")
+                    .replace("-", "тире");;
+                unowned string row = rows.get_buffer ().get_text ();
+                unowned string column = columns.get_buffer ().get_text ();
+                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Validate_string(alphabet, letters, row, column);
+                text.set_text (Encryption.Polybius.encrypt (alphabet, letters, int.parse (row), int.parse (column)));
+             }
+             catch (OOBError ex) {
+                 toast_spawner(ex.message);
+             }
+             catch (Errors.ValidateError ex) {
+                 toast_spawner(ex.message);
+             }
         }
 
-        construct {
-            this.encrypt.clicked.connect (e => {
-                try {
-                   string letters = text.text.down ()
-                        .replace (" ", "")
-                        .replace(".", "тчк")
-                        .replace(",", "зпт")
-                        .replace("-", "тире");;
-                    unowned string row = rows.get_buffer ().get_text ();
-                    unowned string column = columns.get_buffer ().get_text ();
-                    Alphabets alphabets = new Alphabets ();
-                    Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate_string(alphabet, letters, row, column);
-                    text.set_text (Encryption.Polybius.encrypt (alphabet, letters, int.parse (row), int.parse (column)));
-                }
-                catch (OOBError ex) {
-                    toast_spawner(ex.message);
-                }
-                catch (Errors.ValidateError ex) {
-                    toast_spawner(ex.message);
-                }
-            });
+        [GtkCallback]
+        private void on_decrypt_click (Gtk.Button self) {
+            try {
+                string letters = text.text.down ().replace (" ", "");
+                unowned string row = rows.get_buffer ().get_text ();
+                unowned string column = columns.get_buffer ().get_text ();
+                int row_int;
+                int column_int;
+                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Validate_int(letters, row, column, out row_int, out column_int);
+                text.set_text (Encryption.Polybius.decrypt (alphabet, letters, row_int, column_int));
+            }
+            catch (OOBError ex) {
+                toast_spawner(ex.message);
+            }
+            catch (Errors.ValidateError ex) {
+                toast_spawner(ex.message);
+            }
+        }
 
-            this.decrypt.clicked.connect (e => {
-                try {
-                    string letters = text.text.down ().replace (" ", "");
-                    unowned string row = rows.get_buffer ().get_text ();
-                    unowned string column = columns.get_buffer ().get_text ();
-                    int row_int;
-                    int column_int;
-                    Alphabets alphabets = new Alphabets ();
-                    Alphabet alphabet = new Alphabet (alphabets.ru);
-                    Validate_int(letters, row, column, out row_int, out column_int);
-                    text.set_text (Encryption.Polybius.decrypt (alphabet, letters, row_int, column_int));
-                }
-                catch (OOBError ex) {
-                    toast_spawner(ex.message);
-                }
-                catch (Errors.ValidateError ex) {
-                    toast_spawner(ex.message);
-                }
-            });
+        public Polybius (spawn_toast toaster, get_alphabet alphabet_get) {
+            toast_spawner = toaster;
+            alphabet_getter = alphabet_get;
         }
 
         private void Validate_string (Alphabet alphabet, string text, string rows, string columns) throws Errors.ValidateError {
