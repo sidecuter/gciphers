@@ -14,6 +14,7 @@ src/pages/polybius.vala
 src/pages/trithemium.vala
 src/pages/vigenere.vala
 src/pages/vigenereii.vala
+src/pages/shenon.vala
 
 data/ui/window.ui
 data/ui/atbash.ui
@@ -32,5 +33,6 @@ src/encryption/polybius.vala
 src/encryption/trithemium.vala
 src/encryption/vigenere.vala
 src/encryption/vigenereii.vala
+src/encryption/shenon.vala
 src/encryption/alphabet.vala
 src/encryption/multi_alphabetic.vala
