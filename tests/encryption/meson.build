@@ -30,6 +30,10 @@ unit_tests = {
         meson.project_source_root() + '/src/encryption/vigenereii.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
+    'scrambler': files (
+        meson.project_source_root() + '/src/encryption/scrambler.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
     'shenon': files (
         meson.project_source_root() + '/src/encryption/shenon.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
