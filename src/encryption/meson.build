@@ -8,5 +8,6 @@ gciphers_sources += files(
     'belazo.vala',
     'vigenere.vala',
     'vigenereii.vala',
-    'shenon.vala'
+    'scrambler.vala',
+    'shenon.vala',
 )

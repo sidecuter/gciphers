@@ -37,6 +37,7 @@ namespace GCiphers {
             _("Belazo"),
             _("Vigenere"),
             _("VigenereII"),
+            _("Scrambler"),
             _("Shenon"),
         };
 
@@ -85,6 +86,7 @@ namespace GCiphers {
             pages.append (new GCiphers.Belazo (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Vigenere (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Vigenereii (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Scrambler (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Shenon (this.toaster, this.alphabet_getter));
             for (int i = 0; i < labels.length; i++) {
                 list_rows.append (new GCiphers.Menu_entry (labels[i]));
