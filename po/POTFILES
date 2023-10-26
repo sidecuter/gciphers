@@ -24,6 +24,7 @@ data/ui/polybius.ui
 data/ui/trithemium.ui
 data/ui/vigenere.ui
 data/ui/vigenereii.ui
+data/ui/shenon.ui
 data/gtk/help-overlay.ui
 
 src/encryption/atbash.vala

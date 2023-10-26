@@ -7,14 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-25 22:03+0300\n"
-"PO-Revision-Date: 2023-10-25 22:07+0300\n"
+"POT-Creation-Date: 2023-10-26 20:14+0300\n"
+"PO-Revision-Date: 2023-10-26 20:16+0300\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: Alexander Svobodov sidecuter@outlook.com\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.3.2\n"
 
 #: data/com.github.sidecuter.gciphers.metainfo.xml.in:3
@@ -213,19 +214,19 @@ msgstr "О GCiphers"
 
 #: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
 #: data/ui/polybius.ui:34 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
-#: data/ui/vigenereii.ui:21
+#: data/ui/vigenereii.ui:21 data/ui/shenon.ui:41
 msgid "Enter you text"
 msgstr "Введите фразу"
 
 #: data/ui/atbash.ui:41 data/ui/caesar.ui:47 data/ui/belazo.ui:47
 #: data/ui/polybius.ui:60 data/ui/trithemium.ui:41 data/ui/vigenere.ui:47
-#: data/ui/vigenereii.ui:47
+#: data/ui/vigenereii.ui:47 data/ui/shenon.ui:67
 msgid "Encrypt"
 msgstr "Зашифровать"
 
 #: data/ui/atbash.ui:54 data/ui/caesar.ui:60 data/ui/belazo.ui:60
 #: data/ui/polybius.ui:73 data/ui/trithemium.ui:54 data/ui/vigenere.ui:60
-#: data/ui/vigenereii.ui:60
+#: data/ui/vigenereii.ui:60 data/ui/shenon.ui:80
 msgid "Decrypt"
 msgstr "Расшифровать"
 
@@ -241,6 +242,18 @@ msgstr "Введите количество строк"
 #: data/ui/polybius.ui:27
 msgid "Enter columns count"
 msgstr "Введите количество столбцов"
+
+#: data/ui/shenon.ui:19
+msgid "Enter t0"
+msgstr "Введите t0"
+
+#: data/ui/shenon.ui:28
+msgid "Enter a"
+msgstr "Введите a"
+
+#: data/ui/shenon.ui:34
+msgid "Enter c"
+msgstr "Введите c"
 
 #: data/gtk/help-overlay.ui:11
 msgctxt "shortcut window"

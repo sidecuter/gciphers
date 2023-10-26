@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-25 22:03+0300\n"
+"POT-Creation-Date: 2023-10-26 20:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,19 +213,19 @@ msgstr ""
 
 #: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
 #: data/ui/polybius.ui:34 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
-#: data/ui/vigenereii.ui:21
+#: data/ui/vigenereii.ui:21 data/ui/shenon.ui:41
 msgid "Enter you text"
 msgstr ""
 
 #: data/ui/atbash.ui:41 data/ui/caesar.ui:47 data/ui/belazo.ui:47
 #: data/ui/polybius.ui:60 data/ui/trithemium.ui:41 data/ui/vigenere.ui:47
-#: data/ui/vigenereii.ui:47
+#: data/ui/vigenereii.ui:47 data/ui/shenon.ui:67
 msgid "Encrypt"
 msgstr ""
 
 #: data/ui/atbash.ui:54 data/ui/caesar.ui:60 data/ui/belazo.ui:60
 #: data/ui/polybius.ui:73 data/ui/trithemium.ui:54 data/ui/vigenere.ui:60
-#: data/ui/vigenereii.ui:60
+#: data/ui/vigenereii.ui:60 data/ui/shenon.ui:80
 msgid "Decrypt"
 msgstr ""
 
@@ -240,6 +240,18 @@ msgstr ""
 
 #: data/ui/polybius.ui:27
 msgid "Enter columns count"
+msgstr ""
+
+#: data/ui/shenon.ui:19
+msgid "Enter t0"
+msgstr ""
+
+#: data/ui/shenon.ui:28
+msgid "Enter a"
+msgstr ""
+
+#: data/ui/shenon.ui:34
+msgid "Enter c"
 msgstr ""
 
 #: data/gtk/help-overlay.ui:11
