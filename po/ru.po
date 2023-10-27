@@ -7,15 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 20:14+0300\n"
-"PO-Revision-Date: 2023-10-26 20:16+0300\n"
+"POT-Creation-Date: 2023-10-27 12:56+0300\n"
+"PO-Revision-Date: 2023-10-27 13:01+0300\n"
 "Last-Translator: \n"
 "Language-Team: Alexander Svobodov sidecuter@outlook.com\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.3.2\n"
 
 #: data/com.github.sidecuter.gciphers.metainfo.xml.in:3
@@ -59,19 +60,24 @@ msgid "VigenereII"
 msgstr "ВиженерII"
 
 #: src/window.vala:40
+msgid "Scrambler"
+msgstr "Скрэмблер"
+
+#: src/window.vala:41
 msgid "Shenon"
 msgstr "Шенон"
 
 #: src/pages/atbash.vala:76 src/pages/caesar.vala:85 src/pages/belazo.vala:82
 #: src/pages/polybius.vala:95 src/pages/polybius.vala:114
 #: src/pages/trithemium.vala:76 src/pages/vigenere.vala:83
-#: src/pages/vigenereii.vala:83 src/pages/shenon.vala:104
+#: src/pages/vigenereii.vala:83 src/pages/scrambler.vala:115
+#: src/pages/shenon.vala:104
 msgid "Text field is empty"
 msgstr "Фраза отсутствует"
 
 #: src/pages/atbash.vala:82 src/pages/caesar.vala:91
 #: src/pages/polybius.vala:101 src/pages/trithemium.vala:82
-#: src/pages/shenon.vala:110
+#: src/pages/scrambler.vala:121 src/pages/shenon.vala:110
 msgid "No such letter in alphabet"
 msgstr "Нет такой буквы в алфавите"
 
@@ -144,6 +150,54 @@ msgstr "Ключ содержит некорректный символ"
 msgid "No such phrase letter in alphabet"
 msgstr "Фраза содержит некорректный символ"
 
+#: src/pages/scrambler.vala:99
+msgid "First scrambler is empty"
+msgstr "Первый скрэмблер пуст"
+
+#: src/pages/scrambler.vala:101
+msgid "First scrambler is not a valid number"
+msgstr "Первый скрэмблер не является корректным числом"
+
+#: src/pages/scrambler.vala:102
+msgid "First scrambler can contain only 1 or 0"
+msgstr "Первый скрэмблер может содержать только 1 или 0"
+
+#: src/pages/scrambler.vala:103
+msgid "Second scrambler is empty"
+msgstr "Второй скрэмблер пуст"
+
+#: src/pages/scrambler.vala:105
+msgid "Second scrambler is not a valid number"
+msgstr "Второй скрэмблер не является корректным числом"
+
+#: src/pages/scrambler.vala:106
+msgid "Second scrambler can contain only 1 or 0"
+msgstr "Второй скрэмблер может содержать только 1 или 0"
+
+#: src/pages/scrambler.vala:107
+msgid "First key is empty"
+msgstr "Первый ключ пуст"
+
+#: src/pages/scrambler.vala:109
+msgid "First key is not a valid number"
+msgstr "Первый ключ не является корректным числом"
+
+#: src/pages/scrambler.vala:110
+msgid "First key can contain only 1 or 0"
+msgstr "Первый ключ может содержать только 1 или 0"
+
+#: src/pages/scrambler.vala:111
+msgid "Second key is empty"
+msgstr "Второй скрэмблер пуст"
+
+#: src/pages/scrambler.vala:113
+msgid "Second key is not a valid number"
+msgstr "Второй ключ не является корректным числом"
+
+#: src/pages/scrambler.vala:114
+msgid "Second key can contain only 1 or 0"
+msgstr "Второй ключ может содержать только 1 или 0"
+
 #: src/pages/shenon.vala:92
 msgid "T0 is empty"
 msgstr "T0 отсутствует"
@@ -214,19 +268,19 @@ msgstr "О GCiphers"
 
 #: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
 #: data/ui/polybius.ui:34 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
-#: data/ui/vigenereii.ui:21 data/ui/shenon.ui:41
+#: data/ui/vigenereii.ui:21 data/ui/scrambler.ui:53 data/ui/shenon.ui:41
 msgid "Enter you text"
 msgstr "Введите фразу"
 
 #: data/ui/atbash.ui:41 data/ui/caesar.ui:47 data/ui/belazo.ui:47
 #: data/ui/polybius.ui:60 data/ui/trithemium.ui:41 data/ui/vigenere.ui:47
-#: data/ui/vigenereii.ui:47 data/ui/shenon.ui:67
+#: data/ui/vigenereii.ui:47 data/ui/scrambler.ui:79 data/ui/shenon.ui:67
 msgid "Encrypt"
 msgstr "Зашифровать"
 
 #: data/ui/atbash.ui:54 data/ui/caesar.ui:60 data/ui/belazo.ui:60
 #: data/ui/polybius.ui:73 data/ui/trithemium.ui:54 data/ui/vigenere.ui:60
-#: data/ui/vigenereii.ui:60 data/ui/shenon.ui:80
+#: data/ui/vigenereii.ui:60 data/ui/scrambler.ui:92 data/ui/shenon.ui:80
 msgid "Decrypt"
 msgstr "Расшифровать"
 
@@ -242,6 +296,22 @@ msgstr "Введите количество строк"
 #: data/ui/polybius.ui:27
 msgid "Enter columns count"
 msgstr "Введите количество столбцов"
+
+#: data/ui/scrambler.ui:19
+msgid "Enter first scrambler"
+msgstr "Введите первый скрэмблер"
+
+#: data/ui/scrambler.ui:27
+msgid "Enter first key"
+msgstr "Введите первый ключ"
+
+#: data/ui/scrambler.ui:38
+msgid "Enter second scrambler"
+msgstr "Введите второй скрэмблер"
+
+#: data/ui/scrambler.ui:46
+msgid "Enter second key"
+msgstr "Введите второй ключ"
 
 #: data/ui/shenon.ui:19
 msgid "Enter t0"
@@ -272,7 +342,8 @@ msgstr "Закрыть"
 
 #: src/encryption/polybius.vala:31
 msgid "Columns*Rows must be bigger than length of alphabet"
-msgstr "Произведение количества строк на столбцов должно превышать длину алфавит"
+msgstr ""
+"Произведение количества строк на столбцов должно превышать длину алфавита"
 
 #: src/encryption/polybius.vala:61
 msgid "No such letter in table"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 20:14+0300\n"
+"POT-Creation-Date: 2023-10-27 12:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,19 +58,24 @@ msgid "VigenereII"
 msgstr ""
 
 #: src/window.vala:40
+msgid "Scrambler"
+msgstr ""
+
+#: src/window.vala:41
 msgid "Shenon"
 msgstr ""
 
 #: src/pages/atbash.vala:76 src/pages/caesar.vala:85 src/pages/belazo.vala:82
 #: src/pages/polybius.vala:95 src/pages/polybius.vala:114
 #: src/pages/trithemium.vala:76 src/pages/vigenere.vala:83
-#: src/pages/vigenereii.vala:83 src/pages/shenon.vala:104
+#: src/pages/vigenereii.vala:83 src/pages/scrambler.vala:115
+#: src/pages/shenon.vala:104
 msgid "Text field is empty"
 msgstr ""
 
 #: src/pages/atbash.vala:82 src/pages/caesar.vala:91
 #: src/pages/polybius.vala:101 src/pages/trithemium.vala:82
-#: src/pages/shenon.vala:110
+#: src/pages/scrambler.vala:121 src/pages/shenon.vala:110
 msgid "No such letter in alphabet"
 msgstr ""
 
@@ -143,6 +148,54 @@ msgstr ""
 msgid "No such phrase letter in alphabet"
 msgstr ""
 
+#: src/pages/scrambler.vala:99
+msgid "First scrambler is empty"
+msgstr ""
+
+#: src/pages/scrambler.vala:101
+msgid "First scrambler is not a valid number"
+msgstr ""
+
+#: src/pages/scrambler.vala:102
+msgid "First scrambler can contain only 1 or 0"
+msgstr ""
+
+#: src/pages/scrambler.vala:103
+msgid "Second scrambler is empty"
+msgstr ""
+
+#: src/pages/scrambler.vala:105
+msgid "Second scrambler is not a valid number"
+msgstr ""
+
+#: src/pages/scrambler.vala:106
+msgid "Second scrambler can contain only 1 or 0"
+msgstr ""
+
+#: src/pages/scrambler.vala:107
+msgid "First key is empty"
+msgstr ""
+
+#: src/pages/scrambler.vala:109
+msgid "First key is not a valid number"
+msgstr ""
+
+#: src/pages/scrambler.vala:110
+msgid "First key can contain only 1 or 0"
+msgstr ""
+
+#: src/pages/scrambler.vala:111
+msgid "Second key is empty"
+msgstr ""
+
+#: src/pages/scrambler.vala:113
+msgid "Second key is not a valid number"
+msgstr ""
+
+#: src/pages/scrambler.vala:114
+msgid "Second key can contain only 1 or 0"
+msgstr ""
+
 #: src/pages/shenon.vala:92
 msgid "T0 is empty"
 msgstr ""
@@ -213,19 +266,19 @@ msgstr ""
 
 #: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
 #: data/ui/polybius.ui:34 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
-#: data/ui/vigenereii.ui:21 data/ui/shenon.ui:41
+#: data/ui/vigenereii.ui:21 data/ui/scrambler.ui:53 data/ui/shenon.ui:41
 msgid "Enter you text"
 msgstr ""
 
 #: data/ui/atbash.ui:41 data/ui/caesar.ui:47 data/ui/belazo.ui:47
 #: data/ui/polybius.ui:60 data/ui/trithemium.ui:41 data/ui/vigenere.ui:47
-#: data/ui/vigenereii.ui:47 data/ui/shenon.ui:67
+#: data/ui/vigenereii.ui:47 data/ui/scrambler.ui:79 data/ui/shenon.ui:67
 msgid "Encrypt"
 msgstr ""
 
 #: data/ui/atbash.ui:54 data/ui/caesar.ui:60 data/ui/belazo.ui:60
 #: data/ui/polybius.ui:73 data/ui/trithemium.ui:54 data/ui/vigenere.ui:60
-#: data/ui/vigenereii.ui:60 data/ui/shenon.ui:80
+#: data/ui/vigenereii.ui:60 data/ui/scrambler.ui:92 data/ui/shenon.ui:80
 msgid "Decrypt"
 msgstr ""
 
@@ -240,6 +293,22 @@ msgstr ""
 
 #: data/ui/polybius.ui:27
 msgid "Enter columns count"
+msgstr ""
+
+#: data/ui/scrambler.ui:19
+msgid "Enter first scrambler"
+msgstr ""
+
+#: data/ui/scrambler.ui:27
+msgid "Enter first key"
+msgstr ""
+
+#: data/ui/scrambler.ui:38
+msgid "Enter second scrambler"
+msgstr ""
+
+#: data/ui/scrambler.ui:46
+msgid "Enter second key"
 msgstr ""
 
 #: data/ui/shenon.ui:19
