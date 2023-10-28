@@ -32,7 +32,8 @@ namespace Encryption {
         public Alphabets () {
             Object (
                 ru: "абвгдежзийклмнопрстуфхцчшщъыьэюя",
-                ru_full: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+                ru_full: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
+                en: "abcdefghijklmnopqrstuvwxyz"
             );
         }
     }
