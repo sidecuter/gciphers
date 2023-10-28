@@ -28,4 +28,3 @@ namespace Errors {
         WRONG_STRING_LENGTH
     }
 }
-

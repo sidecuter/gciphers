@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
- namespace Encryption {
+namespace Encryption {
     class Trithemium : Object {
         public static string encrypt (Encryption.Alphabet alphabet, string phrase)
             throws Encryption.OOBError
@@ -45,4 +45,3 @@
         }
     }
 }
-

@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
- namespace Encryption {
+namespace Encryption {
     class Generator : Object {
         private int state { get; set; }
         private int a { get; set; }
@@ -84,4 +84,4 @@
             return result;
         }
     }
- }
+}
