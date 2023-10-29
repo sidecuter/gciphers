@@ -25,6 +25,7 @@ namespace Errors {
         NUMBER_BELOW_ZERO,
         EMPTY_STRING,
         INCORRECT_NUMBER,
-        WRONG_STRING_LENGTH
+        WRONG_STRING_LENGTH,
+        NOT_STATED,
     }
 }

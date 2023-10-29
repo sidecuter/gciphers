@@ -201,24 +201,24 @@ namespace Encryption {
             return number.to_string ().length;
         }
 
-        private static List<Matrix> get_letters (Alphabet alphabet, string letters) 
+        private static List<Matrix> get_letters (Alphabet alphabet, string letters, int n) 
         throws Encryption.OOBError {
             int count;
             if (letters.char_count () % 3 == 0) count = letters.char_count () / 3;
             else count = letters.char_count () / 3 + 1;
             List<Matrix> result = new List<Matrix> ();
-            int[,] buffer = new int [3, 1];
+            int[,] buffer = new int [n, 1];
             for (int i = 0; i < count; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (i != count - 1 && i * count + j < letters.char_count ())
-                        buffer[j, 1] = alphabet.get_letter_index (
-                            letters.get_char (
-                                letters.index_of_nth_char (i * count + j)
-                            )
-                        ) + 1;
-                    else buffer[j, 1] = 1;
+                for (int j = 0; j < n; j++) {
+                    if (i != count - 1 && i * count + j >= letters.char_count ())
+                    buffer[j, 0] = 1;
+                    else buffer[j, 0] = alphabet.get_letter_index (
+                        letters.get_char (
+                            letters.index_of_nth_char (i * count + j)
+                        )
+                    ) + 1;
                 }
-                result.append (new Matrix.from_int (3, 1, buffer));
+                result.append (new Matrix.from_int (n, 1, buffer));
             }
             return result;
         }
@@ -235,7 +235,7 @@ namespace Encryption {
             string result = "";
             string buffer = "";
             try {
-                var letters = MatrixCipher.get_letters (alphabet, phrase);
+                List<Matrix> letters = MatrixCipher.get_letters (alphabet, phrase, matr.rows);
                 foreach (var letter_m in letters) {
                     result_m.append (matr.mult (letter_m));
                 }
@@ -247,7 +247,7 @@ namespace Encryption {
                 throw new OOBError.CODE_PASSTHROUGH (ex.message);
             }
             int count = MatrixCipher.count_digits (
-                (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * 3
+                (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * matr.rows
             );
             string format = @"%0$(count)i";
             foreach (var letter_m in result_m) {

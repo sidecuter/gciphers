@@ -39,6 +39,7 @@ subdir('src')
 
 gciphers_deps = [
   dependency('gtk4'),
+  dependency('gee-0.8'),
   dependency('libadwaita-1', version: '>= 1.4'),
   meson.get_compiler('c').find_library('m', required : false),
 ]
