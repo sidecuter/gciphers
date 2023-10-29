@@ -203,18 +203,18 @@ namespace Encryption {
 
         private static List<Matrix> get_letters (Alphabet alphabet, string letters, int n) 
         throws Encryption.OOBError {
+            int char_count = letters.char_count ();
             int count;
-            if (letters.char_count () % 3 == 0) count = letters.char_count () / 3;
-            else count = letters.char_count () / 3 + 1;
+            if (char_count % 3 == 0) count = char_count / 3;
+            else count = char_count / 3 + 1;
             List<Matrix> result = new List<Matrix> ();
             int[,] buffer = new int [n, 1];
             for (int i = 0; i < count; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (i != count - 1 && i * count + j >= letters.char_count ())
-                    buffer[j, 0] = 1;
+                    if (i == count - 1 && i * n + j >= char_count) buffer[j, 0] = 1;
                     else buffer[j, 0] = alphabet.get_letter_index (
                         letters.get_char (
-                            letters.index_of_nth_char (i * count + j)
+                            letters.index_of_nth_char (i * n + j)
                         )
                     ) + 1;
                 }
