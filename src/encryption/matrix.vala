@@ -246,7 +246,9 @@ namespace Encryption {
             catch (MatrixError ex) {
                 throw new OOBError.CODE_PASSTHROUGH (ex.message);
             }
-            int count = MatrixCipher.count_digits ((int)matr.max());
+            int count = MatrixCipher.count_digits (
+                (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * 3
+            );
             string format = @"%0$(count)i";
             foreach (var letter_m in result_m) {
                 for (int i = 0; i < letter_m.rows; i++) {

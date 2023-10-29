@@ -88,7 +88,7 @@
             </child>
             <child>
               <object class="GtkButton">
-                <signal name="clicked" handler="on_encrypt_click"/>
+                <signal name="clicked" handler="on_decrypt_click"/>
                 <property name="label" translatable="yes">Decrypt</property>
                 <property name="valign">center</property>
               </object>

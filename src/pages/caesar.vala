@@ -41,7 +41,7 @@ namespace GCiphers {
                     .replace (" ", "")
                     .replace(".", "тчк")
                     .replace(",", "зпт")
-                    .replace("-", "тире");;
+                    .replace("-", "тире");
                 string key = key.get_buffer ().get_text ();
                 Alphabet alphabet = new Alphabet (alphabet_getter ());
                 Validate(alphabet, letters, key);
