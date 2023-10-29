@@ -29,6 +29,10 @@ unit_tests = {
         meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
+    'multi_alphabetic': files (
+        meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
     'vigenereii': files (
         meson.project_source_root() + '/src/encryption/vigenereii.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
