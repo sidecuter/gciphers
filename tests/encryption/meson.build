@@ -1,4 +1,7 @@
 unit_tests = {
+    'alphabet': files (
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
     'atbash': files (
         meson.project_source_root() + '/src/encryption/atbash.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
