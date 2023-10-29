@@ -53,17 +53,15 @@ namespace Encryption {
         public unichar get_letter_by_index (int index) throws Encryption.OOBError {
             if (index > alphabet.char_count ())
                 throw new Encryption.OOBError.CODE_OUT (_("Index bigger than string size"));
-            for (int i = 0; i < alphabet.char_count (); i++) {
-                if (index == i) return alphabet.get_char (alphabet.index_of_nth_char (i));
-            }
-            throw new Encryption.OOBError.CODE_NOT_FOUND (_("Index not found"));
+            if (index < 0) throw new Encryption.OOBError.CODE_OUT (_("Index can't be negative"));
+            unichar result = alphabet.get_char (alphabet.index_of_nth_char (index));
+            return result;
         }
 
         public int get_letter_index (unichar letter) throws Encryption.OOBError {
-            for (int i = 0; i < alphabet.char_count (); i++) {
-                if ( alphabet.get_char (alphabet.index_of_nth_char (i)) == letter) return i;
-            }
-            throw new Encryption.OOBError.CODE_NOT_FOUND (_("Index not found"));
+            int result = alphabet.index_of_char(letter);
+            if (result == -1) throw new Encryption.OOBError.CODE_NOT_FOUND (_("Index not found"));
+            return result;
         }
     }
 }
