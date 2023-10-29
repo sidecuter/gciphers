@@ -21,7 +21,8 @@
 namespace Encryption {
     errordomain OOBError {
         CODE_OUT,
-        CODE_NOT_FOUND
+        CODE_NOT_FOUND,
+        CODE_PASSTHROUGH,
     }
 
     class Alphabets : Object {

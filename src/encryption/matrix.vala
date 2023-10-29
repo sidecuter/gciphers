@@ -36,10 +36,18 @@ namespace Encryption {
                 rows: rows,
                 columns: columns
             );
+            elements = elems.copy ();
+        }
+
+        public Matrix.from_int (int rows, int columns, int[,] elems) {
+            Object (
+                rows: rows,
+                columns: columns
+            );
             elements = new double[rows, columns];
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
-                    elements[i, j] = elems[i , j];
+                    elements[i, j] = (double) elems[i, j];
                 }
             }
         }
@@ -175,6 +183,88 @@ namespace Encryption {
                 }
             }
             return new Matrix (this.rows, m.columns, elems);
+        }
+
+        public double max () {
+            double max = -double.MAX;
+            for (int i = 0; i < this.rows; i++) {
+                for (int j = 0; j < this.columns; j++) {
+                    if (max < elements[i , j]) max = elements[i , j];
+                }
+            }
+            return max;
+        }
+    }
+
+    class MatrixCipher : Object {
+        private static int count_digits (int number) {
+            return number.to_string ().length;
+        }
+
+        private static List<Matrix> get_letters (Alphabet alphabet, string letters) 
+        throws Encryption.OOBError {
+            int count;
+            if (letters.char_count () % 3 == 0) count = letters.char_count () / 3;
+            else count = letters.char_count () / 3 + 1;
+            List<Matrix> result = new List<Matrix> ();
+            int[,] buffer = new int [3, 1];
+            for (int i = 0; i < count; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (i != count - 1 && i * count + j < letters.char_count ())
+                        buffer[j, 1] = alphabet.get_letter_index (
+                            letters.get_char (
+                                letters.index_of_nth_char (i * count + j)
+                            )
+                        ) + 1;
+                    else buffer[j, 1] = 1;
+                }
+                result.append (new Matrix.from_int (3, 1, buffer));
+            }
+            return result;
+        }
+
+        public static string encrypt (
+            Encryption.Alphabet alphabet,
+            string phrase,
+            int r,
+            int c,
+            int[,] elems
+        ) throws Encryption.OOBError {
+            Matrix matr = new Matrix.from_int (r, c, elems);
+            List<Matrix> result_m = new List<Matrix> ();
+            string result = "";
+            string buffer = "";
+            try {
+                var letters = MatrixCipher.get_letters (alphabet, phrase);
+                foreach (var letter_m in letters) {
+                    result_m.append (matr.mult (letter_m));
+                }
+            }
+            catch (Encryption.OOBError ex) {
+                throw ex;
+            }
+            catch (MatrixError ex) {
+                throw new OOBError.CODE_PASSTHROUGH (ex.message);
+            }
+            int count = MatrixCipher.count_digits ((int)matr.max());
+            string format = @"%0$(count)i";
+            foreach (var letter_m in result_m) {
+                for (int i = 0; i < letter_m.rows; i++) {
+                    buffer = ((int)letter_m.elements[i, 0]).to_string (format);
+                    result = @"$result$buffer";
+                }
+            }
+            return result;
+        }
+
+        public static string decrypt (
+            Encryption.Alphabet alphabet,
+            string phrase,
+            int r,
+            int c,
+            int[,] elems
+        ) throws Encryption.OOBError {
+            return "";
         }
     }
 }
