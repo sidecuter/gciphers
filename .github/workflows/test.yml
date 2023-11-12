@@ -14,11 +14,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup ubuntu noble apt-repos
         run: |
-          sed -i 's/jammy/noble/g' /etc/apt/sources.list
+          add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ noble main restricted universe multiverse"
+          add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ noble main restricted universe multiverse"
       - name: Install deps
         run: |
-          apt-get -y update && \
-          apt-get -y install libgtk-4-dev valac meson \
+          apt-get -t noble -y update && \
+          apt-get -t noble -y install libgtk-4-dev valac meson \
           ninja-build libgee-0.8-dev libadwaita-1-dev \
           gettext desktop-file-utils appstream libxml2-utils
       - name: Setup project
