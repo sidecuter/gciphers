@@ -243,21 +243,6 @@ namespace Encryption {
                 if ((i + 1) % n == 0)
                     result.append (new Matrix.from_int (n, 1, matr_buffer));
             }
-            /*  for (int i = 0; i < phrase.char_count () / n / avg_length; i++) {
-                for (int j = 0; j < n; j++) {
-                    buffer = "";
-                    for (int k = 0; k < avg_length; k++) {
-                        buffer = string.join("", 
-                            buffer,
-                            phrase.get_char (
-                                phrase.index_of_nth_char (i * n + j * avg_length + k)
-                            ).to_string ()
-                        );
-                    }
-                    matr_buffer[j, 0] = int.parse (buffer);
-                }
-                result.append (new Matrix.from_int (n, 1, matr_buffer));
-            }  */
             return result;
         }
 
