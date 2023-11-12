@@ -54,38 +54,34 @@ namespace Encryption {
 
         public double det () throws MatrixError {
             if (this.rows != this.columns)
-                throw new MatrixError.CODE_IS_NOT_N_X_N ("This matrix is not square");
+                throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
             if (this.rows == 1) return this.elements[0, 0];
             Matrix self = new Matrix(this.rows, this.columns, this.elements);
             double mnoj;
             double p = 1.0;
-            bool isNull = false;
             if (self.elements[0, 0] == 0) {
                 try {
                     self.swap_zero ();
                     p *= -1;
                 }
                 catch (MatrixError err) {
-                    isNull = true;
+                    return 0;
                 }
             }
-            if (!isNull) {
-                for (int i = 1; i < self.rows; i++) {
-                    if (self.elements[i, 0] != 0) {
-                        mnoj = self.elements[i, 0] / self.elements[0, 0];
-                        for (int j = 0; j < self.columns; j++) 
-                            self.elements[i, j] -= self.elements[0, j] * mnoj;
-                    }
+            for (int i = 1; i < self.rows; i++) {
+                if (self.elements[i, 0] != 0) {
+                    mnoj = self.elements[i, 0] / self.elements[0, 0];
+                    for (int j = 0; j < self.columns; j++) 
+                        self.elements[i, j] -= self.elements[0, j] * mnoj;
                 }
-                p *= self.elements[0, 0] * self.get_minor (0, 0).det ();
             }
-            else p = 0;
+            p *= self.elements[0, 0] * self.get_minor (0, 0).det ();
             return p;
         }
 
         public Matrix trasnp () throws MatrixError {
             if (this.rows != this.columns)
-                throw new MatrixError.CODE_IS_NOT_N_X_N ("This matrix is not square");
+                throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
             double tmp;
             for (int i = 0; i < this.rows; i++)
             {
@@ -101,7 +97,7 @@ namespace Encryption {
 
         public Matrix get_minor (int iski, int iskj) throws MatrixError {
             if (this.rows != this.columns)
-                throw new MatrixError.CODE_IS_NOT_N_X_N ("This matrix is not square");
+                throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
             int r = this.rows - 1;
             int c = this.columns - 1;
             double[,] elems = new double[r,c];
@@ -140,10 +136,10 @@ namespace Encryption {
 
         public Matrix reverse () throws MatrixError {
             if (this.rows != this.columns)
-                throw new MatrixError.CODE_IS_NOT_N_X_N ("This matrix is not square");
+                throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
             double det = this.det ();
             if (det == 0) 
-                throw new MatrixError.CODE_ZERO_DETERMINANT ("Determinant is zero");
+                throw new MatrixError.CODE_ZERO_DETERMINANT (_("Determinant is zero"));
             int r = this.rows;
             int c = this.columns;
             double[,] elems = new double[r, c];
@@ -161,7 +157,7 @@ namespace Encryption {
 
         public Matrix mult (Matrix m) throws MatrixError.CODE_SIZE_NOT_MATCH {
             if (this.columns != m.rows) 
-                throw new MatrixError.CODE_SIZE_NOT_MATCH ("m1 != n2");
+                throw new MatrixError.CODE_SIZE_NOT_MATCH (_("m1 != n2"));
             double sum;
             double[,] elems = new double[this.rows, m.columns];
             for (int i = 0; i < this.rows; i++) {
@@ -228,7 +224,7 @@ namespace Encryption {
             int[,] matr_buffer = new int[n, 1];
             List<Matrix> result = new List<Matrix> ();
             if ((phrase.char_count () / avg_length) % n != 0)
-                throw new OOBError.CODE_OUT ("Not a valid phrase");
+                throw new OOBError.CODE_OUT (_("Not a valid phrase"));
             for (int i = 0; i < phrase.char_count () / avg_length; i++) {
                 buffer = "";
                 for (int j = 0; j < avg_length; j++) {
@@ -258,7 +254,7 @@ namespace Encryption {
             string result = "";
             string buffer = "";
             try {
-                if (!MatrixCipher.check_det (matr)) throw new OOBError.CODE_PASSTHROUGH ("Determinant is zero");
+                if (!MatrixCipher.check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
                 List<Matrix> letters = MatrixCipher.get_letters (alphabet, phrase, matr.rows);
                 foreach (var letter_m in letters) {
                     result_m.append (matr.mult (letter_m));
@@ -295,7 +291,7 @@ namespace Encryption {
             string buffer = "";
             double temp;
             try {
-                if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH ("Determinant is zero");
+                if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
                 int count = MatrixCipher.count_digits (
                     (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * matr.rows
                 );
@@ -308,7 +304,7 @@ namespace Encryption {
                     for (int i = 0; i < buff.rows; i++) {
                         temp = Math.round (buff.elements[i, 0] * 100) / 100;
                         if ((double) ((int) temp) != temp)
-                            throw new Encryption.OOBError.CODE_PASSTHROUGH ("Phrase contains wrong encrypted components");
+                            throw new Encryption.OOBError.CODE_PASSTHROUGH (_("Phrase contains wrong encrypted components"));
                         buffer = alphabet.get_letter_by_index (((int) temp) - 1).to_string ();
                         result = @"$result$buffer";
                     }

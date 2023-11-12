@@ -13,6 +13,7 @@ src/pages/pages_errors.vala
 src/pages/polybius.vala
 src/pages/trithemium.vala
 src/pages/vigenere.vala
+src/pages/matrix.vala
 src/pages/vigenereii.vala
 src/pages/scrambler.vala
 src/pages/shenon.vala
@@ -24,6 +25,7 @@ data/ui/belazo.ui
 data/ui/polybius.ui
 data/ui/trithemium.ui
 data/ui/vigenere.ui
+data/ui/matrix.ui
 data/ui/vigenereii.ui
 data/ui/scrambler.ui
 data/ui/shenon.ui
@@ -35,6 +37,7 @@ src/encryption/belazo.vala
 src/encryption/polybius.vala
 src/encryption/trithemium.vala
 src/encryption/vigenere.vala
+src/encryption/matrix.vala
 src/encryption/vigenereii.vala
 src/encryption/scrambler.vala
 src/encryption/shenon.vala
