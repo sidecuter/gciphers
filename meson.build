@@ -38,8 +38,11 @@ gciphers_sources = files (
 subdir('src')
 
 gciphers_deps = [
-  dependency('gtk4'),
+  dependency('gtk4', version: '>= 4.12'),
+  dependency('gio-2.0', version: '>= 2.78'),
+  dependency('gee-0.8', version: '>= 0.20'),
   dependency('libadwaita-1', version: '>= 1.4'),
+  meson.get_compiler('c').find_library('m', required : false),
 ]
 
 executable(

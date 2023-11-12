@@ -47,7 +47,7 @@ namespace GCiphers {
                     .replace (" ", "")
                     .replace(".", "тчк")
                     .replace(",", "зпт")
-                    .replace("-", "тире");;
+                    .replace("-", "тире");
                 unowned string t0 = t0.get_buffer ().get_text ();
                 unowned string a = a.get_buffer ().get_text ();
                 unowned string c = c.get_buffer ().get_text ();

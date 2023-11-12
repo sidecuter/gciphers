@@ -38,7 +38,7 @@ namespace GCiphers {
                     .replace (" ", "")
                     .replace(".", "тчк")
                     .replace(",", "зпт")
-                    .replace("-", "тире");;
+                    .replace("-", "тире");
                 Alphabet alphabet = new Alphabet (alphabet_getter ());
                 Validate(alphabet, letters);
                 text.set_text (Encryption.Trithemium.encrypt (alphabet, letters));

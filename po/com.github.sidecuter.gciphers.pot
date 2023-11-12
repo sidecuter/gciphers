@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-27 12:56+0300\n"
+"POT-Creation-Date: 2023-11-12 12:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,28 +54,34 @@ msgid "Vigenere"
 msgstr ""
 
 #: src/window.vala:39
-msgid "VigenereII"
+msgid "Matrix"
 msgstr ""
 
 #: src/window.vala:40
-msgid "Scrambler"
+msgid "VigenereII"
 msgstr ""
 
 #: src/window.vala:41
+msgid "Scrambler"
+msgstr ""
+
+#: src/window.vala:42
 msgid "Shenon"
 msgstr ""
 
 #: src/pages/atbash.vala:76 src/pages/caesar.vala:85 src/pages/belazo.vala:82
 #: src/pages/polybius.vala:95 src/pages/polybius.vala:114
 #: src/pages/trithemium.vala:76 src/pages/vigenere.vala:83
-#: src/pages/vigenereii.vala:83 src/pages/scrambler.vala:115
+#: src/pages/matrix.vala:157 src/pages/matrix.vala:170
+#: src/pages/vigenereii.vala:83 src/pages/scrambler.vala:142
 #: src/pages/shenon.vala:104
 msgid "Text field is empty"
 msgstr ""
 
 #: src/pages/atbash.vala:82 src/pages/caesar.vala:91
 #: src/pages/polybius.vala:101 src/pages/trithemium.vala:82
-#: src/pages/scrambler.vala:121 src/pages/shenon.vala:110
+#: src/pages/matrix.vala:163 src/pages/scrambler.vala:148
+#: src/pages/shenon.vala:110
 msgid "No such letter in alphabet"
 msgstr ""
 
@@ -124,7 +130,7 @@ msgstr ""
 msgid "Columns count is below or equal zero"
 msgstr ""
 
-#: src/pages/polybius.vala:117
+#: src/pages/polybius.vala:117 src/pages/matrix.vala:173
 msgid "Phrase should be only consist of numbers"
 msgstr ""
 
@@ -148,51 +154,67 @@ msgstr ""
 msgid "No such phrase letter in alphabet"
 msgstr ""
 
-#: src/pages/scrambler.vala:99
+#: src/pages/matrix.vala:130 src/pages/matrix.vala:146
+msgid "n is empty"
+msgstr ""
+
+#: src/pages/matrix.vala:131 src/pages/matrix.vala:147
+msgid "n is not a valid number"
+msgstr ""
+
+#: src/pages/matrix.vala:132
+msgid "n is below or equal one"
+msgstr ""
+
+#: src/pages/matrix.vala:156
+msgid "Matrix not determined"
+msgstr ""
+
+#: src/pages/scrambler.vala:126
 msgid "First scrambler is empty"
 msgstr ""
 
-#: src/pages/scrambler.vala:101
+#: src/pages/scrambler.vala:128
 msgid "First scrambler is not a valid number"
 msgstr ""
 
-#: src/pages/scrambler.vala:102
+#: src/pages/scrambler.vala:129
 msgid "First scrambler can contain only 1 or 0"
 msgstr ""
 
-#: src/pages/scrambler.vala:103
+#: src/pages/scrambler.vala:130
 msgid "Second scrambler is empty"
 msgstr ""
 
-#: src/pages/scrambler.vala:105
+#: src/pages/scrambler.vala:132
 msgid "Second scrambler is not a valid number"
 msgstr ""
 
-#: src/pages/scrambler.vala:106
+#: src/pages/scrambler.vala:133
 msgid "Second scrambler can contain only 1 or 0"
 msgstr ""
 
-#: src/pages/scrambler.vala:107
+#: src/pages/scrambler.vala:134
 msgid "First key is empty"
 msgstr ""
 
-#: src/pages/scrambler.vala:109
+#: src/pages/scrambler.vala:136
 msgid "First key is not a valid number"
 msgstr ""
 
-#: src/pages/scrambler.vala:110
+#: src/pages/scrambler.vala:137
 msgid "First key can contain only 1 or 0"
 msgstr ""
 
-#: src/pages/scrambler.vala:111
+#: src/pages/scrambler.vala:138
 msgid "Second key is empty"
 msgstr ""
 
-#: src/pages/scrambler.vala:113
+#: src/pages/scrambler.vala:140
 msgid "Second key is not a valid number"
 msgstr ""
 
-#: src/pages/scrambler.vala:114
+#: src/pages/scrambler.vala:141
 msgid "Second key can contain only 1 or 0"
 msgstr ""
 
@@ -266,19 +288,22 @@ msgstr ""
 
 #: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
 #: data/ui/polybius.ui:34 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
-#: data/ui/vigenereii.ui:21 data/ui/scrambler.ui:53 data/ui/shenon.ui:41
+#: data/ui/matrix.ui:42 data/ui/vigenereii.ui:21 data/ui/scrambler.ui:53
+#: data/ui/shenon.ui:41
 msgid "Enter you text"
 msgstr ""
 
 #: data/ui/atbash.ui:41 data/ui/caesar.ui:47 data/ui/belazo.ui:47
 #: data/ui/polybius.ui:60 data/ui/trithemium.ui:41 data/ui/vigenere.ui:47
-#: data/ui/vigenereii.ui:47 data/ui/scrambler.ui:79 data/ui/shenon.ui:67
+#: data/ui/matrix.ui:68 data/ui/vigenereii.ui:47 data/ui/scrambler.ui:79
+#: data/ui/shenon.ui:67
 msgid "Encrypt"
 msgstr ""
 
 #: data/ui/atbash.ui:54 data/ui/caesar.ui:60 data/ui/belazo.ui:60
 #: data/ui/polybius.ui:73 data/ui/trithemium.ui:54 data/ui/vigenere.ui:60
-#: data/ui/vigenereii.ui:60 data/ui/scrambler.ui:92 data/ui/shenon.ui:80
+#: data/ui/matrix.ui:81 data/ui/vigenereii.ui:60 data/ui/scrambler.ui:92
+#: data/ui/shenon.ui:80
 msgid "Decrypt"
 msgstr ""
 
@@ -293,6 +318,14 @@ msgstr ""
 
 #: data/ui/polybius.ui:27
 msgid "Enter columns count"
+msgstr ""
+
+#: data/ui/matrix.ui:21
+msgid "Enter n"
+msgstr ""
+
+#: data/ui/matrix.ui:30
+msgid "Get"
 msgstr ""
 
 #: data/ui/scrambler.ui:19
@@ -366,10 +399,36 @@ msgstr ""
 msgid "Letters count in text for decryption must be a multiple of two"
 msgstr ""
 
-#: src/encryption/alphabet.vala:53
+#: src/encryption/matrix.vala:57 src/encryption/matrix.vala:84
+#: src/encryption/matrix.vala:100 src/encryption/matrix.vala:139
+msgid "This matrix is not square"
+msgstr ""
+
+#: src/encryption/matrix.vala:142 src/encryption/matrix.vala:257
+#: src/encryption/matrix.vala:294
+msgid "Determinant is zero"
+msgstr ""
+
+#: src/encryption/matrix.vala:160
+msgid "m1 != n2"
+msgstr ""
+
+#: src/encryption/matrix.vala:227
+msgid "Not a valid phrase"
+msgstr ""
+
+#: src/encryption/matrix.vala:307
+msgid "Phrase contains wrong encrypted components"
+msgstr ""
+
+#: src/encryption/alphabet.vala:55
 msgid "Index bigger than string size"
 msgstr ""
 
-#: src/encryption/alphabet.vala:57 src/encryption/alphabet.vala:64
+#: src/encryption/alphabet.vala:56
+msgid "Index can't be negative"
+msgstr ""
+
+#: src/encryption/alphabet.vala:64
 msgid "Index not found"
 msgstr ""

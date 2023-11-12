@@ -36,6 +36,7 @@ namespace GCiphers {
             _("Trithemium"),
             _("Belazo"),
             _("Vigenere"),
+            _("Matrix"),
             _("VigenereII"),
             _("Scrambler"),
             _("Shenon"),
@@ -85,6 +86,7 @@ namespace GCiphers {
             pages.append (new GCiphers.Trithemium (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Belazo (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Vigenere (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Matrix (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Vigenereii (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Scrambler (this.toaster, this.alphabet_getter));
             pages.append (new GCiphers.Shenon (this.toaster, this.alphabet_getter));

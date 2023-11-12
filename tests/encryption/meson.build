@@ -1,4 +1,7 @@
 unit_tests = {
+    'alphabet': files (
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
     'atbash': files (
         meson.project_source_root() + '/src/encryption/atbash.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
@@ -24,6 +27,14 @@ unit_tests = {
     'vigenere': files (
         meson.project_source_root() + '/src/encryption/vigenere.vala',
         meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
+    'multi_alphabetic': files (
+        meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
+    'matrix': files (
+        meson.project_source_root() + '/src/encryption/matrix.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
     'vigenereii': files (

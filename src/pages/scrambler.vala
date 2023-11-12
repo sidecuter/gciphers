@@ -50,7 +50,34 @@ namespace GCiphers {
                     .replace (" ", "")
                     .replace(".", "тчк")
                     .replace(",", "зпт")
-                    .replace("-", "тире");;
+                    .replace("-", "тире");
+                unowned string scrambler1 = scrambler1.get_buffer ().get_text ();
+                unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
+                unowned string key1 = key1.get_buffer ().get_text ();
+                unowned string key2 = key2.get_buffer ().get_text ();
+                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Validate (alphabet, letters, scrambler1, scrambler2, key1, key2);
+                text.set_text (Encryption.Scrambler.encrypt (
+                    alphabet,
+                    letters,
+                    scrambler1,
+                    scrambler2,
+                    key1,
+                    key2
+                ));
+             }
+             catch (OOBError ex) {
+                 toast_spawner(ex.message);
+             }
+             catch (Errors.ValidateError ex) {
+                 toast_spawner(ex.message);
+             }
+        }
+
+        [GtkCallback]
+        private void on_decrypt_click (Gtk.Button self) {
+            try {
+                string letters = text.text.down ().replace (" ", "");
                 unowned string scrambler1 = scrambler1.get_buffer ().get_text ();
                 unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
                 unowned string key1 = key1.get_buffer ().get_text ();
