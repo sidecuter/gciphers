@@ -52,15 +52,6 @@ namespace Encryption {
             }
         }
 
-        public Matrix round () {
-            for (int i = 0; i < this.rows; i++) {
-                for (int j = 0; j < this.columns; j++) {
-                    this.elements[i, j] = Math.round (this.elements[i, j] * 100) / 100;
-                }
-            }
-            return this;
-        }
-
         public double det () throws MatrixError {
             if (this.rows != this.columns)
                 throw new MatrixError.CODE_IS_NOT_N_X_N ("This matrix is not square");
@@ -201,6 +192,11 @@ namespace Encryption {
             return number.to_string ().length;
         }
 
+        private static bool check_det (Matrix matr) throws MatrixError {
+            if (matr.det () == 0) return false;
+            else return true;
+        }
+
         private static List<Matrix> get_letters (Alphabet alphabet, string letters, int n) 
         throws Encryption.OOBError {
             int char_count = letters.char_count ();
@@ -223,6 +219,48 @@ namespace Encryption {
             return result;
         }
 
+        private static List<Matrix> get_numbers (
+            string phrase,
+            int avg_length,
+            int n
+        ) throws OOBError {
+            string buffer;
+            int[,] matr_buffer = new int[n, 1];
+            List<Matrix> result = new List<Matrix> ();
+            if ((phrase.char_count () / avg_length) % n != 0)
+                throw new OOBError.CODE_OUT ("Not a valid phrase");
+            for (int i = 0; i < phrase.char_count () / avg_length; i++) {
+                buffer = "";
+                for (int j = 0; j < avg_length; j++) {
+                    buffer = string.join("", 
+                        buffer,
+                        phrase.get_char (
+                            phrase.index_of_nth_char (i * avg_length + j)
+                        ).to_string ()
+                    );
+                }
+                matr_buffer[i % n, 0] = int.parse (buffer);
+                if ((i + 1) % n == 0)
+                    result.append (new Matrix.from_int (n, 1, matr_buffer));
+            }
+            /*  for (int i = 0; i < phrase.char_count () / n / avg_length; i++) {
+                for (int j = 0; j < n; j++) {
+                    buffer = "";
+                    for (int k = 0; k < avg_length; k++) {
+                        buffer = string.join("", 
+                            buffer,
+                            phrase.get_char (
+                                phrase.index_of_nth_char (i * n + j * avg_length + k)
+                            ).to_string ()
+                        );
+                    }
+                    matr_buffer[j, 0] = int.parse (buffer);
+                }
+                result.append (new Matrix.from_int (n, 1, matr_buffer));
+            }  */
+            return result;
+        }
+
         public static string encrypt (
             Encryption.Alphabet alphabet,
             string phrase,
@@ -235,6 +273,7 @@ namespace Encryption {
             string result = "";
             string buffer = "";
             try {
+                if (!MatrixCipher.check_det (matr)) throw new OOBError.CODE_PASSTHROUGH ("Determinant is zero");
                 List<Matrix> letters = MatrixCipher.get_letters (alphabet, phrase, matr.rows);
                 foreach (var letter_m in letters) {
                     result_m.append (matr.mult (letter_m));
@@ -266,7 +305,37 @@ namespace Encryption {
             int c,
             int[,] elems
         ) throws Encryption.OOBError {
-            return "";
+            Matrix matr = new Matrix.from_int (r, c, elems);
+            string result = "";
+            string buffer = "";
+            double temp;
+            try {
+                if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH ("Determinant is zero");
+                int count = MatrixCipher.count_digits (
+                    (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * matr.rows
+                );
+                List<Matrix> numbers = MatrixCipher.get_numbers (phrase, count, matr.rows);
+                matr = matr.reverse ();
+                Matrix buff;
+                foreach (var number_m in numbers) {
+                    buff = matr.mult (number_m);
+                    //buff = buff.round ();
+                    for (int i = 0; i < buff.rows; i++) {
+                        temp = Math.round (buff.elements[i, 0] * 100) / 100;
+                        if ((double) ((int) temp) != temp)
+                            throw new Encryption.OOBError.CODE_PASSTHROUGH ("Phrase contains wrong encrypted components");
+                        buffer = alphabet.get_letter_by_index (((int) temp) - 1).to_string ();
+                        result = @"$result$buffer";
+                    }
+                }
+            }
+            catch (Encryption.OOBError ex) {
+                throw ex;
+            }
+            catch (MatrixError ex) {
+                throw new OOBError.CODE_PASSTHROUGH (ex.message);
+            }
+            return result;
         }
     }
 }

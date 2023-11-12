@@ -79,29 +79,44 @@ namespace GCiphers {
                         items
                     )
                 );
-             }
-             catch (OOBError ex) {
-                 toast_spawner(ex.message);
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
-        }
-
-        [GtkCallback]
-        private void on_decrypt_click (Gtk.Button self) {
-            /*  try {
-                string letters = text.text.down ().replace (" ", "");
-                //Alphabet alphabet = new Alphabet (alphabet_getter ());
-                //Validate (alphabet, letters, t0, a, c);
-                //text.set_text (Encryption.Shenon.decrypt (alphabet, letters, int.parse (t0), int.parse (a), int.parse (c)));
             }
             catch (OOBError ex) {
                 toast_spawner(ex.message);
             }
             catch (Errors.ValidateError ex) {
                 toast_spawner(ex.message);
-            }  */
+            }
+        }
+
+        [GtkCallback]
+        private void on_decrypt_click (Gtk.Button self) {
+            try {
+                string letters = text.text.down ().replace (" ", "");
+                int rows;
+                int columns;
+                var items = parse_entries (
+                    (GCiphers.MatrixGrid) placeholder.child,
+                    out rows,
+                    out columns
+                );
+                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Validate_int(letters);
+                text.set_text (
+                    Encryption.MatrixCipher.decrypt (
+                        alphabet,
+                        letters,
+                        rows,
+                        columns,
+                        items
+                    )
+                );
+            }
+            catch (OOBError ex) {
+                toast_spawner(ex.message);
+            }
+            catch (Errors.ValidateError ex) {
+                toast_spawner(ex.message);
+            }
         }
 
         public Matrix (spawn_toast toaster, get_alphabet alphabet_get) {
@@ -147,6 +162,15 @@ namespace GCiphers {
                 catch (OOBError ex) {
                     throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter in alphabet"));
                 }
+            }
+        }
+
+        private void Validate_int (string text) throws Errors.ValidateError {
+            int num;
+            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
+            for (long i = 0; i < text.char_count (); i++){
+                if (!int.try_parse (text.get_char(text.index_of_nth_char (i)).to_string (), out num))
+                    throw new Errors.ValidateError.NOT_NUMBER (_("Phrase should be only consist of numbers"));
             }
         }
     }
