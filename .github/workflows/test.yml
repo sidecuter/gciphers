@@ -13,19 +13,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup ubuntu noble apt-repos
-        run: |
-          sudo add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ noble main restricted universe multiverse"
-          sudo add-apt-repository -n -y "deb http://archive.ubuntu.com/ubuntu/ noble main restricted universe multiverse"
+        run: | 
+          sudo sed -i 's/jammy/noble/g' /etc/apt/sources.list
+          sudo apt-get -y update
       - name: Install deps
-        run: |
-          sudo apt-get -t noble -y update
-          sudo apt-get -t noble -y install libgtk-4-dev valac meson \
-          ninja-build libgee-0.8-dev libadwaita-1-dev \
-          gettext desktop-file-utils appstream libxml2-utils
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: |
+            libgtk-4-dev valac meson ninja-build \
+            libgee-0.8-dev libadwaita-1-dev gettext \
+            desktop-file-utils appstream libxml2-utils
+          version: ${{ runner.os }}-${{ hashFiles('./meson.build') }}
       - name: Setup project
         run: meson setup builddir
       - name: Compile project
         run: meson compile -C builddir
       - name: Run Unit Tests
         run: meson test -C builddir
-          
