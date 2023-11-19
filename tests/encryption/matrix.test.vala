@@ -1,9 +1,9 @@
 using Encryption;
 
 public void test_matrix_max () {
-    int[,] elems = {
-        {2, 4},
-        {4, 3}
+    int[] elems = {
+        2, 4,
+        4, 3
     };
     Encryption.Matrix matr = new Encryption.Matrix.from_int (
         2,
@@ -15,9 +15,9 @@ public void test_matrix_max () {
 
 public void test_matrix_det () {
     try {
-        int[,] elems = {
-            {2, 4},
-            {4, 3}
+        int[] elems = {
+            2, 4,
+            4, 3
         };
         Encryption.Matrix matr = new Encryption.Matrix.from_int (
             2,
@@ -33,13 +33,13 @@ public void test_matrix_det () {
 
 public void test_matrix_reverse () {
     try {
-        int[,] elems = {
-            {2, 4},
-            {4, 3}
+        int[] elems = {
+            2, 4,
+            4, 3
         };
-        int[,] elems_E = {
-            {1, 0},
-            {0, 1}
+        int[] elems_E = {
+            1, 0,
+            0, 1
         };
         
         Encryption.Matrix matr = new Encryption.Matrix.from_int (
@@ -56,9 +56,9 @@ public void test_matrix_reverse () {
         for (int i = 0; i < matr_r_mult_matr.rows; i++) {
             for (int j = 0; j < matr_r_mult_matr.columns; j++) {
                 assert_cmpfloat (
-                    matr_E.elements[i, j],
+                    matr_E.elements.get(i * matr_E.columns + j),
                     GLib.CompareOperator.EQ,
-                    matr_r_mult_matr.elements[i, j]
+                    matr_r_mult_matr.elements.get(i * matr_r_mult_matr.columns + j)
                 );
             }
         }
@@ -72,10 +72,10 @@ public void test_matrix_ru_enc () {
     Alphabets alphabets = new Alphabets ();
     Alphabet alphabet = new Alphabet (alphabets.ru);
     try {
-        int[,] elems = {
-            {2, 5, 6},
-            {4, 3, 2},
-            {7, 1, 5},
+        int[] elems = {
+            2, 5, 6,
+            4, 3, 2,
+            7, 1, 5,
         };
         assert_cmpstr (
             "215147199170092124179093123259159242172096131275125203154074101045053093276136205129073076045043077091089122146060108224170212",
@@ -98,10 +98,10 @@ public void test_matrix_ru_dec () {
     Alphabets alphabets = new Alphabets ();
     Alphabet alphabet = new Alphabet (alphabets.ru);
     try {
-        int[,] elems = {
-            {2, 5, 6},
-            {4, 3, 2},
-            {7, 1, 5},
+        int[] elems = {
+            2, 5, 6,
+            4, 3, 2,
+            7, 1, 5,
         };
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
