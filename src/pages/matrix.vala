@@ -133,10 +133,10 @@ namespace GCiphers {
             return num;
         }
 
-        private int[,] parse_entries (GCiphers.MatrixGrid grid, out int rows, out int columns) throws Errors.ValidateError {
+        private int[] parse_entries (GCiphers.MatrixGrid grid, out int rows, out int columns) throws Errors.ValidateError {
             rows = grid.rows;
             columns = grid.columns;
-            int[,] result = new int[rows, columns];
+            int[] result = new int[rows * columns];
             int k = 0;
             int num;
             unowned string n;
@@ -145,7 +145,7 @@ namespace GCiphers {
                     n = grid.elements.get (k).get_buffer ().get_text ();
                     if (n.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("n is empty"));
                     if (!int.try_parse (n, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("n is not a valid number"));
-                    result[i, j] = num;
+                    result[i * columns + j] = num;
                     k++;
                 }
             }
