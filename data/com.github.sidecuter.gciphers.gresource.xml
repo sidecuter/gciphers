@@ -18,6 +18,6 @@
     <file compressed="true" preprocess="xml-stripblanks">ui/vigenereii.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/scrambler.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/shenon.ui</file>
-    <file>styles/style.css</file>
+    <file compressed="true">styles/style.css</file>
   </gresource>
 </gresources>

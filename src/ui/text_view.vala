@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
- namespace UI {
+namespace UI {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/text_view.ui")]
     public class TextView : Gtk.TextView {
 
@@ -30,5 +30,4 @@
         }
 
     }
- }
- 
+}

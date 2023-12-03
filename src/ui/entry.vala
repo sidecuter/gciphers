@@ -18,10 +18,9 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
- namespace UI {
+namespace UI {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/entry.ui")]
     public class Entry : Gtk.Entry {
 
     }
- }
- 
+}
