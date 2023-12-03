@@ -10,6 +10,7 @@
     <file preprocess="xml-stripblanks">ui/trithemium.ui</file>
     <file preprocess="xml-stripblanks">ui/belazo.ui</file>
     <file preprocess="xml-stripblanks">ui/vigenere.ui</file>
+    <file preprocess="xml-stripblanks">ui/vertical.ui</file>
     <file preprocess="xml-stripblanks">ui/matrix.ui</file>
     <file preprocess="xml-stripblanks">ui/matrix_grid.ui</file>
     <file preprocess="xml-stripblanks">ui/vigenereii.ui</file>

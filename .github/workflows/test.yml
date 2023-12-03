@@ -1,10 +1,10 @@
 name: 'Run unit tests'
 on:
   push:
-    branch:
+    branches:
       - master
   pull_request:
-    branch:
+    branches:
       - master
 jobs:
   unit-tests:

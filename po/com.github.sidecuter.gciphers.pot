@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-12 12:15+0300\n"
+"POT-Creation-Date: 2023-12-03 15:17+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,27 +54,31 @@ msgid "Vigenere"
 msgstr ""
 
 #: src/window.vala:39
-msgid "Matrix"
+msgid "Vertical"
 msgstr ""
 
 #: src/window.vala:40
-msgid "VigenereII"
+msgid "Matrix"
 msgstr ""
 
 #: src/window.vala:41
-msgid "Scrambler"
+msgid "VigenereII"
 msgstr ""
 
 #: src/window.vala:42
+msgid "Scrambler"
+msgstr ""
+
+#: src/window.vala:43
 msgid "Shenon"
 msgstr ""
 
 #: src/pages/atbash.vala:76 src/pages/caesar.vala:85 src/pages/belazo.vala:82
 #: src/pages/polybius.vala:95 src/pages/polybius.vala:114
 #: src/pages/trithemium.vala:76 src/pages/vigenere.vala:83
-#: src/pages/matrix.vala:157 src/pages/matrix.vala:170
-#: src/pages/vigenereii.vala:83 src/pages/scrambler.vala:142
-#: src/pages/shenon.vala:104
+#: src/pages/vertical.vala:82 src/pages/matrix.vala:157
+#: src/pages/matrix.vala:170 src/pages/vigenereii.vala:83
+#: src/pages/scrambler.vala:142 src/pages/shenon.vala:104
 msgid "Text field is empty"
 msgstr ""
 
@@ -86,7 +90,7 @@ msgid "No such letter in alphabet"
 msgstr ""
 
 #: src/pages/caesar.vala:82 src/pages/belazo.vala:81 src/pages/vigenere.vala:81
-#: src/pages/vigenereii.vala:81
+#: src/pages/vertical.vala:81 src/pages/vigenereii.vala:81
 msgid "Key is empty"
 msgstr ""
 
@@ -98,11 +102,11 @@ msgstr ""
 msgid "Number is below zero"
 msgstr ""
 
-#: src/pages/belazo.vala:88
+#: src/pages/belazo.vala:88 src/pages/vertical.vala:88
 msgid "No such letter from phrase in alphabet"
 msgstr ""
 
-#: src/pages/belazo.vala:96
+#: src/pages/belazo.vala:96 src/pages/vertical.vala:96
 msgid "No such letter from key in alphabet"
 msgstr ""
 
@@ -288,27 +292,27 @@ msgstr ""
 
 #: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
 #: data/ui/polybius.ui:34 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
-#: data/ui/matrix.ui:42 data/ui/vigenereii.ui:21 data/ui/scrambler.ui:53
-#: data/ui/shenon.ui:41
+#: data/ui/vertical.ui:21 data/ui/matrix.ui:42 data/ui/vigenereii.ui:21
+#: data/ui/scrambler.ui:53 data/ui/shenon.ui:41
 msgid "Enter you text"
 msgstr ""
 
 #: data/ui/atbash.ui:41 data/ui/caesar.ui:47 data/ui/belazo.ui:47
 #: data/ui/polybius.ui:60 data/ui/trithemium.ui:41 data/ui/vigenere.ui:47
-#: data/ui/matrix.ui:68 data/ui/vigenereii.ui:47 data/ui/scrambler.ui:79
-#: data/ui/shenon.ui:67
+#: data/ui/vertical.ui:47 data/ui/matrix.ui:68 data/ui/vigenereii.ui:47
+#: data/ui/scrambler.ui:79 data/ui/shenon.ui:67
 msgid "Encrypt"
 msgstr ""
 
 #: data/ui/atbash.ui:54 data/ui/caesar.ui:60 data/ui/belazo.ui:60
 #: data/ui/polybius.ui:73 data/ui/trithemium.ui:54 data/ui/vigenere.ui:60
-#: data/ui/matrix.ui:81 data/ui/vigenereii.ui:60 data/ui/scrambler.ui:92
-#: data/ui/shenon.ui:80
+#: data/ui/vertical.ui:60 data/ui/matrix.ui:81 data/ui/vigenereii.ui:60
+#: data/ui/scrambler.ui:92 data/ui/shenon.ui:80
 msgid "Decrypt"
 msgstr ""
 
 #: data/ui/caesar.ui:16 data/ui/belazo.ui:16 data/ui/vigenere.ui:16
-#: data/ui/vigenereii.ui:16
+#: data/ui/vertical.ui:16 data/ui/vigenereii.ui:16
 msgid "Enter key"
 msgstr ""
 
@@ -399,25 +403,25 @@ msgstr ""
 msgid "Letters count in text for decryption must be a multiple of two"
 msgstr ""
 
-#: src/encryption/matrix.vala:57 src/encryption/matrix.vala:84
-#: src/encryption/matrix.vala:100 src/encryption/matrix.vala:139
+#: src/encryption/matrix.vala:67 src/encryption/matrix.vala:103
+#: src/encryption/matrix.vala:125 src/encryption/matrix.vala:170
 msgid "This matrix is not square"
 msgstr ""
 
-#: src/encryption/matrix.vala:142 src/encryption/matrix.vala:257
-#: src/encryption/matrix.vala:294
+#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:290
+#: src/encryption/matrix.vala:327
 msgid "Determinant is zero"
 msgstr ""
 
-#: src/encryption/matrix.vala:160
+#: src/encryption/matrix.vala:191
 msgid "m1 != n2"
 msgstr ""
 
-#: src/encryption/matrix.vala:227
+#: src/encryption/matrix.vala:260
 msgid "Not a valid phrase"
 msgstr ""
 
-#: src/encryption/matrix.vala:307
+#: src/encryption/matrix.vala:339
 msgid "Phrase contains wrong encrypted components"
 msgstr ""
 
