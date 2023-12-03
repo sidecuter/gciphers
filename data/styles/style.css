@@ -1,9 +1,13 @@
-textview > text {
+textview.blob > text {
     background-color: rgba(255,255,255, 0.15);
-    border-radius: 10px;
 }
 
-entry {
+textview.blob {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+entry.blob {
     background-color: rgba(255,255,255, 0.15);
     border-radius: 10px;
 }

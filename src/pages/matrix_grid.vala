@@ -26,19 +26,18 @@ namespace GCiphers {
 
         public int rows { get; construct; }
         public int columns { get; construct; }
-        public Gee.ArrayList<unowned Gtk.Entry> elements;
+        public Gee.ArrayList<unowned UI.Entry> elements;
 
         public MatrixGrid (int rows, int columns) {
             Object (
                 rows: rows,
                 columns: columns
             );
-            elements = new Gee.ArrayList<unowned Gtk.Entry> ();
-            Gtk.Entry tmp;
+            elements = new Gee.ArrayList<unowned UI.Entry> ();
+            UI.Entry tmp;
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
-                    tmp = new Gtk.Entry ();
-                    tmp.hexpand = true;
+                    tmp = new UI.Entry ();
                     this.attach (tmp, j, i);
                     elements.add (tmp);
                 }

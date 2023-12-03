@@ -47,7 +47,7 @@ namespace GCiphers {
             var provider = new Gtk.CssProvider ();
 		    provider.load_from_resource ("/com/github/sidecuter/gciphers/styles/style.css");
 		    Gtk.StyleContext.add_provider_for_display (
-			    Gdk.Display.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+			    win.get_display (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 			);
         }
 
@@ -63,7 +63,6 @@ namespace GCiphers {
                 developers = developers,
                 copyright = "© 2023 Alexander Svobodov",
             };
-
             about.present ();
         }
 

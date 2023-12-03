@@ -6,4 +6,5 @@ gciphers_sources += files(
 )
 
 subdir('encryption')
+subdir('ui')
 subdir('pages')

@@ -15,15 +15,13 @@
           <object class="GtkBox">
             <property name="orientation">horizontal</property>
              <child>
-              <object class="GtkEntry" id="scrambler1">
+              <object class="UIEntry" id="scrambler1">
                 <property name="placeholder_text" translatable="yes">Enter first scrambler</property>
                 <property name="margin-end">10</property>
-                <property name="hexpand">True</property>
               </object>
             </child>
             <child>
-              <object class="GtkEntry" id="key1">
-                <property name="hexpand">True</property>
+              <object class="UIEntry" id="key1">
                 <property name="placeholder_text" translatable="yes">Enter first key</property>
               </object>
             </child>
@@ -34,15 +32,13 @@
             <property name="orientation">horizontal</property>
             <property name="margin-top">10</property>
              <child>
-              <object class="GtkEntry" id="scrambler2">
+              <object class="UIEntry" id="scrambler2">
                 <property name="placeholder_text" translatable="yes">Enter second scrambler</property>
                 <property name="margin-end">10</property>
-                <property name="hexpand">True</property>
               </object>
             </child>
             <child>
-              <object class="GtkEntry" id="key2">
-                <property name="hexpand">True</property>
+              <object class="UIEntry" id="key2">
                 <property name="placeholder_text" translatable="yes">Enter second key</property>
               </object>
             </child>
@@ -55,18 +51,7 @@
           </object>
         </child>
         <child>
-          <object class="GtkTextView">
-            <property name="height-request">150</property>
-            <property name="margin-top">10</property>
-            <property name="left-margin">10</property>
-            <property name="top-margin">10</property>
-            <property name="right-margin">10</property>
-            <property name="bottom-margin">10</property>
-            <property name="wrap-mode">3</property>
-            <property name="buffer">
-              <object class="GtkTextBuffer" id="text"/>
-            </property>
-          </object>
+          <object class="UITextView" id="text_view"/>
         </child>
         <child>
           <object class="GtkBox">
