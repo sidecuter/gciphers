@@ -34,10 +34,10 @@ namespace GCiphers {
         private unowned Adw.Bin placeholder;
 
         [GtkChild]
-        private unowned Gtk.TextBuffer text;
+        private unowned UI.TextView text_view;
 
         [GtkChild]
-        private unowned Gtk.Entry n;
+        private unowned UI.Entry n;
 
         [GtkCallback]
         private void on_get_click (Gtk.Button self) {
@@ -56,6 +56,7 @@ namespace GCiphers {
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
             try {
+                var text = text_view.get_text_buffer ();
                 string letters = text.text.down ()
                     .replace (" ", "")
                     .replace(".", "тчк")
@@ -91,6 +92,7 @@ namespace GCiphers {
         [GtkCallback]
         private void on_decrypt_click (Gtk.Button self) {
             try {
+                var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
                 int rows;
                 int columns;

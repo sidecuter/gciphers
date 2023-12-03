@@ -29,14 +29,15 @@ namespace GCiphers {
         private unowned get_alphabet alphabet_getter;
 
         [GtkChild]
-        private unowned Gtk.TextBuffer text;
+        private unowned UI.TextView text_view;
 
         [GtkChild]
-        private unowned Gtk.Entry key;
+        private unowned UI.Entry key;
 
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
             try {
+                var text = text_view.get_text_buffer ();
                 string letters = text.text.down ()
                     .replace (" ", "")
                     .replace(".", "тчк")
@@ -58,6 +59,7 @@ namespace GCiphers {
         [GtkCallback]
         private void on_decrypt_click (Gtk.Button self) {
             try {
+                var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
                 string key = key.get_buffer ().get_text ().down ();
                 Alphabet alphabet = new Alphabet (alphabet_getter ());

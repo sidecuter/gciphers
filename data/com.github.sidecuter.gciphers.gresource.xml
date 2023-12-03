@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/com/github/sidecuter/gciphers">
-    <file preprocess="xml-stripblanks">ui/window.ui</file>
-    <file preprocess="xml-stripblanks">ui/menu_entry.ui</file>
-    <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
-    <file preprocess="xml-stripblanks">ui/atbash.ui</file>
-    <file preprocess="xml-stripblanks">ui/caesar.ui</file>
-    <file preprocess="xml-stripblanks">ui/polybius.ui</file>
-    <file preprocess="xml-stripblanks">ui/trithemium.ui</file>
-    <file preprocess="xml-stripblanks">ui/belazo.ui</file>
-    <file preprocess="xml-stripblanks">ui/vigenere.ui</file>
-    <file preprocess="xml-stripblanks">ui/vertical.ui</file>
-    <file preprocess="xml-stripblanks">ui/matrix.ui</file>
-    <file preprocess="xml-stripblanks">ui/matrix_grid.ui</file>
-    <file preprocess="xml-stripblanks">ui/vigenereii.ui</file>
-    <file preprocess="xml-stripblanks">ui/scrambler.ui</file>
-    <file preprocess="xml-stripblanks">ui/shenon.ui</file>
-    <file>styles/style.css</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/text_view.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/entry.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/menu_entry.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/atbash.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/caesar.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/polybius.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/trithemium.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/belazo.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/vigenere.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/vertical.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/matrix.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/matrix_grid.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/vigenereii.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/scrambler.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/shenon.ui</file>
+    <file compressed="true">styles/style.css</file>
   </gresource>
 </gresources>

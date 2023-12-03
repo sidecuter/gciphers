@@ -29,23 +29,24 @@ namespace GCiphers {
         private unowned get_alphabet alphabet_getter;
 
         [GtkChild]
-        private unowned Gtk.TextBuffer text;
+        private unowned UI.TextView text_view;
 
         [GtkChild]
-        private unowned Gtk.Entry scrambler1;
+        private unowned UI.Entry scrambler1;
 
         [GtkChild]
-        private unowned Gtk.Entry scrambler2;
+        private unowned UI.Entry scrambler2;
         
         [GtkChild]
-        private unowned Gtk.Entry key1;
+        private unowned UI.Entry key1;
 
         [GtkChild]
-        private unowned Gtk.Entry key2;
+        private unowned UI.Entry key2;
 
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
             try {
+                var text = text_view.get_text_buffer ();
                 string letters = text.text.down ()
                     .replace (" ", "")
                     .replace(".", "тчк")
@@ -77,6 +78,7 @@ namespace GCiphers {
         [GtkCallback]
         private void on_decrypt_click (Gtk.Button self) {
             try {
+                var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
                 unowned string scrambler1 = scrambler1.get_buffer ().get_text ();
                 unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
