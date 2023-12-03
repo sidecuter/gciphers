@@ -49,29 +49,29 @@ public void test_vertical_ru_enc () {
     }
 }
 
-/*  public void test_vertical_ru_dec () {
+public void test_vertical_ru_dec () {
     Alphabets alphabets = new Alphabets ();
     Alphabet alphabet = new Alphabet (alphabets.ru);
     try {
         assert_cmpstr (
-            "тцтистзтутфыйстзтгептоджйхажтллдзсмждйццыо",
+            "отодногопорченогояблокавесьвоззагниваеттчк",
             GLib.CompareOperator.EQ,
-            Encryption.Vertical.encrypt(
+            Encryption.Vertical.decrypt (
                 alphabet,
-                "отодногопорченогояблокавесьвоззагниваеттчк",
-                4
+                "нооотдрчпгооояоенгавоблкозьесвивгзанчктает",
+                "супчик"
             )
         );
     }
     catch (Encryption.OOBError ex) {
         assert_true (false);
     }
-}  */
+}
 
 public static int main (string[] args) {
     Test.init (ref args);
     Test.add_func ("/encryption/vertical_ru_enc", test_vertical_ru_enc);
-    /*  Test.add_func ("/encryption/vertical_ru_dec", test_vertical_ru_dec);  */
+    Test.add_func ("/encryption/vertical_ru_dec", test_vertical_ru_dec);
     Test.add_func ("/encryption/vertical_methods_get_order", test_vertical_methods_get_order);
     return Test.run ();
 }

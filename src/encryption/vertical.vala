@@ -114,8 +114,38 @@ namespace Encryption {
             throws Encryption.OOBError
         {
             try {
-                //string result = Encryption.MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
-                return "result";
+                int[] keys = VerticalMethods.get_order (alphabet, key);
+                string result = "";
+                int row = phrase.char_count () / keys.length;
+                int row_other = row;
+                int[] rows = new int[keys.length];
+                if (phrase.char_count () % keys.length != 0) row++;
+                int[,] buffer = new int[row, keys.length];
+                int[,] result_array = new int[row, keys.length];
+                for (int i = 0; i < keys.length; i++) {
+                    if ((i+1) >= row_other) rows[i] = row_other;
+                    else rows[i] = row;
+                }
+                int k = 0;
+                for (int i = 0; i < row*keys.length; i++) {
+                    if (i/keys.length < rows[keys[i%keys.length]]) 
+                        buffer[i/keys.length, i%keys.length] = alphabet.get_letter_index (
+                        phrase.get_char (phrase.index_of_nth_char (k++))
+                    );
+                    else buffer[i/keys.length, i%keys.length] = -1;
+                }
+                for (int j = 0; j < keys.length; j++) {
+                    for (int i = 0; i < row; i++) {
+                        result_array[i, j] = buffer[i, keys[j] - 1]; 
+                    }
+                }
+                for (int i = 0; i < row; i++) {
+                    for (int j = 0; j < keys.length; j++)
+                        if (result_array[i, j] != -1) {
+                            result = @"$result$(alphabet.get_letter_by_index (result_array[i, j]))";
+                        }
+                }
+                return result;
             }
             catch (Encryption.OOBError ex) {
                 throw ex;
