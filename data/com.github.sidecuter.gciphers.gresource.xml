@@ -13,9 +13,10 @@
     <file compressed="true" preprocess="xml-stripblanks">ui/belazo.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/vigenere.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/vertical.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">ui/matrix.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">ui/matrix_grid.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/vigenereii.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/matrix.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/playfair.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/matrix_grid.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/scrambler.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/shenon.ui</file>
     <file compressed="true">styles/style.css</file>
