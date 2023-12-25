@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-25 14:19+0300\n"
-"PO-Revision-Date: 2023-12-25 14:20+0300\n"
+"PO-Revision-Date: 2023-12-25 15:37+0300\n"
 "Last-Translator: \n"
 "Language-Team: Alexander Svobodov sidecuter@outlook.com\n"
 "Language: ru\n"
@@ -57,7 +57,7 @@ msgstr "Виженер"
 
 #: src/window.vala:39
 msgid "Vertical"
-msgstr "Вертикальная перестановка"
+msgstr "Вертикальный"
 
 #: src/window.vala:40
 msgid "VigenereII"
