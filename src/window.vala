@@ -37,8 +37,8 @@ namespace GCiphers {
             _("Belazo"),
             _("Vigenere"),
             _("Vertical"),
-            _("Matrix"),
             _("VigenereII"),
+            _("Matrix"),
             _("Scrambler"),
             _("Shenon"),
         };
