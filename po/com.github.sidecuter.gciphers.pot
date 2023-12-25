@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-25 14:19+0300\n"
+"POT-Creation-Date: 2023-12-25 15:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,12 +109,12 @@ msgid "Number is below zero"
 msgstr ""
 
 #: src/pages/belazo.vala:90 src/pages/vertical.vala:90
-#: src/pages/playfair.vala:88
+#: src/pages/playfair.vala:90
 msgid "No such letter from phrase in alphabet"
 msgstr ""
 
 #: src/pages/belazo.vala:98 src/pages/vertical.vala:98
-#: src/pages/playfair.vala:96
+#: src/pages/playfair.vala:98
 msgid "No such letter from key in alphabet"
 msgstr ""
 
@@ -183,7 +183,11 @@ msgid "Matrix not determined"
 msgstr ""
 
 #: src/pages/playfair.vala:65
-msgid "length must be divisible by 2"
+msgid "Length must be divisible by 2"
+msgstr ""
+
+#: src/pages/playfair.vala:84
+msgid "Key must contain only unique letters"
 msgstr ""
 
 #: src/pages/scrambler.vala:128
