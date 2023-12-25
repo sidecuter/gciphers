@@ -20,13 +20,17 @@
 
 namespace Encryption {
     class Playfair : Object {
-        public static bool validate_key (Alphabet alphabet, string key) {
+        public static bool validate_key (string key) {
             var dup = new Gee.HashMap<string, int> ();
             string letter;
             for (int i = 0; i < key.char_count (); i++) {
                 letter = key.get_char (key.index_of_nth_char (i)).to_string ();
-                if (dup.has_key (letter)) dup[letter] += 1;
-                else dup[letter] = 1;
+                if (dup.has_key (letter)) {
+                    dup.set(letter, dup.get(letter) + 1);
+                }
+                else {
+                    dup.set(letter, 1);
+                }
             }
             foreach (var entry in dup) {
                 if (entry.value > 1) return false;
