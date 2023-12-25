@@ -37,12 +37,16 @@ unit_tests = {
         meson.project_source_root() + '/src/encryption/vertical.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
+    'vigenereii': files (
+        meson.project_source_root() + '/src/encryption/vigenereii.vala',
+        meson.project_source_root() + '/src/encryption/alphabet.vala',
+    ),
     'matrix': files (
         meson.project_source_root() + '/src/encryption/matrix.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
-    'vigenereii': files (
-        meson.project_source_root() + '/src/encryption/vigenereii.vala',
+    'playfair': files (
+        meson.project_source_root() + '/src/encryption/playfair.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
     'scrambler': files (

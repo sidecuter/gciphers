@@ -14,8 +14,9 @@ src/pages/polybius.vala
 src/pages/trithemium.vala
 src/pages/vigenere.vala
 src/pages/vertical.vala
-src/pages/matrix.vala
 src/pages/vigenereii.vala
+src/pages/matrix.vala
+src/pages/playfair.vala
 src/pages/scrambler.vala
 src/pages/shenon.vala
 
@@ -27,8 +28,9 @@ data/ui/polybius.ui
 data/ui/trithemium.ui
 data/ui/vigenere.ui
 data/ui/vertical.ui
-data/ui/matrix.ui
 data/ui/vigenereii.ui
+data/ui/matrix.ui
+data/ui/playfair.ui
 data/ui/scrambler.ui
 data/ui/shenon.ui
 data/gtk/help-overlay.ui
@@ -40,8 +42,9 @@ src/encryption/polybius.vala
 src/encryption/trithemium.vala
 src/encryption/vigenere.vala
 src/encryption/vertical.vala
-src/encryption/matrix.vala
 src/encryption/vigenereii.vala
+src/encryption/matrix.vala
+src/encryption/playfair.vala
 src/encryption/scrambler.vala
 src/encryption/shenon.vala
 src/encryption/alphabet.vala
