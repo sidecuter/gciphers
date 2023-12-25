@@ -37,5 +37,118 @@ namespace Encryption {
             }
             return true;
         }
+
+        private static void find_letter (
+            string [,] table,
+            string letter,
+            ref int i,
+            ref int j
+        ) {
+            string l = letter.replace("ё", "e")
+                .replace("й", "и")
+                .replace("ь", "ъ");
+            for (i = 0; i < 5; i++) {
+                for (j = 0; j < 6; j++) {
+                    if (table[i, j] == l) return;                
+                }
+            }
+        }
+
+        private static int mod (int num, int del) {
+            if (num >= 0) return num % del;
+            else return del - (-num) % del;
+        }
+
+        private static string get_letter_pair(string[,] table, string letter1, string letter2, bool rev) {
+            string r = "";
+            int dir = rev ? -1 : 1;
+            int i1 = 0, i2 = 0, j1 = 0, j2 = 0;
+            find_letter (table, letter1, ref i1, ref j1);
+            find_letter (table, letter2, ref i2, ref j2);
+            if (i1 == i2) {
+                j1 = mod(j1 + dir, 6);
+                j2 = mod(j2 + dir, 6);
+                r = @"$(table[i1,j1])$(table[i2,j2])";
+            }
+            else if (j1 == j2) {
+                i1 = mod(i1 + dir, 5);
+                i2 = mod(i2 + dir, 5);
+                r = @"$(table[i1,j1])$(table[i2,j2])";
+            }
+            else {
+                r = @"$(table[i1,j2])$(table[i2,j1])";
+            }
+            return r;
+        }
+
+        private static string[,] get_table (string key) {
+            string playfair_alphabet = "абвгдежзиклмнопрстуфхцчшщъыэюя";
+            var table = new string[5,6];
+            int k = 0, l = 0;
+            unichar symb;
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 6; j++) {
+                    if (k < key.length) {
+                        key.get_next_char (ref k, out symb);
+                        table[i, j] = symb.to_string ();
+                        playfair_alphabet = playfair_alphabet.replace (
+                            table[i,j], "");
+                    }
+                    else {
+                        playfair_alphabet.get_next_char (ref l, out symb);
+                        table[i, j] = symb.to_string ();
+                    }
+                }
+            }
+            return table;
+        }
+
+        private static string process_letters(string[,] table, string phrase, bool rev = false) {
+            string r = "";
+            int i = 0;
+            string buffer;
+            while (i < phrase.length) {
+                unichar letter1, letter2;
+                phrase.get_next_char (ref i, out letter1);
+                if (!phrase.get_next_char (ref i, out letter2)) letter2 = 1072;
+                if (letter1 == letter2) {
+                    buffer = get_letter_pair(
+                        table,
+                        letter1.to_string (),
+                        "ф",
+                        rev
+                    );
+                    r = @"$r$buffer";
+                    if (!phrase.get_next_char (ref i, out letter1)) letter1 = 1072;
+                    buffer = get_letter_pair(
+                        table,
+                        letter2.to_string (),
+                        letter1.to_string (),
+                        rev
+                    );
+                    r = @"$r$buffer";
+                }
+                else {
+                    buffer = get_letter_pair(
+                        table,
+                        letter1.to_string (),
+                        letter2.to_string (),
+                        rev
+                    );
+                    r = @"$r$buffer";
+                }
+            }
+            return r;
+        }
+
+        public static string encrypt (string phrase, string key) {
+            var playfair_table = get_table(key);
+            return process_letters (playfair_table, phrase);
+        }
+
+        public static string decrypt (string phrase, string key) {
+            var playfair_table = get_table(key);
+            return process_letters (playfair_table, phrase, true);
+        }
     }
 }
