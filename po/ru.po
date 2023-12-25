@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-25 14:19+0300\n"
-"PO-Revision-Date: 2023-12-25 14:20+0300\n"
+"POT-Creation-Date: 2023-12-25 15:47+0300\n"
+"PO-Revision-Date: 2023-12-25 15:48+0300\n"
 "Last-Translator: \n"
 "Language-Team: Alexander Svobodov sidecuter@outlook.com\n"
 "Language: ru\n"
@@ -57,7 +57,7 @@ msgstr "Виженер"
 
 #: src/window.vala:39
 msgid "Vertical"
-msgstr "Вертикальная перестановка"
+msgstr "Вертикальный"
 
 #: src/window.vala:40
 msgid "VigenereII"
@@ -111,12 +111,12 @@ msgid "Number is below zero"
 msgstr "Ключ не может быть меньше нуля"
 
 #: src/pages/belazo.vala:90 src/pages/vertical.vala:90
-#: src/pages/playfair.vala:88
+#: src/pages/playfair.vala:90
 msgid "No such letter from phrase in alphabet"
 msgstr "В фразе содержится некорректный символ"
 
 #: src/pages/belazo.vala:98 src/pages/vertical.vala:98
-#: src/pages/playfair.vala:96
+#: src/pages/playfair.vala:98
 msgid "No such letter from key in alphabet"
 msgstr "В ключе содержится некорректный символ"
 
@@ -185,8 +185,12 @@ msgid "Matrix not determined"
 msgstr "Матрица не указана"
 
 #: src/pages/playfair.vala:65
-msgid "length must be divisible by 2"
+msgid "Length must be divisible by 2"
 msgstr "Длина должна делиться нацело на 2"
+
+#: src/pages/playfair.vala:84
+msgid "Key must contain only unique letters"
+msgstr "Ключ должен содержать только уникальные значения"
 
 #: src/pages/scrambler.vala:128
 msgid "First scrambler is empty"

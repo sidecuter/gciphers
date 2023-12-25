@@ -62,7 +62,7 @@ namespace GCiphers {
                 Alphabet alphabet = new Alphabet (alphabet_getter ());
                 Validate(alphabet, letters, key);
                 if (letters.char_count () % 2 != 0) 
-                    throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("length must be divisible by 2"));
+                    throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("Length must be divisible by 2"));
                 text.set_text (Encryption.Playfair.decrypt (letters, key));
             }
             catch (Errors.ValidateError ex) {
@@ -80,6 +80,8 @@ namespace GCiphers {
             var p_alphabet = new Alphabet (playfair_alphabet);
             if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
+            if (!Encryption.Playfair.validate_key (key))
+                    throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("Key must contain only unique letters"));
             for (long i = 0; i < text.char_count (); i++){
                 try {
                     alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
