@@ -39,15 +39,9 @@ namespace Encryption {
             var buffer = new Gee.HashMap<int, unichar>();
             try {
                 for (int i = 0; i < key.char_count (); i++) {
-                    buffer.set(
-                        alphabet.get_letter_index (
-                            key.get_char (key.index_of_nth_char (i))
-                        ),
-                        key.get_char (key.index_of_nth_char (i))
-                    );
-                    buffer_a[i] = alphabet.get_letter_index (
-                        key.get_char (key.index_of_nth_char (i))
-                    );
+                    unichar symb = key.get_char (key.index_of_nth_char (i));
+                    buffer_a[i] = alphabet.get_letter_index (symb);
+                    buffer.set(buffer_a[i], symb);
                 }
                 List<int> positions = new List<int>();
                 foreach (var buffer_key in buffer.keys) positions.append (buffer_key);
@@ -66,37 +60,35 @@ namespace Encryption {
                 throw ex;
             }
         }
-    }
 
-    class Vertical : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
+        public static void get_rows_and_keys(
+            Encryption.Alphabet alphabet,
+            string phrase, string key, out int[] keys,
+            out int row, out int row_o, out int[] rows
+        ) 
+            throws Encryption.OOBError 
+        {
+            try {
+                keys = get_order (alphabet, key);
+                row = phrase.char_count () / keys.length;
+                row_o = row;
+                rows = new int[keys.length];
+                if (phrase.char_count () % keys.length != 0) row++;
+                for (int i = 0; i < keys.length; i++) {
+                    if ((i+1) >= row_o) rows[i] = row_o;
+                    else rows[i] = row;
+                }
+            }
+            catch (OOBError ex) {
+                throw ex;
+            }
+        }
+
+        public static string get_result (Alphabet alphabet, int row, int[] keys, int[,] result_array)
             throws Encryption.OOBError
         {
             try {
-                int[] keys = VerticalMethods.get_order (alphabet, key);
                 string result = "";
-                int row = phrase.char_count () / keys.length;
-                int row_other = row;
-                int[] rows = new int[keys.length];
-                if (phrase.char_count () % keys.length != 0) row++;
-                int[,] buffer = new int[row, keys.length];
-                int[,] result_array = new int[row, keys.length];
-                for (int i = 0; i < keys.length; i++) {
-                    if ((i+1) >= row_other) rows[i] = row_other;
-                    else rows[i] = row;
-                }
-                for (int i = 0; i < row*keys.length; i++) {
-                    if (i < (phrase.char_count () / keys.length) * keys.length) 
-                        buffer[i/keys.length, i%keys.length] = alphabet.get_letter_index (
-                        phrase.get_char (phrase.index_of_nth_char (i))
-                    );
-                    else buffer[i/keys.length, i%keys.length] = -1;
-                }
-                for (int j = 0; j < keys.length; j++) {
-                    for (int i = 0; i < row; i++) {
-                        result_array[i, keys[j] - 1] = buffer[i, j]; 
-                    }
-                }
                 for (int i = 0; i < row; i++) {
                     for (int j = 0; j < keys.length; j++)
                         if (result_array[i, j] != -1) {
@@ -110,42 +102,74 @@ namespace Encryption {
             }
         }
 
+        public static int[,] get_buffer (Alphabet alphabet, string phrase, int row, int length) 
+            throws Encryption.OOBError
+        {
+            try {
+                int[,] buffer = new int[row, length];
+                int k = 0;
+                unichar symb;
+                for (int i = 0; i < row; i++) {
+                    for (int j = 0; j < length; j++) {
+                        if (k < phrase.length) {
+                            phrase.get_next_char (ref k, out symb);
+                            buffer[i, j] = alphabet.get_letter_index (symb);
+                        }
+                        else buffer[i, j] = -1;
+                    }
+                }
+                return buffer;
+            }
+            catch (Encryption.OOBError ex) {
+                throw ex;
+            }
+        }
+    }
+
+    class Vertical : Object {
+        private static string proto_crypt (Encryption.Alphabet alphabet, string phrase, string key, bool enc = true)
+        throws Encryption.OOBError
+        {
+            try {
+                int row, row_other;
+                int[] keys, rows;
+                VerticalMethods.get_rows_and_keys (
+                    alphabet, phrase, key,
+                    out keys, out row,
+                    out row_other, out rows);
+                int[,] buffer = VerticalMethods.get_buffer (
+                    alphabet, phrase, row, keys.length
+                );
+                int[,] result_array = new int[row, keys.length];
+                for (int j = 0; j < keys.length; j++) {
+                    for (int i = 0; i < row; i++) {
+                        if (enc) result_array[i, keys[j] - 1] = buffer[i, j];
+                        else result_array[i, j] = buffer[i, keys[j] - 1]; 
+                    }
+                }
+                return VerticalMethods.get_result (alphabet, row, keys, result_array);
+            }
+            catch (Encryption.OOBError ex) {
+                throw ex;
+            }
+        }
+
+        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
+            throws Encryption.OOBError
+        {
+            try {
+                return proto_crypt (alphabet, phrase, key);
+            }
+            catch (Encryption.OOBError ex) {
+                throw ex;
+            }
+        }
+
         public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
             try {
-                int[] keys = VerticalMethods.get_order (alphabet, key);
-                string result = "";
-                int row = phrase.char_count () / keys.length;
-                int row_other = row;
-                int[] rows = new int[keys.length];
-                if (phrase.char_count () % keys.length != 0) row++;
-                int[,] buffer = new int[row, keys.length];
-                int[,] result_array = new int[row, keys.length];
-                for (int i = 0; i < keys.length; i++) {
-                    if ((i+1) >= row_other) rows[i] = row_other;
-                    else rows[i] = row;
-                }
-                int k = 0;
-                for (int i = 0; i < row*keys.length; i++) {
-                    if (i/keys.length < rows[keys[i%keys.length]]) 
-                        buffer[i/keys.length, i%keys.length] = alphabet.get_letter_index (
-                        phrase.get_char (phrase.index_of_nth_char (k++))
-                    );
-                    else buffer[i/keys.length, i%keys.length] = -1;
-                }
-                for (int j = 0; j < keys.length; j++) {
-                    for (int i = 0; i < row; i++) {
-                        result_array[i, j] = buffer[i, keys[j] - 1]; 
-                    }
-                }
-                for (int i = 0; i < row; i++) {
-                    for (int j = 0; j < keys.length; j++)
-                        if (result_array[i, j] != -1) {
-                            result = @"$result$(alphabet.get_letter_by_index (result_array[i, j]))";
-                        }
-                }
-                return result;
+                return proto_crypt (alphabet, phrase, key, false);
             }
             catch (Encryption.OOBError ex) {
                 throw ex;
