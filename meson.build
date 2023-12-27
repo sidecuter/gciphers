@@ -4,9 +4,11 @@ project('com.github.sidecuter.gciphers', ['c', 'vala'],
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
 
-app_id = 'com.github.sidecuter.gciphers'
+app_id = meson.project_name()
 
 conf = configuration_data()
+conf.set('APP_ID_FIXED', app_id)
+conf.set('REPO_PATH', meson.source_root())
 conf.set_quoted('APP_ID', app_id)
 conf.set_quoted('APP_NAME', 'GCiphers')
 conf.set_quoted('G_LOG_DOMAIN', 'GCiphers')
@@ -45,12 +47,17 @@ gciphers_deps = [
   meson.get_compiler('c').find_library('m', required : false),
 ]
 
+if host_machine.system() == 'windows'
+    subdir('windows')
+endif
+
 executable(
   meson.project_name(),
   gciphers_sources,
   asresources,
   dependencies: gciphers_deps,
   install: true,
+  win_subsystem: 'windows',
 )
 
 subdir('tests')
