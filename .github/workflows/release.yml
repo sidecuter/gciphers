@@ -28,7 +28,7 @@ jobs:
       - name: Build package
         shell: msys2 {0}
         run: |
-          meson setup --prefix=$(pwd)/install --buildtype=release --optimization=3
+          meson setup build --prefix=$(pwd)/install --buildtype=release --optimization=3
           meson compile -C build
           meson test -C build
           meson install -C build
