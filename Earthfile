@@ -9,7 +9,9 @@ deps:
 build:
 	FROM +deps
 	COPY . .
-	RUN meson setup build
+	RUN meson setup build --prefix=$(pwd)/install
 	RUN meson compile -C build
 	RUN meson test -C build
+	RUN meson install -C build
 	SAVE ARTIFACT build /dist AS LOCAL build
+	SAVE ARTIFACT install AS LOCAL install
