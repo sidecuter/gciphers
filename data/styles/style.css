@@ -4,7 +4,6 @@ textview.blob > text {
 
 textview.blob {
     border-radius: 10px;
-    overflow: hidden;
 }
 
 entry.blob {

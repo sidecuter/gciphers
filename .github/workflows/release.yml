@@ -1,0 +1,41 @@
+name: Github release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: Windows
+    steps:
+      - uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            mingw-w64-x86_64-gtk4
+            mingw-w64-x86_64-vala
+            mingw-w64-x86_64-toolchain
+            base-devel
+            mingw-w64-x86_64-libgee
+            mingw-w64-x86_64-libadwaita
+            mingw-w64-x86_64-desktop-file-utils
+            mingw-w64-x86_64-meson
+            mingw-w64-x86_64-nsis
+            git
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build package
+        shell: msys2 {0}
+        run: |
+          meson setup --prefix=$(pwd)/install --buildtype=release --optimization=3
+          meson compile -C build
+          meson test -C build
+          meson install -C build
+          cd install
+          ./post_install.sh
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: gciphers.exe

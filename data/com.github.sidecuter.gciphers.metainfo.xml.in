@@ -11,5 +11,5 @@
 	  <p>No description</p>
 	</description>
 	<translation type="gettext">@app_id@</translation>
-	<launchable type="desktop-id">@appid@.desktop</launchable>
+	<launchable type="desktop-id">@app_id@.desktop</launchable>
 </component>

@@ -128,7 +128,7 @@ namespace Encryption {
 
     class Vertical : Object {
         private static string proto_crypt (Encryption.Alphabet alphabet, string phrase, string key, bool enc = true)
-        throws Encryption.OOBError
+            throws Encryption.OOBError
         {
             try {
                 int row, row_other;
