@@ -7,8 +7,6 @@ project('com.github.sidecuter.gciphers', ['c', 'vala'],
 app_id = meson.project_name()
 
 conf = configuration_data()
-conf.set('APP_ID_FIXED', app_id)
-conf.set('REPO_PATH', meson.source_root())
 conf.set_quoted('APP_ID', app_id)
 conf.set_quoted('APP_NAME', 'GCiphers')
 conf.set_quoted('G_LOG_DOMAIN', 'GCiphers')

@@ -1,3 +1,9 @@
+win_conf = configuration_data()
+win_conf.set('APP_ID_FIXED', app_id)
+win_conf.set('REPO_PATH', meson.source_root())
+win_conf.set_quoted('APP_ID', app_id)
+win_conf.set_quoted('VERSION', meson.project_version())
+
 custom_target('copy icon',
   input : '@0@.ico'.format(app_id),
   output :  '@0@.ico'.format(app_id),
@@ -18,7 +24,7 @@ custom_target('copy post_install.sh',
 configure_file(
   input: './gciphers.nsi.in',
   output: 'gciphers.nsi',
-  configuration: conf,
+  configuration: win_conf,
   install: true,
   install_dir: get_option('prefix'),
 )
@@ -26,14 +32,14 @@ configure_file(
 configure_file(
   input: './version.rc.in',
   output: 'version.rc',
-  configuration: conf,
+  configuration: win_conf,
   install: false,
 )
 
 configure_file(
   input: './gciphers.rc.in',
   output: 'gciphers.rc',
-  configuration: conf,
+  configuration: win_conf,
   install: false,
 )
 
