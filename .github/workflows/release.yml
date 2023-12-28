@@ -22,6 +22,7 @@ jobs:
             mingw-w64-x86_64-desktop-file-utils
             mingw-w64-x86_64-meson
             mingw-w64-x86_64-nsis
+            mingw-w64-x86_64-ntldd
             git
       - name: Checkout
         uses: actions/checkout@v3
@@ -38,4 +39,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: install/gciphers.exe
+          files: gciphers.exe
