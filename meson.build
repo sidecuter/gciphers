@@ -46,7 +46,7 @@ gciphers_deps = [
 ]
 
 if host_machine.system() == 'windows'
-    subdir('windows')
+  subdir('windows')
 endif
 
 executable(
