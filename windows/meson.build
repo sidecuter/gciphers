@@ -12,23 +12,6 @@ custom_target('copy icon',
   build_by_default : true
 )
 
-custom_target('copy post_install.sh',
-  input : 'post_install.sh',
-  output :  'post_install.sh',
-  command : ['cp', '@INPUT@', '@OUTPUT@'],
-  install : true,
-  install_dir: get_option('prefix'),
-  build_by_default : true
-)
-
-configure_file(
-  input: './gciphers.nsi.in',
-  output: 'gciphers.nsi',
-  configuration: win_conf,
-  install: true,
-  install_dir: get_option('prefix'),
-)
-
 configure_file(
   input: './version.rc.in',
   output: 'version.rc',
@@ -48,3 +31,5 @@ gciphers_sources += windows.compile_resources(
     join_paths(meson.current_build_dir(), 'gciphers.rc'), 
     join_paths(meson.current_build_dir(), 'version.rc'),
 )
+
+meson.add_install_script('./post_install.py')
