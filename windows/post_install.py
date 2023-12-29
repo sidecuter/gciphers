@@ -30,11 +30,9 @@ def copytree(src, dst, symlinks=False, ignore=None):
             shutil.copy2(s, d)
 
 
-#INSTALL_PREFIX = "C:/msys64/home/Alexander/gciphers/install"
-#SOURCE_ROOT = "C:/msys64/home/Alexander/gciphers"
-INSTALL_PREFIX = os.environ['MESON_INSTALL_PREFIX']
+BASE_PATH = '\\'.join([i for i in os.popen("where meson")][0].split('\\')[:-2])
 SOURCE_ROOT = os.environ['MESON_SOURCE_ROOT'].replace('/', '\\')
-BASE_PATH = os.path.join('/'.join(INSTALL_PREFIX.split('/')[:-4]), "mingw64")
+INSTALL_PREFIX = os.environ['MESON_INSTALL_PREFIX']
 BIN_DIR = os.path.join(INSTALL_PREFIX, "bin")
 SHARE_DIR = os.path.join(INSTALL_PREFIX, "share")
 ICONS_DIR = os.path.join(SHARE_DIR, "icons")
