@@ -10,6 +10,6 @@
 	<description>
 	  <p>No description</p>
 	</description>
-	<translation type="gettext">@app_id@</translation>
-	<launchable type="desktop-id">@app_id@.desktop</launchable>
+	<translation type="gettext">@APP_ID@</translation>
+	<launchable type="desktop-id">@APP_ID@.desktop</launchable>
 </component>
