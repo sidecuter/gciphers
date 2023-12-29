@@ -32,4 +32,4 @@ gciphers_sources += windows.compile_resources(
     join_paths(meson.current_build_dir(), 'version.rc'),
 )
 
-meson.add_install_script('./post_install.py')
+meson.add_install_script('post_install.py')

@@ -4,7 +4,6 @@ from typing import Any
 import os
 import shutil
 import functools
-import json
 
 
 def print_wrapper(message="Base"):
@@ -44,8 +43,8 @@ class DepsFinder():
     def find_msys_deps(self, target: str, depth: int = 0) -> None:
         if depth == 0:
             return
-        for line in os.popen(f"ntldd {target}"):
-            line = line.split()[2]
+        for line in os.popen(f'ntldd "{target}"'):
+            line = " ".join(line.split()[2:3])
             if line == 'not':
                 continue
             path: list[str] = line.split('\\')
@@ -173,15 +172,14 @@ def create_nsis_script():
 !define APP_NAME "Gciphers"
 !define COMP_NAME "Sidecuter"
 !define WEB_SITE "https://github.com/sidecuter/gciphers"
-!define VERSION "0.0.1.0"
+!define VERSION "0.1.0.0"
 !define COPYRIGHT "Sidecuter © 2023"
 !define DESCRIPTION "Application"
 !define LICENSE_TXT "{SOURCE_ROOT}\\LICENSE"
 !define INSTALLER_NAME "{SOURCE_ROOT}\\gciphers.exe"
 !define MAIN_APP_EXE "bin\\com.github.sidecuter.gciphers.exe"
 !define INSTALL_TYPE "SetShellVarContext all"
-!define REG_ROOT "HKLM"
-''')
+!define REG_ROOT "HKLM"''')
         file.write('''
 !define REG_APP_PATH "Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\${MAIN_APP_EXE}"
 !define UNINSTALL_PATH "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\${APP_NAME}"
@@ -205,9 +203,8 @@ Name "${APP_NAME}"
 Caption "${APP_NAME}"
 OutFile "${INSTALLER_NAME}"
 BrandingText "${APP_NAME}"
-XPStyle on
 InstallDirRegKey "${REG_ROOT}" "${REG_APP_PATH}" ""
-InstallDir "$PROGRAMFILES\\Gciphers"
+InstallDir "C:\\Program Files (x86)\\Gciphers"
 
 ######################################################################
 
@@ -225,8 +222,6 @@ InstallDir "$PROGRAMFILES\\Gciphers"
 !ifdef LICENSE_TXT
 !insertmacro MUI_PAGE_LICENSE "${LICENSE_TXT}"
 !endif
-
-!insertmacro MUI_PAGE_DIRECTORY
 
 !ifdef REG_START_MENU
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "Gciphers"
