@@ -60,8 +60,8 @@ namespace Encryption {
 
         public int get_letter_index (unichar letter) throws Encryption.OOBError {
             int result = alphabet.index_of_char(letter);
-            result = alphabet.char_count () != alphabet.length ? result / 2 : result;
             if (result == -1) throw new Encryption.OOBError.CODE_NOT_FOUND (_("Index not found"));
+            result = alphabet.char_count () != alphabet.length ? result / 2 : result;
             return result;
         }
     }
