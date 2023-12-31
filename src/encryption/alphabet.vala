@@ -50,7 +50,12 @@ namespace Encryption {
             );
         }
 
-        public unichar get_letter_by_index (int index) throws Encryption.OOBError {
+        public bool contains (unichar letter) {
+            int result = alphabet.index_of_char(letter);
+            return result == -1 ? false : true;
+        }
+
+        public new unichar get (int index) throws Encryption.OOBError {
             if (index > alphabet.char_count ())
                 throw new Encryption.OOBError.CODE_OUT (_("Index bigger than string size"));
             if (index < 0) throw new Encryption.OOBError.CODE_OUT (_("Index can't be negative"));
@@ -58,9 +63,9 @@ namespace Encryption {
             return result;
         }
 
-        public int get_letter_index (unichar letter) throws Encryption.OOBError {
+        public int index_of (unichar letter) throws Encryption.OOBError {
+            if (!(letter in this)) throw new Encryption.OOBError.CODE_NOT_FOUND (_("Index not found"));
             int result = alphabet.index_of_char(letter);
-            if (result == -1) throw new Encryption.OOBError.CODE_NOT_FOUND (_("Index not found"));
             result = alphabet.char_count () != alphabet.length ? result / 2 : result;
             return result;
         }

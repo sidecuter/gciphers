@@ -1,4 +1,5 @@
 gciphers_sources += files(
+    'enc_methods.vala',
     'alphabet.vala',
     'atbash.vala',
     'caesar.vala',

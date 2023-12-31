@@ -40,7 +40,7 @@ namespace Encryption {
             );
         }
 
-        public PolybiusIndexes get_letter_indexes (unichar letter) throws Encryption.OOBError{
+        public PolybiusIndexes index_ofes (unichar letter) throws Encryption.OOBError{
             PolybiusIndexes indexes = new PolybiusIndexes ();
             for (int i = 0; i < this.rows; i++) {
                 if (i + 1 > this.last_row) continue;
@@ -61,7 +61,7 @@ namespace Encryption {
             throw new Encryption.OOBError.CODE_NOT_FOUND (_("No such letter in table"));
         }
 
-        public unichar get_letter_by_indexes (PolybiusIndexes indexes) throws Encryption.OOBError {
+        public new unichar get (PolybiusIndexes indexes) throws Encryption.OOBError {
             if (indexes.row <= 0 || indexes.column <= 0)
                 throw new Encryption.OOBError.CODE_OUT (_("Indexes must be bigger than 0"));
             if (indexes.row > this.rows || indexes.row > this.last_row)
@@ -96,7 +96,7 @@ namespace Encryption {
             }
             for (long i = 0; i < phrase.char_count(); i++) {
                 try {
-                    indexes = table.get_letter_indexes (
+                    indexes = table.index_ofes (
                         phrase.get_char (
                             phrase.index_of_nth_char (i)
                         )
@@ -127,7 +127,7 @@ namespace Encryption {
                 try {
                     indexes.row = int.parse(phrase.get_char (phrase.index_of_nth_char (i)).to_string ());
                     indexes.column = int.parse(phrase.get_char (phrase.index_of_nth_char (i + 1)).to_string ());
-                    buffer = table.get_letter_by_indexes (indexes).to_string ();
+                    buffer = table[indexes].to_string ();
                     result = @"$result$buffer";
                 }
                 catch (Encryption.OOBError ex) {

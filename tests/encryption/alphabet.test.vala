@@ -12,13 +12,13 @@ public void test_alphabet_ru () {
         assert_cmpstr (
             "а",
             GLib.CompareOperator.EQ,
-            alphabet.get_letter_by_index (0).to_string ()
+            alphabet[0].to_string ()
         );
         string letter = "я";
         assert_cmpint (
             31,
             GLib.CompareOperator.EQ,
-            alphabet.get_letter_index (letter.get_char (0))
+            alphabet.index_of (letter.get_char (0))
         );
     }
     catch (Encryption.OOBError ex) {
@@ -38,13 +38,13 @@ public void test_alphabet_ru_full () {
         assert_cmpstr (
             "а",
             GLib.CompareOperator.EQ,
-            alphabet.get_letter_by_index (0).to_string ()
+            alphabet[0].to_string ()
         );
         string letter = "я";
         assert_cmpint (
             32,
             GLib.CompareOperator.EQ,
-            alphabet.get_letter_index (letter.get_char (0))
+            alphabet.index_of (letter.get_char (0))
         );
     }
     catch (Encryption.OOBError ex) {
@@ -64,13 +64,13 @@ public void test_alphabet_en () {
         assert_cmpstr (
             "a",
             GLib.CompareOperator.EQ,
-            alphabet.get_letter_by_index (0).to_string ()
+            alphabet[0].to_string ()
         );
         string letter = "z";
         assert_cmpint (
             25,
             GLib.CompareOperator.EQ,
-            alphabet.get_letter_index (letter.get_char (0))
+            alphabet.index_of (letter.get_char (0))
         );
     }
     catch (Encryption.OOBError ex) {

@@ -40,7 +40,7 @@ namespace Encryption {
             try {
                 for (int i = 0; i < key.char_count (); i++) {
                     unichar symb = key.get_char (key.index_of_nth_char (i));
-                    buffer_a[i] = alphabet.get_letter_index (symb);
+                    buffer_a[i] = alphabet.index_of (symb);
                     buffer.set(buffer_a[i], symb);
                 }
                 List<int> positions = new List<int>();
@@ -92,7 +92,7 @@ namespace Encryption {
                 for (int i = 0; i < row; i++) {
                     for (int j = 0; j < keys.length; j++)
                         if (result_array[i, j] != -1) {
-                            result = @"$result$(alphabet.get_letter_by_index (result_array[i, j]))";
+                            result = @"$result$(alphabet[result_array[i, j]])";
                         }
                 }
                 return result;
@@ -113,7 +113,7 @@ namespace Encryption {
                     for (int j = 0; j < length; j++) {
                         if (k < phrase.length) {
                             phrase.get_next_char (ref k, out symb);
-                            buffer[i, j] = alphabet.get_letter_index (symb);
+                            buffer[i, j] = alphabet.index_of (symb);
                         }
                         else buffer[i, j] = -1;
                     }

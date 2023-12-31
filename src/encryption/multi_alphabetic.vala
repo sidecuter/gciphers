@@ -29,17 +29,17 @@ namespace Encryption {
             for (long i = 0; i < phrase.char_count (); i++) {
                 k %= key.char_count ();
                 try {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
+                    buffer = alphabet[
+                        Encryption.get_index (
+                            alphabet.index_of (
                                 phrase.get_char (phrase.index_of_nth_char (i))
                             ),
-                            alphabet.get_letter_index(
+                            alphabet.index_of(
                                 key.get_char (key.index_of_nth_char (k))
                             ),
                             alphabet.length
                         )
-                    );
+                    ];
                     result = @"$result$(buffer.to_string())";
                 }
                 catch (Encryption.OOBError ex) {
@@ -59,17 +59,17 @@ namespace Encryption {
             for (long i = 0; i < phrase.char_count (); i++) {
                 k %= key.char_count ();
                 try {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
+                    buffer = alphabet[
+                        Encryption.get_index (
+                            alphabet.index_of (
                                 phrase.get_char (phrase.index_of_nth_char (i))
                             ),
-                            -alphabet.get_letter_index (
+                            -alphabet.index_of (
                                 key.get_char (key.index_of_nth_char (k))
                             ),
                             alphabet.length
                         )
-                    );
+                    ];
                     result = @"$result$(buffer.to_string())";
                 }
                 catch (Encryption.OOBError ex) {
@@ -77,14 +77,6 @@ namespace Encryption {
                 }
                 k++;
             }
-            return result;
-        }
-
-        private static int get_index (int index, int shift, int length) {
-            int result = index;
-            result += shift;
-            if ( result >= length ) result -= length;
-            if ( result < 0 ) result += length;
             return result;
         }
     }

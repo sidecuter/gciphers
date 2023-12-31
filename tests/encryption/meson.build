@@ -9,6 +9,7 @@ unit_tests = {
     'caesar': files (
         meson.project_source_root() + '/src/encryption/caesar.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
+        meson.project_source_root() + '/src/encryption/enc_methods.vala',
     ),
     'polybius': files (
         meson.project_source_root() + '/src/encryption/polybius.vala',
@@ -18,20 +19,24 @@ unit_tests = {
         meson.project_source_root() + '/src/encryption/belazo.vala',
         meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
+        meson.project_source_root() + '/src/encryption/enc_methods.vala',
     ),
     'trithemium': files (
         meson.project_source_root() + '/src/encryption/trithemium.vala',
         meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
+        meson.project_source_root() + '/src/encryption/enc_methods.vala',
     ),
     'vigenere': files (
         meson.project_source_root() + '/src/encryption/vigenere.vala',
         meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
+        meson.project_source_root() + '/src/encryption/enc_methods.vala',
     ),
     'multi_alphabetic': files (
         meson.project_source_root() + '/src/encryption/multi_alphabetic.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
+        meson.project_source_root() + '/src/encryption/enc_methods.vala',
     ),
     'vertical': files (
         meson.project_source_root() + '/src/encryption/vertical.vala',
@@ -40,6 +45,7 @@ unit_tests = {
     'vigenereii': files (
         meson.project_source_root() + '/src/encryption/vigenereii.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
+        meson.project_source_root() + '/src/encryption/enc_methods.vala',
     ),
     'matrix': files (
         meson.project_source_root() + '/src/encryption/matrix.vala',

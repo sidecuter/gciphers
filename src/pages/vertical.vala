@@ -84,7 +84,7 @@ namespace GCiphers {
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
             for (long i = 0; i < text.char_count (); i++){
                 try {
-                    alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
+                    alphabet.index_of (text.get_char (text.index_of_nth_char (i)));
                 }
                 catch (OOBError ex) {
                     throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter from phrase in alphabet"));
@@ -92,7 +92,7 @@ namespace GCiphers {
             }
             for (long i = 0; i < key.char_count (); i++){
                 try {
-                    alphabet.get_letter_index (key.get_char (key.index_of_nth_char (i)));
+                    alphabet.index_of (key.get_char (key.index_of_nth_char (i)));
                 }
                 catch (OOBError ex) {
                     throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter from key in alphabet"));

@@ -25,15 +25,15 @@ namespace Encryption {
             unichar buffer;
             for (long i = 0; i < phrase.char_count (); i++) {
                 try {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
+                    buffer = alphabet[
+                        Encryption.get_index (
+                            alphabet.index_of (
                                 phrase.get_char (phrase.index_of_nth_char (i))
                             ),
                             shift,
                             alphabet.length
                         )
-                    );
+                    ];
                     result = @"$result$(buffer.to_string())";
                 }
                 catch (Encryption.OOBError ex) {
@@ -48,29 +48,21 @@ namespace Encryption {
             unichar buffer;
             for (long i = 0; i < phrase.char_count (); i++) {
                 try {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
+                    buffer = alphabet[
+                        Encryption.get_index (
+                            alphabet.index_of (
                                 phrase.get_char (phrase.index_of_nth_char (i))
                             ),
                             -shift,
                             alphabet.length
                         )
-                    );
+                    ];
                     result = @"$result$(buffer.to_string())";
                 }
                 catch (Encryption.OOBError ex) {
                     throw ex;
                 }
             }
-            return result;
-        }
-
-        private static int get_index (int index, int shift, int length) {
-            int result = index;
-            result += shift;
-            if ( result >= length ) result -= length;
-            if ( result < 0 ) result += length;
             return result;
         }
     }

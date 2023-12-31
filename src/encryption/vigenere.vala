@@ -40,15 +40,15 @@ namespace Encryption {
                 string result = "";
                 unichar buffer = key.get_char (key.index_of_nth_char (0));
                 for (long i = 0; i < phrase.char_count (); i++) {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
+                    buffer = alphabet[
+                        Encryption.get_index (
+                            alphabet.index_of (
                                 phrase.get_char (phrase.index_of_nth_char (i))
                             ),
-                            -alphabet.get_letter_index (buffer),
+                            -alphabet.index_of (buffer),
                             alphabet.length
                         )
-                    );
+                    ];
                     result = @"$result$(buffer.to_string ())";
                 }
                 return result;
@@ -56,14 +56,6 @@ namespace Encryption {
             catch (Encryption.OOBError ex) {
                 throw ex;
             }
-        }
-
-        private static int get_index (int index, int shift, int length) {
-            int result = index;
-            result += shift;
-            if ( result >= length ) result -= length;
-            if ( result < 0 ) result += length;
-            return result;
         }
     }
 }

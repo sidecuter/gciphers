@@ -46,12 +46,12 @@ namespace Encryption {
             int pos = 0;
             for (long i = 0; i < phrase.char_count (); i++) {
                 try {
-                    pos = (generator.step () + alphabet.get_letter_index (
+                    pos = (generator.step () + alphabet.index_of (
                         phrase.get_char (
                             phrase.index_of_nth_char (i)
                         )
                     )) % alphabet.length;
-                    buffer = alphabet.get_letter_by_index (pos).to_string ();
+                    buffer = alphabet[pos].to_string ();
                     result = @"$result$buffer";
                 }
                 catch (Encryption.OOBError ex) {
@@ -68,13 +68,13 @@ namespace Encryption {
             int pos = 0;
             for (long i = 0; i < phrase.char_count (); i++) {
                 try {
-                    pos = alphabet.get_letter_index (
+                    pos = alphabet.index_of (
                         phrase.get_char (
                             phrase.index_of_nth_char (i)
                         )
                     ) - generator.step ();
                     if (pos < 0) pos += alphabet.length;
-                    buffer = alphabet.get_letter_by_index (pos).to_string ();
+                    buffer = alphabet[pos].to_string ();
                     result = @"$result$buffer";
                 }
                 catch (Encryption.OOBError ex) {

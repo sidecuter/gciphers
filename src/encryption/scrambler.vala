@@ -35,7 +35,7 @@ namespace Encryption {
             List<char> bits = new List<char> ();
             int index;
             for (int i = 0; i < phrase.char_count (); i++) {
-                index = alphabet.get_letter_index (
+                index = alphabet.index_of (
                     phrase.get_char (
                         phrase.index_of_nth_char (i)
                     )
@@ -61,7 +61,7 @@ namespace Encryption {
                     index--;
                     if (index < 0) index += alphabet.length;
                     index %= alphabet.length;
-                    buffer = alphabet.get_letter_by_index(index).to_string();
+                    buffer = alphabet[index].to_string();
                     result = @"$result$buffer";
                     index = 0;
                     count = 0;

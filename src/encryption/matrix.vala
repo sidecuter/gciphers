@@ -237,7 +237,7 @@ namespace Encryption {
             for (int i = 0; i < count; i++) {
                 for (int j = 0; j < n; j++) {
                     if (i == count - 1 && i * n + j >= char_count) buffer[j] = 1;
-                    else buffer[j] = alphabet.get_letter_index (
+                    else buffer[j] = alphabet.index_of (
                         letters.get_char (
                             letters.index_of_nth_char (i * n + j)
                         )
@@ -337,7 +337,7 @@ namespace Encryption {
                         temp = Math.round (buff.elements.get(i) * 100) / 100;
                         if ((double) ((int) temp) != temp)
                             throw new Encryption.OOBError.CODE_PASSTHROUGH (_("Phrase contains wrong encrypted components"));
-                        buffer = alphabet.get_letter_by_index (((int) temp) - 1).to_string ();
+                        buffer = alphabet[((int) temp) - 1].to_string ();
                         result = @"$result$buffer";
                     }
                 }
