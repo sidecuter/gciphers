@@ -71,9 +71,9 @@ namespace Encryption {
             Object (
                 scrambler: scrambl,
                 value_start: key,
-                size: scrambl.length,
-                value: key
+                size: scrambl.length
             );
+            this.value = key;
         }
 
         public char shift () {
