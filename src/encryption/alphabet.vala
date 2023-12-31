@@ -51,8 +51,7 @@ namespace Encryption {
         }
 
         public bool contains (unichar letter) {
-            int result = alphabet.index_of_char(letter);
-            return result == -1 ? false : true;
+            return letter.to_string() in alphabet;
         }
 
         public new unichar get (int index) throws Encryption.OOBError {

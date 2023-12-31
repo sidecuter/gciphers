@@ -85,14 +85,7 @@ namespace GCiphers {
             if (!int.try_parse (key, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("Key is not a valid number"));
             if (num < 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Number is below zero"));
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            for (long i = 0; i < text.char_count (); i++){
-                try {
-                    alphabet.index_of (text.get_char (text.index_of_nth_char (i)));
-                }
-                catch (OOBError ex) {
-                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter in alphabet"));
-                }
-            }
+            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
         }
     }
 }

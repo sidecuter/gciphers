@@ -28,4 +28,26 @@ namespace Errors {
         WRONG_STRING_LENGTH,
         NOT_STATED,
     }
+
+    void validate_string (Encryption.Alphabet alphabet, string text, string message)
+        throws ValidateError
+    {
+        int i = 0;
+        unichar letter;
+        while (text.get_next_char (ref i, out letter)){
+            if (!(letter in alphabet))
+                throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (message);
+        }
+    }
+
+    void validate_int (string text, string message)
+        throws ValidateError
+    {
+        int i = 0, num;
+        unichar letter;
+        while (text.get_next_char (ref i, out letter)){
+            if (!int.try_parse (letter.to_string (), out num))
+                throw new Errors.ValidateError.NOT_NUMBER (message);
+        }
+    }
 }
