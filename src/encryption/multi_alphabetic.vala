@@ -20,64 +20,42 @@
 
 namespace Encryption {
     class MultiAlphabetic : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key) 
-            throws Encryption.OOBError
-        {
+        private static string proto_crypt (
+            Encryption.Alphabet alphabet, string phrase, string key, bool reverse = false
+        ) throws Encryption.OOBError {
             string result = "";
-            unichar buffer;
-            long k = 0;
-            for (long i = 0; i < phrase.char_count (); i++) {
-                k %= key.char_count ();
+            unichar buffer, letter;
+            int k = 0, i = 0;
+            while (phrase.get_next_char (ref i, out letter)) {
+                if (key.length == k) k %= key.length;
+                key.get_next_char (ref k, out buffer);
                 try {
-                    buffer = alphabet[
+                    letter = alphabet[
                         Encryption.get_index (
-                            alphabet.index_of (
-                                phrase.get_char (phrase.index_of_nth_char (i))
-                            ),
-                            alphabet.index_of(
-                                key.get_char (key.index_of_nth_char (k))
-                            ),
+                            alphabet.index_of (letter),
+                            alphabet.index_of(buffer) * (reverse ? -1 : 1),
                             alphabet.length
                         )
                     ];
-                    result = @"$result$(buffer.to_string())";
+                    result = @"$result$(letter.to_string())";
                 }
                 catch (Encryption.OOBError ex) {
                     throw ex;
                 }
-                k++;
             }
             return result;
+        }
+
+        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key) 
+            throws Encryption.OOBError
+        {
+            return proto_crypt (alphabet, phrase, key);
         }
 
         public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
-            string result = "";
-            unichar buffer;
-            long k = 0;
-            for (long i = 0; i < phrase.char_count (); i++) {
-                k %= key.char_count ();
-                try {
-                    buffer = alphabet[
-                        Encryption.get_index (
-                            alphabet.index_of (
-                                phrase.get_char (phrase.index_of_nth_char (i))
-                            ),
-                            -alphabet.index_of (
-                                key.get_char (key.index_of_nth_char (k))
-                            ),
-                            alphabet.length
-                        )
-                    ];
-                    result = @"$result$(buffer.to_string())";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
-                k++;
-            }
-            return result;
+            return proto_crypt (alphabet, phrase, key, true);
         }
     }
 }

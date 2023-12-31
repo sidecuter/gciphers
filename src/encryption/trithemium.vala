@@ -23,25 +23,13 @@ namespace Encryption {
         public static string encrypt (Encryption.Alphabet alphabet, string phrase)
             throws Encryption.OOBError
         {
-            try {
-                string result = Encryption.MultiAlphabetic.encrypt(alphabet, phrase, alphabet.alphabet);
-                return result;
-            }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
+            return Encryption.MultiAlphabetic.encrypt(alphabet, phrase, alphabet.alphabet);
         }
 
         public static string decrypt (Encryption.Alphabet alphabet, string phrase)
             throws Encryption.OOBError
         {
-            try {
-                string result = Encryption.MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
-                return result;
-            }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
+            return Encryption.MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
         }
     }
 }

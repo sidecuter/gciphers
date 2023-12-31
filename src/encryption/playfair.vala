@@ -22,14 +22,14 @@ namespace Encryption {
     class Playfair : Object {
         public static bool validate_key (string key) {
             var dup = new Gee.HashMap<string, int> ();
-            string letter;
-            for (int i = 0; i < key.char_count (); i++) {
-                letter = key.get_char (key.index_of_nth_char (i)).to_string ();
-                if (dup.has_key (letter)) {
-                    dup.set(letter, dup.get(letter) + 1);
+            int i = 0;
+            unichar buf;
+            while (key.get_next_char (ref i, out buf)) {
+                if (dup.has_key (buf.to_string ())) {
+                    dup.set(buf.to_string (), dup.get(buf.to_string ()) + 1);
                 }
                 else {
-                    dup.set(letter, 1);
+                    dup.set(buf.to_string (), 1);
                 }
             }
             foreach (var entry in dup) {
@@ -107,9 +107,8 @@ namespace Encryption {
             string r = "";
             int i = 0;
             string buffer;
-            while (i < phrase.length) {
-                unichar letter1, letter2;
-                phrase.get_next_char (ref i, out letter1);
+            unichar letter1, letter2;
+            while (phrase.get_next_char (ref i, out letter1)) {
                 if (!phrase.get_next_char (ref i, out letter2)) letter2 = 1072;
                 if (letter1 == letter2) {
                     buffer = get_letter_pair(

@@ -23,52 +23,42 @@ namespace Encryption {
         public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
-            try {
-                string result = "";
-                unichar buffer = key.get_char (key.index_of_nth_char (0));
-                for (long i = 0; i < phrase.char_count (); i++) {
-                    buffer = alphabet[
-                        Encryption.get_index (
-                            alphabet.index_of (
-                                phrase.get_char (phrase.index_of_nth_char (i))
-                            ),
-                            alphabet.index_of (buffer),
-                            alphabet.length
-                        )
-                    ];
-                    result = @"$result$(buffer.to_string ())";
-                }
-                return result;
+            string result = "";
+            int i = 0, k = 0;
+            unichar buffer, letter;
+            key.get_next_char (ref k, out buffer);
+            while (phrase.get_next_char (ref i, out letter)) {
+                buffer = alphabet[
+                    Encryption.get_index (
+                        alphabet.index_of (letter),
+                        alphabet.index_of (buffer),
+                        alphabet.length
+                    )
+                ];
+                result = @"$result$(buffer.to_string ())";
             }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
+            return result;
         }
 
         public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
-            try {
-                string result = "";
-                unichar buffer = key.get_char (key.index_of_nth_char (0));
-                for (long i = 0; i < phrase.char_count (); i++) {
-                    buffer = alphabet[
-                        Encryption.get_index (
-                            alphabet.index_of (
-                                phrase.get_char (phrase.index_of_nth_char (i))
-                            ),
-                            -alphabet.index_of (buffer),
-                            alphabet.length
-                        )
-                    ];
-                    result = @"$result$(buffer.to_string ())";
-                    buffer = phrase.get_char (phrase.index_of_nth_char (i));
-                }
-                return result;
+            string result = "";
+            unichar buffer = key.get_char (key.index_of_nth_char (0));
+            for (long i = 0; i < phrase.char_count (); i++) {
+                buffer = alphabet[
+                    Encryption.get_index (
+                        alphabet.index_of (
+                            phrase.get_char (phrase.index_of_nth_char (i))
+                        ),
+                        -alphabet.index_of (buffer),
+                        alphabet.length
+                    )
+                ];
+                result = @"$result$(buffer.to_string ())";
+                buffer = phrase.get_char (phrase.index_of_nth_char (i));
             }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
+            return result;
         }
     }
 }

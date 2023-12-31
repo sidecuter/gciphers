@@ -22,13 +22,12 @@ namespace Encryption {
     class Atbash : Object {
         public static string encrypt (Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
             string result = "";
-            unichar buffer;
-            for (long i = 0; i < phrase.char_count (); i++) {
+            unichar letter;
+            int i = 0;
+            while (phrase.get_next_char (ref i, out letter)) {
                 try {
-                    buffer = alphabet[alphabet.length - 1 -
-                        alphabet.index_of (phrase.get_char (phrase.index_of_nth_char (i)))
-                    ];
-                    result = @"$result$(buffer.to_string())";
+                    letter = alphabet[alphabet.length - 1 - alphabet.index_of (letter)];
+                    result = @"$result$(letter.to_string())";
                 }
                 catch (Encryption.OOBError ex) {
                     throw ex;

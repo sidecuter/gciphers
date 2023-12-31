@@ -31,15 +31,12 @@ namespace Encryption {
             else return '1';
         }
 
-        public static List<char> convert_to_bits(string phrase, Alphabet alphabet) throws OOBError {
+        public static List<char> convert_to_bits (string phrase, Alphabet alphabet) throws OOBError {
             List<char> bits = new List<char> ();
-            int index;
-            for (int i = 0; i < phrase.char_count (); i++) {
-                index = alphabet.index_of (
-                    phrase.get_char (
-                        phrase.index_of_nth_char (i)
-                    )
-                ) + 1;
+            int index, i = 0;
+            unichar letter;
+            while (phrase.get_next_char(ref i, out letter)) {
+                index = alphabet.index_of (letter) + 1;
                 for (int j = 0; j < 6; j++) {
                     if ((index & 32) == 32) bits.append ('1');
                     else bits.append ('0');
@@ -49,7 +46,7 @@ namespace Encryption {
             return bits;
         }
 
-        public static string convert_to_letters(List<char> bits, Alphabet alphabet) throws OOBError {
+        public static string convert_to_letters (List<char> bits, Alphabet alphabet) throws OOBError {
             int count = 0;
             int index = 0;
             string result = "";
@@ -61,7 +58,7 @@ namespace Encryption {
                     index--;
                     if (index < 0) index += alphabet.length;
                     index %= alphabet.length;
-                    buffer = alphabet[index].to_string();
+                    buffer = alphabet[index].to_string ();
                     result = @"$result$buffer";
                     index = 0;
                     count = 0;
@@ -74,16 +71,16 @@ namespace Encryption {
             Object (
                 scrambler: scrambl,
                 value_start: key,
-                size: scrambl.length
+                size: scrambl.length,
+                value: key
             );
-            this.value = key;
         }
 
-        public char shift() {
+        public char shift () {
             char param = value[value.length - 1];
             char ret_value = param;
             for (int i = size - 2; i >= 0; i--) {
-                if (scrambler[i] == '1') param = xor(param, value[i]);
+                if (scrambler[i] == '1') param = xor (param, value[i]);
             }
             value = @"$param$(value[0:size-1])";
             return ret_value;
@@ -102,27 +99,19 @@ namespace Encryption {
             Register reg1 = new Register (scrambler1, key1);
             Register reg2 = new Register (scrambler2, key2);
             List<char> out_bits = new List<char> ();
-            string result = "";
             bool flag = false;
             char out1 = '0', out2 = '0';
-            try {
-                List<char> bits = Register.convert_to_bits (phrase, alphabet);
-                foreach (char bit in bits) {
-                    if (
-                        flag && reg1.value == reg1.value_start &&
-                        reg2.value == reg2.value_start
-                    ) throw new OOBError.CODE_OUT ("End of cycle before end of phrase");
-                    flag = true;
-                    out1 = reg1.shift ();
-                    out2 = reg2.shift ();
-                    out_bits.append (Register.xor(Register.xor(out1, out2), bit));
-                }
-                result = Register.convert_to_letters(out_bits, alphabet);
+            foreach (char bit in Register.convert_to_bits (phrase, alphabet)) {
+                if (
+                    flag && reg1.value == reg1.value_start &&
+                    reg2.value == reg2.value_start
+                ) throw new OOBError.CODE_OUT ("End of cycle before end of phrase");
+                flag = true;
+                out1 = reg1.shift ();
+                out2 = reg2.shift ();
+                out_bits.append (Register.xor (Register.xor (out1, out2), bit));
             }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
-            return result;
+            return Register.convert_to_letters (out_bits, alphabet);
         }
     }
 }
