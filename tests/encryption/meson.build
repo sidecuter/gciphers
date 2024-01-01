@@ -58,6 +58,7 @@ unit_tests = {
     'scrambler': files (
         meson.project_source_root() + '/src/encryption/scrambler.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
+        meson.project_source_root() + '/src/encryption/enc_methods.vala',
     ),
     'shenon': files (
         meson.project_source_root() + '/src/encryption/shenon.vala',

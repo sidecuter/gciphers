@@ -19,11 +19,13 @@
  */
 
 namespace Encryption {
+    int mod (int value, int modd) {
+        if ( value >= modd ) value %= modd;
+        if ( value < 0 ) value = modd - (-value) % modd;
+        return value;
+    }
+
     int get_index (int index, int shift, int length) {
-        int result = index;
-        result += shift;
-        if ( result >= length ) result %= length;
-        if ( result < 0 ) result = length - (-result) % length;
-        return result;
+        return mod (index + shift, length);
     }
 }
