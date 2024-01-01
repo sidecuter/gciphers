@@ -30,14 +30,12 @@ namespace Encryption {
             uint8 value_buffer = 0, scrambler_buffer = 0;
             unichar symbol;
             for (int i = 0; i < size1; i++) {
+                scrambler_buffer <<= 1;
+                value_buffer <<= 1;
                 scrambler.get_next_char (ref pos_s, out symbol);
                 scrambler_buffer |= (uint8) int.parse(symbol.to_string ());
                 value.get_next_char (ref pos_v, out symbol);
                 value_buffer |= (uint8) int.parse(symbol.to_string ());
-                if (i != size1 - 1) {
-                    scrambler_buffer <<= 1;
-                    value_buffer <<= 1;
-                }
             }
             Object (
                 size: size1,
@@ -82,12 +80,10 @@ namespace Encryption {
         {
             uint8 reg1 = 0, reg2 = 0, result;
             for (uint8 i = 0; i < 6; i++) {
+                reg1 <<= 1;
+                reg2 <<= 1;
                 reg1 |= this.reg1.shift ();
                 reg2 |= this.reg2.shift ();
-                if (i != 5) {
-                    reg1 <<= 1;
-                    reg2 <<= 1;
-                }
                 if (this.reg1.value == this.reg1.value_start &&
                     this.reg2.value == this.reg2.value_start)
                     throw new OOBError.CODE_OUT (_("End of cycle before end of phrase"));
