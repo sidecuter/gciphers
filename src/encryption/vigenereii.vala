@@ -29,9 +29,8 @@ namespace Encryption {
             key.get_next_char (ref k, out buffer);
             while (phrase.get_next_char (ref i, out letter)) {
                 buffer = alphabet[
-                    Encryption.get_index (
-                        alphabet.index_of (letter),
-                        alphabet.index_of (buffer),
+                    mod (
+                        alphabet.index_of (letter) + alphabet.index_of (buffer),
                         alphabet.length
                     )
                 ];
@@ -47,11 +46,10 @@ namespace Encryption {
             unichar buffer = key.get_char (key.index_of_nth_char (0));
             for (long i = 0; i < phrase.char_count (); i++) {
                 buffer = alphabet[
-                    Encryption.get_index (
+                    mod (
                         alphabet.index_of (
                             phrase.get_char (phrase.index_of_nth_char (i))
-                        ),
-                        -alphabet.index_of (buffer),
+                        ) - alphabet.index_of (buffer),
                         alphabet.length
                     )
                 ];

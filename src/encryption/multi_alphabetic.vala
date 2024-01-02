@@ -31,9 +31,9 @@ namespace Encryption {
                 key.get_next_char (ref k, out buffer);
                 try {
                     letter = alphabet[
-                        Encryption.get_index (
-                            alphabet.index_of (letter),
-                            alphabet.index_of(buffer) * (reverse ? -1 : 1),
+                        mod (
+                            alphabet.index_of (letter) 
+                            + alphabet.index_of(buffer) * (reverse ? -1 : 1),
                             alphabet.length
                         )
                     ];

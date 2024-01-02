@@ -35,9 +35,8 @@ namespace Encryption {
             key.get_next_char (ref k, out buffer);
             while (phrase.get_next_char (ref i, out letter)) {
                 buffer = alphabet[
-                    Encryption.get_index (
-                        alphabet.index_of (letter),
-                        -alphabet.index_of (buffer),
+                    mod (
+                        alphabet.index_of (letter) - alphabet.index_of (buffer),
                         alphabet.length
                     )
                 ];

@@ -30,9 +30,8 @@ namespace Encryption {
             while (phrase.get_next_char (ref i, out letter)) {
                 try {
                     letter = alphabet[
-                        Encryption.get_index (
-                            alphabet.index_of (letter),
-                            reverse ? -shift : shift,
+                        mod (
+                            alphabet.index_of (letter) + (reverse ? -shift : shift),
                             alphabet.length
                         )
                     ];

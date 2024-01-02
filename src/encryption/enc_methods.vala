@@ -24,8 +24,4 @@ namespace Encryption {
         if ( value < 0 ) value = modd - (-value) % modd;
         return value;
     }
-
-    int get_index (int index, int shift, int length) {
-        return mod (index + shift, length);
-    }
 }
