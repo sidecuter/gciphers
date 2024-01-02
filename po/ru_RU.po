@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-31 22:26+0300\n"
-"PO-Revision-Date: 2023-12-27 15:35+0300\n"
+"POT-Creation-Date: 2024-01-03 02:28+0300\n"
+"PO-Revision-Date: 2024-01-03 02:30+0300\n"
 "Last-Translator: Alexander Svobodov\n"
 "Language-Team: Alexander Svobodov sidecuter@outlook.com\n"
 "Language: ru_RU\n"
@@ -31,6 +31,22 @@ msgstr "Шифруем и дешифруем текст используя ра�
 #: data/com.github.sidecuter.gciphers.metainfo.xml.in:11
 msgid "No description"
 msgstr "Нет описания"
+
+#: data/com.github.sidecuter.gciphers.gschema.xml:6
+msgid "Window width"
+msgstr "Ширина окна"
+
+#: data/com.github.sidecuter.gciphers.gschema.xml:7
+msgid "Saved window width in pixels"
+msgstr "Сохраненное значение ширины окна в пикселях"
+
+#: data/com.github.sidecuter.gciphers.gschema.xml:13
+msgid "Window height"
+msgstr "Высота окна"
+
+#: data/com.github.sidecuter.gciphers.gschema.xml:14
+msgid "Saved window height in pixels"
+msgstr "Сохраненное значение высоты окна в пикселях"
 
 #: src/window.vala:33
 msgid "Atbash"
@@ -434,6 +450,10 @@ msgstr "Фраза не корректна"
 #: src/encryption/matrix.vala:339
 msgid "Phrase contains wrong encrypted components"
 msgstr "Фраза содержит неверно защифрованнные фрагменты"
+
+#: src/encryption/scrambler.vala:89
+msgid "End of cycle before end of phrase"
+msgstr "Конец цикла перед концом фразы"
 
 #: src/encryption/alphabet.vala:59
 msgid "Index bigger than string size"

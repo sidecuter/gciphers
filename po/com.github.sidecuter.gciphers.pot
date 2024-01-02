@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-31 22:26+0300\n"
+"POT-Creation-Date: 2024-01-03 02:28+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,22 @@ msgstr ""
 
 #: data/com.github.sidecuter.gciphers.metainfo.xml.in:11
 msgid "No description"
+msgstr ""
+
+#: data/com.github.sidecuter.gciphers.gschema.xml:6
+msgid "Window width"
+msgstr ""
+
+#: data/com.github.sidecuter.gciphers.gschema.xml:7
+msgid "Saved window width in pixels"
+msgstr ""
+
+#: data/com.github.sidecuter.gciphers.gschema.xml:13
+msgid "Window height"
+msgstr ""
+
+#: data/com.github.sidecuter.gciphers.gschema.xml:14
+msgid "Saved window height in pixels"
 msgstr ""
 
 #: src/window.vala:33
@@ -429,6 +445,10 @@ msgstr ""
 
 #: src/encryption/matrix.vala:339
 msgid "Phrase contains wrong encrypted components"
+msgstr ""
+
+#: src/encryption/scrambler.vala:89
+msgid "End of cycle before end of phrase"
 msgstr ""
 
 #: src/encryption/alphabet.vala:59
