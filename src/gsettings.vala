@@ -31,8 +31,7 @@ namespace GCiphers {
             this.settings = new Settings (Config.APP_ID);
         }
 
-        public void set_new_window_resolution (int width, int height)
-        {
+        public void set_new_window_resolution (int width, int height) {
             settings.set_int ("width", width);
             settings.set_int ("height", height);
         }
