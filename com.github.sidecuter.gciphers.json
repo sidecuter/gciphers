@@ -8,7 +8,6 @@
     ],
     "command" : "com.github.sidecuter.gciphers",
     "finish-args" : [
-        "--share=network",
         "--share=ipc",
         "--socket=fallback-x11",
         "--device=dri",
@@ -32,13 +31,13 @@
     ],
     "modules" : [
         {
-            "name" : "gciphers",
+            "name" : "com.github.sidecuter.gciphers",
             "builddir" : true,
             "buildsystem" : "meson",
             "sources" : [
                 {
-                    "type" : "git",
-                    "url" : "https://github.com/sidecuter/gciphers"
+                    "type" : "dir",
+                    "path" : "."
                 }
             ]
         }

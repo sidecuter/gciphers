@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<name>GCiphers</name>
-	<display_name>GCiphers</display_name>
-	<id>com.github.sidecuter.gciphers.desktop</id>
+	<name>@APP_NAME@</name>
+	<display_name>@APP_NAME@</display_name>
+	<id>@APP_ID@.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
 	<content_rating type="oars-1.1" />
