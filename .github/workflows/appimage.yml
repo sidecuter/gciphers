@@ -1,0 +1,43 @@
+name: Github appimage release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  appimage-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup ubuntu noble apt-repos
+        run: | 
+          sudo sed -i 's/jammy/noble/g' /etc/apt/sources.list
+          sudo apt-get -y update
+      - name: Install deps
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: |
+            libgtk-4-dev valac meson ninja-build \
+            libgee-0.8-dev libadwaita-1-dev gettext \
+            desktop-file-utils appstream libxml2-utils \
+            binutils coreutils fakeroot fuse libgdk-pixbuf2.0-dev \
+            patchelf python3-pip python3-setuptools squashfs-tools strace util-linux zsync
+          version: ${{ runner.os }}-${{ hashFiles('./meson.build') }}
+      - name: download appimage-builder
+        run: |
+          sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
+          sudo chmod +x /usr/local/bin/appimagetool
+          sudo pip3 install appimage-builder
+      - name: Build appimage
+        run: appimage-builder --recipe AppImageBuilder.yml --skip-tests
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          generate_release_notes: true
+          files: GCiphers-0.1.1-x86_64.AppImage

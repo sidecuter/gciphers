@@ -1,7 +1,7 @@
 # appimage-builder recipe see https://appimage-builder.readthedocs.io for details
 version: 1
 AppDir:
-  path: ~/AppDir
+  path: ./AppDir
   app_info:
     id: com.github.sidecuter.gciphers
     name: GCiphers
@@ -9,9 +9,6 @@ AppDir:
     version: 0.1.1
     exec: usr/bin/com.github.sidecuter.gciphers
     exec_args: $@
-  pacman:
-    include: []
-    exclude: []
   files:
     include:
     - /lib64/ld-linux-x86-64.so.2
