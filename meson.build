@@ -12,8 +12,13 @@ conf.set_quoted('APP_NAME', 'GCiphers')
 conf.set_quoted('G_LOG_DOMAIN', 'GCiphers')
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
-conf.set_quoted('DATADIR', join_paths(get_option('prefix'), get_option('datadir')))
-conf.set_quoted('GNOMELOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
+if get_option('appimage') == true
+  conf.set_quoted('DATADIR', get_option('datadir'))
+  conf.set_quoted('GNOMELOCALEDIR', get_option('localedir'))
+else
+  conf.set_quoted('DATADIR', join_paths(get_option('prefix'), get_option('datadir')))
+  conf.set_quoted('GNOMELOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
+endif
 configure_file(output: 'config.h', configuration: conf)
 
 add_project_arguments(

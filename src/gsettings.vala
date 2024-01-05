@@ -21,24 +21,50 @@
 namespace GCiphers {
     [SingleInstance]
     class GSettings : Object {
-        private Settings settings;
+        private Settings? settings;
 
         public GSettings () {
             Object();
         }
 
         construct {
-            this.settings = new Settings (Config.APP_ID);
+            try {
+                string origin;
+                foreach (unowned string env in Environ.get()) {
+                    var temp = env.split ("=");
+                    if (temp[0] == "ORIGIN")
+                        origin = temp[1];
+                }
+                string settings_dir;
+                if (origin != null)
+                    settings_dir = Path.build_path (
+                        Path.DIR_SEPARATOR_S,
+                        origin,
+                        "usr",
+                        Config.DATADIR,
+                        "glib-2.0/schemas"
+                    );
+                else 
+                    settings_dir = Path.build_path (Path.DIR_SEPARATOR_S, Config.DATADIR, "glib-2.0/schemas");
+                SettingsSchemaSource sss = new SettingsSchemaSource.from_directory (settings_dir, null, false);
+                SettingsSchema schema = sss.lookup (Config.APP_ID, false);
+                if (schema != null) {
+                    this.settings = new Settings.full (schema, null, null);
+                }
+            }
+            catch (Error e) {
+                warning (e.message);
+            }
         }
 
         public void set_new_window_resolution (int width, int height) {
-            settings.set_int ("width", width);
-            settings.set_int ("height", height);
+            settings?.set_int ("width", width);
+            settings?.set_int ("height", height);
         }
 
         public void get_current_window_resolution (ref int width, ref int height) {
-            width = settings.get_int ("width");
-            height = settings.get_int ("height");
+            width = settings == null ? width : settings.get_int ("width");
+            height = settings == null ? height : settings.get_int ("height");
         }
     }
 }

@@ -1,0 +1,52 @@
+# appimage-builder recipe see https://appimage-builder.readthedocs.io for details
+version: 1
+AppDir:
+  path: ~/AppDir
+  app_info:
+    id: com.github.sidecuter.gciphers
+    name: GCiphers
+    icon: com.github.sidecuter.gciphers
+    version: 0.1.1
+    exec: usr/bin/com.github.sidecuter.gciphers
+    exec_args: $@
+  pacman:
+    include: []
+    exclude: []
+  files:
+    include:
+    - /lib64/ld-linux-x86-64.so.2
+    exclude:
+    - usr/share/man
+    - usr/share/doc/*/README.*
+    - usr/share/doc/*/changelog.*
+    - usr/share/doc/*/NEWS.*
+    - usr/share/doc/*/TODO.*
+  test:
+    fedora-30:
+      image: appimagecrafters/tests-env:fedora-30
+      command: ./AppRun
+    debian-stable:
+      image: appimagecrafters/tests-env:debian-stable
+      command: ./AppRun
+    archlinux-latest:
+      image: appimagecrafters/tests-env:archlinux-latest
+      command: ./AppRun
+    centos-7:
+      image: appimagecrafters/tests-env:centos-7
+      command: ./AppRun
+    ubuntu-xenial:
+      image: appimagecrafters/tests-env:ubuntu-xenial
+      command: ./AppRun
+script: |
+  # remove any existent binaries
+  rm AppDir build | true
+
+  # compile and install binaries into AppDir
+  meson setup build --prefix=/usr --buildtype=release -Dappimage=true
+  meson compile -C build
+  DESTDIR=$(pwd)/AppDir meson install -C build
+  update-desktop-database $(pwd)/AppDir/usr/share/applications
+  glib-compile-schemas $(pwd)/AppDir/usr/share/glib-2.0/schemas
+AppImage:
+  arch: x86_64
+  update-information: guess

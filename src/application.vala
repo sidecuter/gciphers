@@ -33,8 +33,26 @@ namespace GCiphers {
             this.add_action_entries (action_entries, this);
             this.set_accels_for_action ("app.quit", {"<primary>q"});
             Intl.setlocale (LocaleCategory.ALL, "");
-            Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.GNOMELOCALEDIR);
-            Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+            string? origin = null;
+            foreach (unowned string env in Environ.get()) {
+                var temp = env.split ("=");
+                if (temp[0] == "ORIGIN")
+                    origin = temp[1];
+            }
+            if (origin != null) {
+                Intl.bindtextdomain (
+                    Config.GETTEXT_PACKAGE,
+                    Path.build_path (Path.DIR_SEPARATOR_S,
+                        origin,
+                        "usr", 
+                        Config.GNOMELOCALEDIR
+                    )
+                );
+            }
+            else {
+                Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.GNOMELOCALEDIR);
+            }
+            Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");   
             Intl.textdomain (Config.GETTEXT_PACKAGE);
         }
 
