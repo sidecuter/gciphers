@@ -228,20 +228,16 @@ namespace Encryption {
 
         private static List<Matrix> get_letters (Alphabet alphabet, string letters, int n) 
         throws Encryption.OOBError {
-            int char_count = letters.char_count ();
-            int count;
+            unichar letter;
+            int count, k = 0, char_count = letters.char_count ();
             if (char_count % 3 == 0) count = char_count / 3;
             else count = char_count / 3 + 1;
             List<Matrix> result = new List<Matrix> ();
             int[] buffer = new int [n];
             for (int i = 0; i < count; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (i == count - 1 && i * n + j >= char_count) buffer[j] = 1;
-                    else buffer[j] = alphabet.index_of (
-                        letters.get_char (
-                            letters.index_of_nth_char (i * n + j)
-                        )
-                    ) + 1;
+                    if (!letters.get_next_char (ref k, out letter)) buffer[j] = 1;
+                    else buffer[j] = alphabet.index_of (letter) + 1;
                 }
                 result.append (new Matrix.from_int (n, 1, buffer));
             }
@@ -263,9 +259,7 @@ namespace Encryption {
                 for (int j = 0; j < avg_length; j++) {
                     buffer = string.join("", 
                         buffer,
-                        phrase.get_char (
-                            phrase.index_of_nth_char (i * avg_length + j)
-                        ).to_string ()
+                        phrase[i * avg_length + j].to_string ()
                     );
                 }
                 matr_buffer[i % n] = int.parse (buffer);

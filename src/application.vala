@@ -34,7 +34,7 @@ namespace GCiphers {
             this.set_accels_for_action ("app.quit", {"<primary>q"});
             Intl.setlocale (LocaleCategory.ALL, "");
             string? origin = null;
-            foreach (unowned string env in Environ.get()) {
+            foreach (unowned string env in Environ.get()) { // TODO: Environ.get() needs to free memory after it's use
                 var temp = env.split ("=");
                 if (temp[0] == "ORIGIN")
                     origin = temp[1];
