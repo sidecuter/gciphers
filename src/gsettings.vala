@@ -29,12 +29,8 @@ namespace GCiphers {
 
         construct {
             try {
-                string origin;
-                foreach (unowned string env in Environ.get()) {
-                    var temp = env.split ("=");
-                    if (temp[0] == "ORIGIN")
-                        origin = temp[1];
-                }
+                var envs = Environ.get();
+                string? origin = Environ.get_variable (envs, "ORIGIN");
                 string settings_dir;
                 if (origin != null)
                     settings_dir = Path.build_path (
@@ -44,7 +40,7 @@ namespace GCiphers {
                         Config.DATADIR,
                         "glib-2.0/schemas"
                     );
-                else 
+                else
                     settings_dir = Path.build_path (Path.DIR_SEPARATOR_S, Config.DATADIR, "glib-2.0/schemas");
                 SettingsSchemaSource sss = new SettingsSchemaSource.from_directory (settings_dir, null, false);
                 SettingsSchema schema = sss.lookup (Config.APP_ID, false);
