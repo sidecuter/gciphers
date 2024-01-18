@@ -30,7 +30,13 @@ namespace GCiphers {
         construct {
             try {
                 var envs = Environ.get();
-                string? origin = Environ.get_variable (envs, "ORIGIN");
+                string? origin = null;
+                if (Environment.get_os_info (OsInfoKey.NAME) == "Windows") {
+                    origin = Environ.get_variable (envs, "GCAD");
+                }
+                else {
+                    origin = Environ.get_variable (envs, "ORIGIN");
+                }
                 string settings_dir;
                 if (origin != null)
                     settings_dir = Path.build_path (
