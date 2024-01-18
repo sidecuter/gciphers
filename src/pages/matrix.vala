@@ -131,7 +131,7 @@ namespace GCiphers {
             int num;
             if (n.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("n is empty"));
             if (!int.try_parse (n, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("n is not a valid number"));
-            if (num <= 1 || num > 10) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("n is below or equal one or greater than 10"));
+            if (num <= 1 || num > 10) throw new Errors.ValidateError.INCORRECT_NUMBER (_("n is below or equal one or greater than 10"));
             return num;
         }
 
