@@ -187,7 +187,7 @@ def create_nsis_script():
 !define APP_NAME "GCiphers"
 !define COMP_NAME "Sidecuter"
 !define WEB_SITE "https://github.com/sidecuter/gciphers"
-!define VERSION "0.1.1.0"
+!define VERSION "0.1.2.0"
 !define COPYRIGHT "Sidecuter © 2023"
 !define DESCRIPTION "Application"
 !define LICENSE_TXT "{SOURCE_ROOT}\\LICENSE"
