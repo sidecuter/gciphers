@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<name>@APP_NAME@</name>
+	<name>Gciphers</name>
 	<display_name>@APP_NAME@</display_name>
 	<id>@APP_ID@.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
