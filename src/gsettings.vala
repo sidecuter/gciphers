@@ -38,7 +38,14 @@ namespace GCiphers {
                     origin = Environ.get_variable (envs, "ORIGIN");
                 }
                 string settings_dir;
-                if (origin != null)
+                if (origin != null && Environment.get_os_info (OsInfoKey.NAME) == "Windows")
+                    settings_dir = Path.build_path (
+                        Path.DIR_SEPARATOR_S,
+                        origin,
+                        "share",
+                        "glib-2.0/schemas"
+                    );
+                else if (origin != null)
                     settings_dir = Path.build_path (
                         Path.DIR_SEPARATOR_S,
                         origin,
@@ -46,9 +53,15 @@ namespace GCiphers {
                         Config.DATADIR,
                         "glib-2.0/schemas"
                     );
-                else
-                    settings_dir = Path.build_path (Path.DIR_SEPARATOR_S, Config.DATADIR, "glib-2.0/schemas");
-                SettingsSchemaSource sss = new SettingsSchemaSource.from_directory (settings_dir, null, false);
+                else 
+                    settings_dir = Path.build_path (
+                        Path.DIR_SEPARATOR_S,
+                        Config.DATADIR,
+                        "glib-2.0/schemas"
+                    );
+                SettingsSchemaSource sss = new SettingsSchemaSource.from_directory (
+                    settings_dir, null, false
+                );
                 SettingsSchema schema = sss.lookup (Config.APP_ID, false);
                 if (schema != null) {
                     this.settings = new Settings.full (schema, null, null);

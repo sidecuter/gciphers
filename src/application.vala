@@ -34,13 +34,7 @@ namespace GCiphers {
             this.set_accels_for_action ("app.quit", {"<primary>q"});
             Intl.setlocale (LocaleCategory.ALL, "");
             var envs = Environ.get();
-            string? origin = null;
-            if (Environment.get_os_info (OsInfoKey.NAME) == "Windows") {
-                origin = Environ.get_variable (envs, "GCAD");
-            }
-            else {
-                origin = Environ.get_variable (envs, "ORIGIN");
-            }
+            string? origin = Environ.get_variable (envs, "ORIGIN");
             if (origin != null) {
                 Intl.bindtextdomain (
                     Config.GETTEXT_PACKAGE,
