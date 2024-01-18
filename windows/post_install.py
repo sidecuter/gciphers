@@ -96,11 +96,26 @@ def copy_gdk_pixbuff():
         os.path.join(BASE_PATH, "lib", "gettext"),
         gettext_path
     )
-    
+
 
 @print_wrapper(message="Searching deps")
 def clear_deps_search(func, *args):
     func(*args)
+
+
+@print_wrapper(message="Search deps for libs")
+def search_libs_deps(finder, *args):
+    for lib in args:
+        lib_path: str = os.path.join(BASE_PATH, "lib", lib)
+        dlls = filter(
+            lambda dll: dll.split('.')[-1]=="dll",
+            os.listdir(lib_path)
+        )
+        for dll in dlls:
+            finder(
+                os.path.join(lib_path, dll),
+                3
+            )
 
 
 def get_all_content_of_dir(path: str) -> dict[Any] | None:
@@ -169,10 +184,10 @@ def create_nsis_script():
     content = get_all_content_of_dir(INSTALL_PREFIX)
     with open(os.path.join(INSTALL_PREFIX, "gciphers.nsi"), 'wt') as file:
         file.write(f'''
-!define APP_NAME "Gciphers"
+!define APP_NAME "GCiphers"
 !define COMP_NAME "Sidecuter"
 !define WEB_SITE "https://github.com/sidecuter/gciphers"
-!define VERSION "0.1.1.0"
+!define VERSION "0.1.2.0"
 !define COPYRIGHT "Sidecuter © 2023"
 !define DESCRIPTION "Application"
 !define LICENSE_TXT "{SOURCE_ROOT}\\LICENSE"
@@ -204,7 +219,7 @@ Caption "${APP_NAME}"
 OutFile "${INSTALLER_NAME}"
 BrandingText "${APP_NAME}"
 InstallDirRegKey "${REG_ROOT}" "${REG_APP_PATH}" ""
-InstallDir "C:\\Program Files (x86)\\Gciphers"
+InstallDir "C:\\Program Files (x86)\\GCiphers"
 
 ######################################################################
 
@@ -224,7 +239,7 @@ InstallDir "C:\\Program Files (x86)\\Gciphers"
 !endif
 
 !ifdef REG_START_MENU
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "Gciphers"
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "GCiphers"
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "${REG_ROOT}"
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "${UNINSTALL_PATH}"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "${REG_START_MENU}"
@@ -255,6 +270,22 @@ FunctionEnd
 
 ######################################################################
 
+Section
+; include for some of the windows messages defines
+!include "winmessages.nsh"
+; HKLM (all users) vs HKCU (current user) defines
+!define env_hklm 'HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"'
+!define env_hkcu 'HKCU "Environment"'
+; set variable for local machine
+WriteRegExpandStr ${env_hklm} GCAD $INSTDIR
+; and current user
+WriteRegExpandStr ${env_hkcu} GCAD $INSTDIR
+; make sure windows knows about the change
+SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+SectionEnd
+
+######################################################################
+
 Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
@@ -280,10 +311,10 @@ CreateShortCut "$SMPROGRAMS\\$SM_Folder\\Uninstall ${APP_NAME}.lnk" "$INSTDIR\\u
 !endif
 
 !ifndef REG_START_MENU
-CreateDirectory "$SMPROGRAMS\\Gciphers"
-CreateShortCut "$SMPROGRAMS\\Gciphers\\${APP_NAME}.lnk" "$INSTDIR\\${MAIN_APP_EXE}"
+CreateDirectory "$SMPROGRAMS\\GCiphers"
+CreateShortCut "$SMPROGRAMS\\GCiphers\\${APP_NAME}.lnk" "$INSTDIR\\${MAIN_APP_EXE}"
 CreateShortCut "$DESKTOP\\${APP_NAME}.lnk" "$INSTDIR\\${MAIN_APP_EXE}"
-CreateShortCut "$SMPROGRAMS\\Gciphers\\Uninstall ${APP_NAME}.lnk" "$INSTDIR\\uninstall.exe"
+CreateShortCut "$SMPROGRAMS\\GCiphers\\Uninstall ${APP_NAME}.lnk" "$INSTDIR\\uninstall.exe"
 
 !endif
 
@@ -321,12 +352,18 @@ RmDir "$SMPROGRAMS\\$SM_Folder"
 !endif
 
 !ifndef REG_START_MENU
-Delete "$SMPROGRAMS\\Gciphers\\${APP_NAME}.lnk"
-Delete "$SMPROGRAMS\\Gciphers\\Uninstall ${APP_NAME}.lnk"
+Delete "$SMPROGRAMS\\GCiphers\\${APP_NAME}.lnk"
+Delete "$SMPROGRAMS\\GCiphers\\Uninstall ${APP_NAME}.lnk"
 Delete "$DESKTOP\\${APP_NAME}.lnk"
 
-RmDir "$SMPROGRAMS\\Gciphers"
+RmDir "$SMPROGRAMS\\GCiphers"
 !endif
+
+; delete variable
+DeleteRegValue ${env_hklm} GCAD
+DeleteRegValue ${env_hkcu} GCAD
+; make sure windows knows about the change
+SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
 
 DeleteRegKey ${REG_ROOT} "${REG_APP_PATH}"
 DeleteRegKey ${REG_ROOT} "${UNINSTALL_PATH}"
@@ -351,11 +388,12 @@ def main():
     )
     deps_finder.deps_list.append("gdbus.exe")
     deps_finder.deps_list.append("gettext.exe")
+    search_libs_deps(deps_finder.find_msys_deps, "gdk-pixbuf-2.0\\2.10.0\\loaders")
     copy_dlls(deps_finder.deps_list)
     copy_icons(["Adwaita", "hicolor"])
     copy_gdk_pixbuff()
     create_nsis_script()
-    
+
 
 if __name__ == "__main__":
     main()

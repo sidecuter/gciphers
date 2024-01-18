@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="gciphers">
+<schemalist gettext-domain="com.github.sidecuter.gciphers">
 	<schema id="com.github.sidecuter.gciphers" path="/com/github/sidecuter/gciphers/">
+		<key name="width" type="i">
+			<default>800</default>
+			<summary>Window width</summary>
+			<description>
+				Saved window width in pixels
+			</description>
+		</key>
+		<key name="height" type="i">
+			<default>400</default>
+			<summary>Window height</summary>
+			<description>
+				Saved window height in pixels
+			</description>
+		</key>
 	</schema>
 </schemalist>

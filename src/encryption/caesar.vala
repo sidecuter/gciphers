@@ -20,21 +20,22 @@
 
 namespace Encryption {
     class Caesar : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
+        private static string proto_crypt (
+            Encryption.Alphabet alphabet, string phrase,
+            int shift, bool reverse = false
+        ) throws Encryption.OOBError {
             string result = "";
-            unichar buffer;
-            for (long i = 0; i < phrase.char_count (); i++) {
+            unichar letter;
+            int i = 0;
+            while (phrase.get_next_char (ref i, out letter)) {
                 try {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
-                                phrase.get_char (phrase.index_of_nth_char (i))
-                            ),
-                            shift,
+                    letter = alphabet[
+                        mod (
+                            alphabet.index_of (letter) + (reverse ? -shift : shift),
                             alphabet.length
                         )
-                    );
-                    result = @"$result$(buffer.to_string())";
+                    ];
+                    result = @"$result$(letter.to_string())";
                 }
                 catch (Encryption.OOBError ex) {
                     throw ex;
@@ -43,35 +44,16 @@ namespace Encryption {
             return result;
         }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase, int shift) throws Encryption.OOBError {
-            string result = "";
-            unichar buffer;
-            for (long i = 0; i < phrase.char_count (); i++) {
-                try {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
-                                phrase.get_char (phrase.index_of_nth_char (i))
-                            ),
-                            -shift,
-                            alphabet.length
-                        )
-                    );
-                    result = @"$result$(buffer.to_string())";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
-            }
-            return result;
+        public static string encrypt (
+            Encryption.Alphabet alphabet, string phrase, int shift
+        ) throws Encryption.OOBError {
+            return proto_crypt (alphabet, phrase, shift);
         }
 
-        private static int get_index (int index, int shift, int length) {
-            int result = index;
-            result += shift;
-            if ( result >= length ) result -= length;
-            if ( result < 0 ) result += length;
-            return result;
+        public static string decrypt (
+            Encryption.Alphabet alphabet, string phrase, int shift
+        ) throws Encryption.OOBError {
+            return proto_crypt (alphabet, phrase, shift, true);
         }
     }
 }

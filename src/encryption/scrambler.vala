@@ -19,74 +19,77 @@
 */
 
 namespace Encryption {
-
     class Register : Object {
-        public int size { get; construct; }
-        public string scrambler { get; construct; }
-        public string value_start { get; construct; }
-        public string value { get; private set; }
+        public uint8 size { get; construct; }
+        public uint8 scrambler { get; construct; }
+        public uint8 value_start { get; construct; }
+        public uint8 value { get; private set; }
 
-        public static char xor (char bit1, char bit2) {
-            if (bit1 == bit2) return '0';
-            else return '1';
-        }
-
-        public static List<char> convert_to_bits(string phrase, Alphabet alphabet) throws OOBError {
-            List<char> bits = new List<char> ();
-            int index;
-            for (int i = 0; i < phrase.char_count (); i++) {
-                index = alphabet.get_letter_index (
-                    phrase.get_char (
-                        phrase.index_of_nth_char (i)
-                    )
-                ) + 1;
-                for (int j = 0; j < 6; j++) {
-                    if ((index & 32) == 32) bits.append ('1');
-                    else bits.append ('0');
-                    index <<= 1;
-                }
+        public Register (uint8 size1, string scrambler, string value) {
+            int pos_s = 0, pos_v = 0;
+            uint8 value_buffer = 0, scrambler_buffer = 0;
+            unichar symbol;
+            for (int i = 0; i < size1; i++) {
+                scrambler_buffer <<= 1;
+                value_buffer <<= 1;
+                scrambler.get_next_char (ref pos_s, out symbol);
+                scrambler_buffer |= (uint8) int.parse(symbol.to_string ());
+                value.get_next_char (ref pos_v, out symbol);
+                value_buffer |= (uint8) int.parse(symbol.to_string ());
             }
-            return bits;
-        }
-
-        public static string convert_to_letters(List<char> bits, Alphabet alphabet) throws OOBError {
-            int count = 0;
-            int index = 0;
-            string result = "";
-            string buffer = "";
-            foreach (char bit in bits) {
-                count++;
-                index = (index << 1) | (bit == '0' ? 0 : 1);
-                if (count == 6) {
-                    index--;
-                    if (index < 0) index += alphabet.length;
-                    index %= alphabet.length;
-                    buffer = alphabet.get_letter_by_index(index).to_string();
-                    result = @"$result$buffer";
-                    index = 0;
-                    count = 0;
-                }
-            }
-            return result;
-        }
-
-        public Register (string scrambl, string key) {
             Object (
-                scrambler: scrambl,
-                value_start: key,
-                size: scrambl.length
+                size: size1,
+                scrambler: scrambler_buffer,
+                value_start: value_buffer
             );
-            this.value = key;
+            this.value = value_buffer;
         }
 
-        public char shift() {
-            char param = value[value.length - 1];
-            char ret_value = param;
-            for (int i = size - 2; i >= 0; i--) {
-                if (scrambler[i] == '1') param = xor(param, value[i]);
+        public uint8 shift () {
+            uint8 and_unit = 1;
+            uint8 new_value = 0;
+            uint8 exit_value = 0;
+            new_value = exit_value = this.value & and_unit;
+            for (int i = 0; i < size - 1; i++) {
+                new_value <<= 1;
+                and_unit <<= 1;
+                if ((this.scrambler & and_unit) > 0) {
+                    new_value ^= this.value;
+                    new_value &= and_unit;
+                }
             }
-            value = @"$param$(value[0:size-1])";
-            return ret_value;
+            this.value >>= 1;
+            this.value |= new_value;
+            return exit_value;
+        }
+    }
+
+    class ScramblerSystem : Object {
+        public Register reg1 { private get; construct; }
+        public Register reg2 { private get; construct; }
+
+        public ScramblerSystem (Register reg_1, Register reg_2) {
+            Object (
+                reg1: reg_1,
+                reg2: reg_2
+            );
+        }
+
+        public uint8 process (uint8 letter_pos, uint8 size)
+            throws OOBError
+        {
+            uint8 reg1 = 0, reg2 = 0, result;
+            for (uint8 i = 0; i < 6; i++) {
+                reg1 <<= 1;
+                reg2 <<= 1;
+                reg1 |= this.reg1.shift ();
+                reg2 |= this.reg2.shift ();
+                if (this.reg1.value == this.reg1.value_start &&
+                    this.reg2.value == this.reg2.value_start)
+                    throw new OOBError.CODE_OUT (_("End of cycle before end of phrase"));
+            }
+            result = (reg1 ^ reg2) ^ letter_pos;
+            return (uint8) Encryption.mod ((int) result, size);
         }
     }
 
@@ -99,28 +102,20 @@ namespace Encryption {
             string key1,
             string key2
         ) throws Encryption.OOBError {
-            Register reg1 = new Register (scrambler1, key1);
-            Register reg2 = new Register (scrambler2, key2);
-            List<char> out_bits = new List<char> ();
             string result = "";
-            bool flag = false;
-            char out1 = '0', out2 = '0';
-            try {
-                List<char> bits = Register.convert_to_bits (phrase, alphabet);
-                foreach (char bit in bits) {
-                    if (
-                        flag && reg1.value == reg1.value_start &&
-                        reg2.value == reg2.value_start
-                    ) throw new OOBError.CODE_OUT ("End of cycle before end of phrase");
-                    flag = true;
-                    out1 = reg1.shift ();
-                    out2 = reg2.shift ();
-                    out_bits.append (Register.xor(Register.xor(out1, out2), bit));
-                }
-                result = Register.convert_to_letters(out_bits, alphabet);
-            }
-            catch (Encryption.OOBError ex) {
-                throw ex;
+            int pos = 0;
+            var scr = new ScramblerSystem (
+                new Register ((uint8) scrambler1.char_count (), scrambler1, key1),
+                new Register ((uint8) scrambler2.char_count (), scrambler2, key2)
+            );
+            int i = 0;
+            unichar letter;
+            while (phrase.get_next_char (ref i, out letter)) {
+                pos = (int) scr.process (
+                    (uint8) (alphabet.index_of (letter) + 1),
+                    (uint8) alphabet.length
+                );
+                result = @"$result$(alphabet[mod (pos-1, alphabet.length)])";
             }
             return result;
         }

@@ -82,22 +82,8 @@ namespace GCiphers {
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
             if (!Encryption.Playfair.validate_key (key))
                     throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("Key must contain only unique letters"));
-            for (long i = 0; i < text.char_count (); i++){
-                try {
-                    alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
-                }
-                catch (OOBError ex) {
-                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter from phrase in alphabet"));
-                }
-            }
-            for (long i = 0; i < key.char_count (); i++){
-                try {
-                    p_alphabet.get_letter_index (key.get_char (key.index_of_nth_char (i)));
-                }
-                catch (OOBError ex) {
-                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter from key in alphabet"));
-                }
-            }
+            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
+            Errors.validate_string (p_alphabet, text, _("No such letter from key in alphabet"));
         }
     }
 }

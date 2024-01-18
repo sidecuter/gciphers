@@ -1,2 +1,6 @@
 uncrustify.cfg
 .vscode/
+.flatpak-builder/
+AppDir/
+appimage-build/
+*.AppImage*

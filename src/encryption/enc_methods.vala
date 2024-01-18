@@ -1,4 +1,4 @@
-/* atbash.vala
+/* enc_methods.vala
  *
  * Copyright 2023 Alexander Svobodov
  *
@@ -19,21 +19,9 @@
  */
 
 namespace Encryption {
-    class Atbash : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
-            string result = "";
-            unichar letter;
-            int i = 0;
-            while (phrase.get_next_char (ref i, out letter)) {
-                try {
-                    letter = alphabet[alphabet.length - 1 - alphabet.index_of (letter)];
-                    result = @"$result$(letter.to_string())";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
-            }
-            return result;
-        }
+    int mod (int value, int modd) {
+        if ( value >= modd ) value %= modd;
+        if ( value < 0 ) value = modd - (-value) % modd;
+        return value;
     }
 }

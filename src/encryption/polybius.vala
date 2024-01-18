@@ -40,7 +40,7 @@ namespace Encryption {
             );
         }
 
-        public PolybiusIndexes get_letter_indexes (unichar letter) throws Encryption.OOBError{
+        public PolybiusIndexes index_ofes (unichar letter) throws Encryption.OOBError{
             PolybiusIndexes indexes = new PolybiusIndexes ();
             for (int i = 0; i < this.rows; i++) {
                 if (i + 1 > this.last_row) continue;
@@ -61,7 +61,7 @@ namespace Encryption {
             throw new Encryption.OOBError.CODE_NOT_FOUND (_("No such letter in table"));
         }
 
-        public unichar get_letter_by_indexes (PolybiusIndexes indexes) throws Encryption.OOBError {
+        public new unichar get (PolybiusIndexes indexes) throws Encryption.OOBError {
             if (indexes.row <= 0 || indexes.column <= 0)
                 throw new Encryption.OOBError.CODE_OUT (_("Indexes must be bigger than 0"));
             if (indexes.row > this.rows || indexes.row > this.last_row)
@@ -94,13 +94,11 @@ namespace Encryption {
             catch (Encryption.OOBError ex) {
                 throw ex;
             }
-            for (long i = 0; i < phrase.char_count(); i++) {
+            int i = 0;
+            unichar letter;
+            while (phrase.get_next_char (ref i, out letter)) {
                 try {
-                    indexes = table.get_letter_indexes (
-                        phrase.get_char (
-                            phrase.index_of_nth_char (i)
-                        )
-                    );
+                    indexes = table.index_ofes (letter);
                     result = @"$result$(indexes.row.to_string())$(indexes.column.to_string())";
                 }
                 catch (Encryption.OOBError ex) {
@@ -116,23 +114,16 @@ namespace Encryption {
             string result = "";
             PolybiusIndexes indexes = new PolybiusIndexes ();
             PolybiusTable table;
-            string buffer;
-            try {
-                table = new PolybiusTable (alphabet, rows, columns);
-            }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
-            for (long i = 0; i < phrase.char_count (); i = i + 2) {
-                try {
-                    indexes.row = int.parse(phrase.get_char (phrase.index_of_nth_char (i)).to_string ());
-                    indexes.column = int.parse(phrase.get_char (phrase.index_of_nth_char (i + 1)).to_string ());
-                    buffer = table.get_letter_by_indexes (indexes).to_string ();
-                    result = @"$result$buffer";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
+            table = new PolybiusTable (alphabet, rows, columns);
+            int i = 0;
+            unichar letter1 = 0, letter2 = 0;
+            while (
+                phrase.get_next_char (ref i, out letter1) 
+                && phrase.get_next_char (ref i, out letter2)
+            ) {
+                indexes.row = int.parse(letter1.to_string ());
+                indexes.column = int.parse(letter2.to_string ());
+                result = @"$result$(table[indexes].to_string ())";
             }
             return result;
         }

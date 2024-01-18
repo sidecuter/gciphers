@@ -95,14 +95,7 @@ namespace GCiphers {
             if (!int.try_parse (columns, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("Columns count is not a valid number"));
             if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Columns count is below or equal zero"));
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            for (long i = 0; i < text.char_count (); i++){
-                try {
-                    alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
-                }
-                catch (OOBError ex) {
-                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter in alphabet"));
-                }
-            }
+            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
         }
 
         private void Validate_int (string text, string rows, string columns, out int row, out int column) throws Errors.ValidateError {
@@ -114,8 +107,10 @@ namespace GCiphers {
             if (!int.try_parse (columns, out column)) throw new Errors.ValidateError.NOT_NUMBER (_("Columns count is not a valid number"));
             if (column <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Columns count is below or equal zero"));
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            for (long i = 0; i < text.char_count (); i++){
-                if (!int.try_parse (text.get_char(text.index_of_nth_char (i)).to_string (), out num))
+            int i = 0;
+            unichar letter;
+            while (text.get_next_char (ref i, out letter)) {
+                if (!int.try_parse (letter.to_string (), out num))
                     throw new Errors.ValidateError.NOT_NUMBER (_("Phrase should be only consist of numbers"));
                 if (i%2 == 0 && num > row)
                     throw new Errors.ValidateError.INCORRECT_NUMBER (_("Row in string cannot be bigger than table rows count"));

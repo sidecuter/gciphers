@@ -23,46 +23,25 @@ namespace Encryption {
         public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
-            try {
-                string key_phrase = @"$key$phrase";
-                string result = Encryption.MultiAlphabetic.encrypt(alphabet, phrase, key_phrase);
-                return result;
-            }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
+            return Encryption.MultiAlphabetic.encrypt(alphabet, phrase, @"$key$phrase");
         }
 
         public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
-            try {
-                string result = "";
-                unichar buffer = key.get_char (key.index_of_nth_char (0));
-                for (long i = 0; i < phrase.char_count (); i++) {
-                    buffer = alphabet.get_letter_by_index (
-                        get_index (
-                            alphabet.get_letter_index (
-                                phrase.get_char (phrase.index_of_nth_char (i))
-                            ),
-                            -alphabet.get_letter_index (buffer),
-                            alphabet.length
-                        )
-                    );
-                    result = @"$result$(buffer.to_string ())";
-                }
-                return result;
+            string result = "";
+            int i = 0, k = 0;
+            unichar buffer, letter;
+            key.get_next_char (ref k, out buffer);
+            while (phrase.get_next_char (ref i, out letter)) {
+                buffer = alphabet[
+                    mod (
+                        alphabet.index_of (letter) - alphabet.index_of (buffer),
+                        alphabet.length
+                    )
+                ];
+                result = @"$result$(buffer.to_string ())";
             }
-            catch (Encryption.OOBError ex) {
-                throw ex;
-            }
-        }
-
-        private static int get_index (int index, int shift, int length) {
-            int result = index;
-            result += shift;
-            if ( result >= length ) result -= length;
-            if ( result < 0 ) result += length;
             return result;
         }
     }

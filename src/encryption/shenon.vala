@@ -42,21 +42,11 @@ namespace Encryption {
         public static string encrypt (Encryption.Alphabet alphabet, string phrase, int t0, int a, int c) throws Encryption.OOBError {
             Generator generator = new Generator (t0, a, c, alphabet.length);
             string result = "";
-            string buffer = "";
-            int pos = 0;
-            for (long i = 0; i < phrase.char_count (); i++) {
-                try {
-                    pos = (generator.step () + alphabet.get_letter_index (
-                        phrase.get_char (
-                            phrase.index_of_nth_char (i)
-                        )
-                    )) % alphabet.length;
-                    buffer = alphabet.get_letter_by_index (pos).to_string ();
-                    result = @"$result$buffer";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
+            int pos = 0, i = 0;
+            unichar letter;
+            while (phrase.get_next_char (ref i, out letter)) {
+                pos = (generator.step () + alphabet.index_of (letter)) % alphabet.length;
+                result = @"$result$(alphabet[pos].to_string ())";
             }
             return result;
         }
@@ -64,22 +54,12 @@ namespace Encryption {
         public static string decrypt (Encryption.Alphabet alphabet, string phrase, int t0, int a, int c) throws Encryption.OOBError {
             Generator generator = new Generator (t0, a, c, alphabet.length);
             string result = "";
-            string buffer = "";
-            int pos = 0;
-            for (long i = 0; i < phrase.char_count (); i++) {
-                try {
-                    pos = alphabet.get_letter_index (
-                        phrase.get_char (
-                            phrase.index_of_nth_char (i)
-                        )
-                    ) - generator.step ();
-                    if (pos < 0) pos += alphabet.length;
-                    buffer = alphabet.get_letter_by_index (pos).to_string ();
-                    result = @"$result$buffer";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
+            int pos = 0, i = 0;
+            unichar letter;
+            while (phrase.get_next_char (ref i, out letter)) {
+                pos = alphabet.index_of (letter) - generator.step ();
+                if (pos < 0) pos += alphabet.length;
+                result = @"$result$(alphabet[pos].to_string ())";
             }
             return result;
         }

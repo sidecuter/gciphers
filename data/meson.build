@@ -1,8 +1,18 @@
+conf_unquoted = configuration_data()
+conf_unquoted.set('APP_ID', app_id)
+conf_unquoted.set('APP_NAME', 'GCiphers')
+conf_unquoted.set('VERSION', meson.project_version())
+
+
 desktop_file = i18n.merge_file(
+      input: configure_file(
         input: 'com.github.sidecuter.gciphers.desktop.in',
-       output: 'com.github.sidecuter.gciphers.desktop',
-         type: 'desktop',
-       po_dir: '../po',
+        output: app_id + '.desktop.in',
+        configuration: conf_unquoted,
+      ),
+      output: 'com.github.sidecuter.gciphers.desktop',
+      type: 'desktop',
+      po_dir: '../po',
       install: true,
   install_dir: get_option('datadir') / 'applications'
 )
@@ -13,9 +23,13 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
+      input: configure_file(
         input: 'com.github.sidecuter.gciphers.metainfo.xml.in',
-       output: 'com.github.sidecuter.gciphers.metainfo.xml',
-       po_dir: '../po',
+        output: app_id + '.metainfo.xml.in',
+        configuration: conf_unquoted,
+      ),
+      output: 'com.github.sidecuter.gciphers.metainfo.xml',
+      po_dir: '../po',
       install: true,
   install_dir: get_option('datadir') / 'metainfo'
 )

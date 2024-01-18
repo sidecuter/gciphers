@@ -131,7 +131,7 @@ namespace GCiphers {
             int num;
             if (n.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("n is empty"));
             if (!int.try_parse (n, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("n is not a valid number"));
-            if (num <= 1) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("n is below or equal one"));
+            if (num <= 1 || num > 10) throw new Errors.ValidateError.INCORRECT_NUMBER (_("n is below or equal one or greater than 10"));
             return num;
         }
 
@@ -157,23 +157,12 @@ namespace GCiphers {
         private void Validate (Alphabet alphabet, string text) throws Errors.ValidateError {
             if (!state) throw new Errors.ValidateError.NOT_STATED (_("Matrix not determined"));
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            for (long i = 0; i < text.char_count (); i++){
-                try {
-                    alphabet.get_letter_index (text.get_char (text.index_of_nth_char (i)));
-                }
-                catch (OOBError ex) {
-                    throw new Errors.ValidateError.LETTERS_NOT_IN_STRING (_("No such letter in alphabet"));
-                }
-            }
+            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
         }
 
         private void Validate_int (string text) throws Errors.ValidateError {
-            int num;
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            for (long i = 0; i < text.char_count (); i++){
-                if (!int.try_parse (text.get_char(text.index_of_nth_char (i)).to_string (), out num))
-                    throw new Errors.ValidateError.NOT_NUMBER (_("Phrase should be only consist of numbers"));
-            }
+            Errors.validate_int (text, _("Phrase should be only consist of numbers"));
         }
     }
 }

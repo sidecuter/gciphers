@@ -99,6 +99,14 @@ namespace GCiphers {
             }
             pages.foreach ((page) => { stack.add_named (page, page.name); });
             list_rows.select_row (list_rows.get_row_at_index (0));
+            var settings = new GSettings ();
+            int width = 0, height = 0;
+            settings.get_current_window_resolution (ref width, ref height);
+            set_default_size (width, height);
+            close_request.connect (e => {
+                settings.set_new_window_resolution (get_width (), get_height ());
+                return false;
+            });
         }
 
         public void toaster (string message) {
