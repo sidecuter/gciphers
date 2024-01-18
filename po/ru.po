@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-03 02:28+0300\n"
-"PO-Revision-Date: 2024-01-03 02:31+0300\n"
+"POT-Creation-Date: 2024-01-18 18:24+0300\n"
+"PO-Revision-Date: 2024-01-18 18:25+0300\n"
 "Last-Translator: Alexander Svobodov\n"
 "Language-Team: Alexander Svobodov sidecuter@outlook.com\n"
 "Language: ru\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.1\n"
 
 #: data/com.github.sidecuter.gciphers.metainfo.xml.in:3
-msgid "GCiphers"
+msgid "Gciphers"
 msgstr "GCiphers"
 
 #: data/com.github.sidecuter.gciphers.metainfo.xml.in:9
@@ -183,8 +183,8 @@ msgid "n is not a valid number"
 msgstr "n не является корректным числом"
 
 #: src/pages/matrix.vala:134
-msgid "n is below or equal one"
-msgstr "n меньше либо равно нулю"
+msgid "n is below or equal one or greater than 10"
+msgstr "n меньше либо равно единице или больше чем 10"
 
 #: src/pages/matrix.vala:158
 msgid "Matrix not determined"
@@ -433,8 +433,8 @@ msgstr "Количество символов должно быть кратно
 msgid "This matrix is not square"
 msgstr "Матрица не является квадратной"
 
-#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:290
-#: src/encryption/matrix.vala:327
+#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:284
+#: src/encryption/matrix.vala:321
 msgid "Determinant is zero"
 msgstr "Детерминант равен нулю"
 
@@ -442,11 +442,11 @@ msgstr "Детерминант равен нулю"
 msgid "m1 != n2"
 msgstr "m1 != n2"
 
-#: src/encryption/matrix.vala:260
+#: src/encryption/matrix.vala:256
 msgid "Not a valid phrase"
 msgstr "Фраза не корректна"
 
-#: src/encryption/matrix.vala:339
+#: src/encryption/matrix.vala:333
 msgid "Phrase contains wrong encrypted components"
 msgstr "Фраза содержит неверно защифрованнные фрагменты"
 
