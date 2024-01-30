@@ -20,6 +20,15 @@
 
 namespace Encryption {
     class Caesar : Object {
+        /**
+         * Метод proto_crypt зашифровывает/расшифровывает исходное сообщение используя шифр Цезаря
+         * Входные параметры:
+         * alphabet - алфавит шифрования
+         * phrase - фраза для зашифровки
+         * shift - сдвиг
+         * reverse - флаг, управляющий поведением функции
+         * Возвращаемое значение: зашифрованная/расшифрованная фраза
+         */
         private static string proto_crypt (
             Encryption.Alphabet alphabet, string phrase,
             int shift, bool reverse = false
@@ -29,6 +38,7 @@ namespace Encryption {
             int i = 0;
             while (phrase.get_next_char (ref i, out letter)) {
                 try {
+                    // Получает букву, согласно сдвигу
                     letter = alphabet[
                         mod (
                             alphabet.index_of (letter) + (reverse ? -shift : shift),

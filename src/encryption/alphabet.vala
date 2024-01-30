@@ -25,6 +25,10 @@ namespace Encryption {
         CODE_PASSTHROUGH,
     }
 
+    /**
+     * Класс алфавитов
+     * Содержит поддерживаемые алфавиты
+     */
     class Alphabets : Object {
         public string ru { get; construct; }
         public string ru_full { get; construct; }
@@ -39,6 +43,12 @@ namespace Encryption {
         }
     }
 
+
+    /**
+     * Класс алфавита
+     * Содержит методы поиска позиции буквы в алфавите,
+     * а так же поиска буквы по позиции
+     */
     class Alphabet : Object {
         public string alphabet { get; construct; }
         public int length { get; construct; }
@@ -50,10 +60,22 @@ namespace Encryption {
             );
         }
 
+        /**
+         * Метод contains проверяет, содержится ли буква в алфавите
+         * Входные параметры:
+         * letter - искомый символ в кодировке юникод
+         * Возвращаемое значение: true/false в зависимости от наличия буквы в алфавите
+         */
         public bool contains (unichar letter) {
             return letter.to_string() in alphabet;
         }
 
+        /**
+         * Метод get возвращает букву по индексу
+         * Входные параметры:
+         * index - индекс буквы в алфавите
+         * Возвращаемое значение: буква алфавита
+         */
         public new unichar get (int index) throws Encryption.OOBError {
             if (index > alphabet.char_count ())
                 throw new Encryption.OOBError.CODE_OUT (_("Index bigger than string size"));
@@ -62,6 +84,12 @@ namespace Encryption {
             return result;
         }
 
+        /**
+         * Метод index_of возвращает индекс буквы в алфавите
+         * Входные параметры:
+         * letter - буква в алфавите
+         * Возвращаемое значение: индекс буквы в алфавите
+         */
         public int index_of (unichar letter) throws Encryption.OOBError {
             if (!(letter in this)) throw new Encryption.OOBError.CODE_NOT_FOUND (_("Index not found"));
             int result = alphabet.index_of_char(letter);

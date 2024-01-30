@@ -36,7 +36,7 @@ namespace GCiphers {
             try {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ()
-                    .replace (" ", "")
+                    //.replace (" ", "прб")
                     .replace (".", "тчк")
                     .replace (",", "зпт")
                     .replace ("-", "тире");
@@ -59,7 +59,12 @@ namespace GCiphers {
                 string letters = text.text.down ().replace (" ", "");
                 Alphabet alphabet = new Alphabet (alphabet_getter ());
                 Validate(alphabet, letters);
-                text.set_text (Encryption.Atbash.encrypt (alphabet, letters));
+                text.set_text (Encryption.Atbash.encrypt (alphabet, letters)
+                    .replace ("тчк", ".")
+                    .replace ("зпт", ",")
+                    .replace ("тире", "-")
+                    .replace ("прб", " ")
+                );
             }
             catch (OOBError ex) {
                 toast_spawner(ex.message);

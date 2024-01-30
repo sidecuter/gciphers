@@ -19,6 +19,10 @@
  */
 
 namespace Encryption {
+    /**
+     * Класс PolybiusTable
+     * Содержит методы по работе с таблицей плейфера
+     */
     class PolybiusTable : Object {
         public int rows { get; construct; }
         public int columns { get; construct; }
@@ -40,6 +44,12 @@ namespace Encryption {
             );
         }
 
+        /**
+         * Метод index_ofes ищет в таблице букву и возвращает ее индексы
+         * Входные параметры:
+         * letter - искомая буква
+         * Возвращаемое значение: индексы буквы
+         */
         public PolybiusIndexes index_ofes (unichar letter) throws Encryption.OOBError{
             PolybiusIndexes indexes = new PolybiusIndexes ();
             for (int i = 0; i < this.rows; i++) {
@@ -61,6 +71,12 @@ namespace Encryption {
             throw new Encryption.OOBError.CODE_NOT_FOUND (_("No such letter in table"));
         }
 
+        /**
+         * Метод get возвращает букву по индексам
+         * Входные параметры:
+         * indexes - индексы буквы
+         * Возвращаемое значение: буква
+         */
         public new unichar get (PolybiusIndexes indexes) throws Encryption.OOBError {
             if (indexes.row <= 0 || indexes.column <= 0)
                 throw new Encryption.OOBError.CODE_OUT (_("Indexes must be bigger than 0"));
@@ -84,6 +100,15 @@ namespace Encryption {
     }
 
     class Polybius : Object {
+        /**
+         * Метод encrypt зашифровывает исходное сообщение используя шифр Квадрат Полибия
+         * Входные параметры:
+         * alphabet - алфавит шифрования
+         * phrase - фраза для зашифровки
+         * rows - количество рядов в Квадрате Полибия
+         * columns - количество столбцов в Квадрате Полибия
+         * Возвращаемое значение: зашифрованная фраза
+         */
         public static string encrypt(Encryption.Alphabet alphabet, string phrase, int rows, int columns) throws Encryption.OOBError {
             string result = "";
             PolybiusIndexes indexes;
@@ -108,6 +133,15 @@ namespace Encryption {
             return result;
         }
 
+        /**
+         * Метод decrypt расшифровывает исходное сообщение используя шифр Квадрат Полибия
+         * Входные параметры:
+         * alphabet - алфавит шифрования
+         * phrase - фраза для зашифровки
+         * rows - количество рядов в Квадрате Полибия
+         * columns - количество столбцов в Квадрате Полибия
+         * Возвращаемое значение: расшифрованная фраза
+         */
         public static string decrypt(Encryption.Alphabet alphabet, string phrase, int rows, int columns) throws Encryption.OOBError {
             if (phrase.char_count () % 2 != 0)
                 throw new Encryption.OOBError.CODE_OUT (_("Letters count in text for decryption must be a multiple of two"));
