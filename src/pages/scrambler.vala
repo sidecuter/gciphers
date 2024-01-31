@@ -49,10 +49,8 @@ public class GCiphers.Scrambler : Adw.Bin {
             unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
             unowned string key1 = key1.get_buffer ().get_text ();
             unowned string key2 = key2.get_buffer ().get_text ();
-            Alphabet alphabet = new Alphabet ();
             validate (letters, scrambler1, scrambler2, key1, key2);
             text.set_text (encrypt (
-                alphabet,
                 letters,
                 scrambler1,
                 scrambler2,
@@ -75,10 +73,8 @@ public class GCiphers.Scrambler : Adw.Bin {
             unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
             unowned string key1 = key1.get_buffer ().get_text ();
             unowned string key2 = key2.get_buffer ().get_text ();
-            Alphabet alphabet = new Alphabet ();
             validate (letters, scrambler1, scrambler2, key1, key2);
             text.set_text (win.decode_text (encrypt (
-                alphabet,
                 letters,
                 scrambler1,
                 scrambler2,

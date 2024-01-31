@@ -19,11 +19,13 @@
  */
 
 namespace Encryption.Trithemium {
-    string encrypt (Alphabet alphabet, string phrase) throws OOBError {
+    string encrypt (string phrase) throws Error {
+        Alphabet alphabet = new Alphabet ();
         return MultiAlphabetic.encrypt(alphabet, phrase, alphabet.alphabet);
     }
 
-    string decrypt (Alphabet alphabet, string phrase) throws OOBError {
+    string decrypt (string phrase) throws Error {
+        Alphabet alphabet = new Alphabet ();
         return MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
     }
 }

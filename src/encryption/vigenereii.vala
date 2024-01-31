@@ -19,9 +19,8 @@
  */
 
 namespace Encryption.VigenereII {
-    string encrypt (Alphabet alphabet, string phrase, string key)
-        throws OOBError
-    {
+    string encrypt (string phrase, string key) throws Error {
+        Alphabet alphabet = new Alphabet ();
         string result = "";
         int i = 0, k = 0;
         unichar buffer, letter;
@@ -38,9 +37,8 @@ namespace Encryption.VigenereII {
         return result;
     }
 
-    string decrypt (Alphabet alphabet, string phrase, string key)
-        throws OOBError
-    {
+    string decrypt (string phrase, string key) throws Error {
+        Alphabet alphabet = new Alphabet ();
         string result = "";
         unichar buffer = key.get_char (key.index_of_nth_char (0));
         for (long i = 0; i < phrase.char_count (); i++) {

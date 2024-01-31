@@ -33,9 +33,8 @@ public class GCiphers.Trithemium : Adw.Bin {
         try {
             var text = text_view.get_text_buffer ();
             string letters = win.encode_text (text.text);
-            Alphabet alphabet = new Alphabet ();
             validate (letters);
-            text.set_text (encrypt (alphabet, letters));
+            text.set_text (encrypt (letters));
         }
         catch (Error ex) {
             win.toaster (ex.message);
@@ -48,9 +47,8 @@ public class GCiphers.Trithemium : Adw.Bin {
         try {
             var text = text_view.get_text_buffer ();
             string letters = text.text.down ().replace (" ", "");
-            Alphabet alphabet = new Alphabet ();
             validate (letters);
-            text.set_text (win.decode_text (decrypt (alphabet, letters)));
+            text.set_text (win.decode_text (decrypt (letters)));
         }
         catch (Error ex) {
             win.toaster (ex.message);

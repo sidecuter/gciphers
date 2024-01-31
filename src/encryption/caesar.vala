@@ -28,40 +28,29 @@ namespace Encryption.Caesar {
      * - reverse - флаг, управляющий поведением функции
      * Возвращаемое значение: зашифрованная/расшифрованная фраза
      */
-    string proto_crypt (
-        Alphabet alphabet, string phrase,
-        int shift, bool reverse = false
-    ) throws OOBError {
+    string proto_crypt (string phrase, int shift, bool reverse = false) throws Error {
+        Alphabet alphabet = new Alphabet ();
         string result = "";
         unichar letter;
         int i = 0;
         while (phrase.get_next_char (ref i, out letter)) {
-            try {
-                // Получает букву, согласно сдвигу
-                letter = alphabet[
-                    mod (
-                        alphabet.index_of (letter) + (reverse ? -shift : shift),
-                        alphabet.length
-                    )
-                ];
-                result = @"$result$(letter.to_string())";
-            }
-            catch (OOBError ex) {
-                throw ex;
-            }
+            // Получает букву, согласно сдвигу
+            letter = alphabet[
+                mod (
+                    alphabet.index_of (letter) + (reverse ? -shift : shift),
+                    alphabet.length
+                )
+            ];
+            result = @"$result$(letter.to_string())";
         }
         return result;
     }
 
-    string encrypt (
-        Alphabet alphabet, string phrase, int shift
-    ) throws OOBError {
-        return proto_crypt (alphabet, phrase, shift);
+    string encrypt (string phrase, int shift) throws Error {
+        return proto_crypt (phrase, shift);
     }
 
-    string decrypt (
-        Alphabet alphabet, string phrase, int shift
-    ) throws OOBError {
-        return proto_crypt (alphabet, phrase, shift, true);
+    string decrypt (string phrase, int shift) throws Error {
+        return proto_crypt (phrase, shift, true);
     }
 }

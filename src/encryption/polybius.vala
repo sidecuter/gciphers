@@ -30,7 +30,7 @@ namespace Encryption.Polybius {
         public int last_column { get; construct; }
         public Alphabet alphabet { get; construct; }
 
-        public Table (Alphabet alphabet_in, int rows_in, int columns_in) throws OOBError {
+        public Table (Alphabet alphabet_in, int rows_in, int columns_in) throws Error {
             if (rows_in * columns_in < alphabet_in.length)
                 throw new OOBError.CODE_OUT (_("Columns*Rows must be bigger than length of alphabet"));
             int last_r = alphabet_in.length / columns_in == 0 ? alphabet_in.length / columns_in : alphabet_in.length / columns_in + 1;
@@ -50,7 +50,7 @@ namespace Encryption.Polybius {
          * - letter - искомая буква
          * Возвращаемое значение: индексы буквы
         */
-        public Indexes index_ofes (unichar letter) throws OOBError{
+        public Indexes index_ofes (unichar letter) throws Error{
             Indexes indexes = new Indexes ();
             for (int i = 0; i < this.rows; i++) {
                 if (i + 1 > this.last_row) continue;
@@ -77,7 +77,7 @@ namespace Encryption.Polybius {
          * - indexes - индексы буквы
          * Возвращаемое значение: буква
          */
-        public new unichar get (Indexes indexes) throws OOBError {
+        public new unichar get (Indexes indexes) throws Error {
             if (indexes.row <= 0 || indexes.column <= 0)
                 throw new OOBError.CODE_OUT (_("Indexes must be bigger than 0"));
             if (indexes.row > this.rows || indexes.row > this.last_row)
@@ -108,26 +108,17 @@ namespace Encryption.Polybius {
      * - columns - количество столбцов в Квадрате Полибия
      * Возвращаемое значение: зашифрованная фраза
      */
-    string encrypt(Alphabet alphabet, string phrase, int rows, int columns) throws OOBError {
+    string encrypt(string phrase, int rows, int columns) throws Error {
+        Alphabet alphabet = new Alphabet ();
         string result = "";
         Indexes indexes;
         Table table;
-        try {
-            table = new Table (alphabet, rows, columns);
-        }
-        catch (OOBError ex) {
-            throw ex;
-        }
+        table = new Table (alphabet, rows, columns);
         int i = 0;
         unichar letter;
         while (phrase.get_next_char (ref i, out letter)) {
-            try {
-                indexes = table.index_ofes (letter);
-                result = @"$result$(indexes.row.to_string())$(indexes.column.to_string())";
-            }
-            catch (OOBError ex) {
-                throw ex;
-            }
+            indexes = table.index_ofes (letter);
+            result = @"$result$(indexes.row.to_string())$(indexes.column.to_string())";
         }
         return result;
     }
@@ -141,7 +132,8 @@ namespace Encryption.Polybius {
      * - columns - количество столбцов в Квадрате Полибия
      * Возвращаемое значение: расшифрованная фраза
      */
-    string decrypt(Alphabet alphabet, string phrase, int rows, int columns) throws OOBError {
+    string decrypt(string phrase, int rows, int columns) throws Error {
+        Alphabet alphabet = new Alphabet ();
         if (phrase.char_count () % 2 != 0)
             throw new OOBError.CODE_OUT (_("Letters count in text for decryption must be a multiple of two"));
         string result = "";

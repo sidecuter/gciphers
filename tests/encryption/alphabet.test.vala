@@ -5,22 +5,22 @@ public void test_alphabet_ru () {
     try {
         assert_cmpint (
             32,
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             alphabet.length
         );
         assert_cmpstr (
             "а",
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             alphabet[0].to_string ()
         );
         string letter = "я";
         assert_cmpint (
             31,
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             alphabet.index_of (letter.get_char (0))
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

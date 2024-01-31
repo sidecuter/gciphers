@@ -28,21 +28,17 @@ namespace Encryption.Atbash {
      * Тк шифр атбаш имеет одинаковый шифр для зашифровки и расшифровки, то
      * реализовали только эту функцию
      */
-    string encrypt (Alphabet alphabet, string phrase) throws OOBError {
+    string encrypt (string phrase) throws Error {
+        Alphabet alphabet = new Alphabet ();
         string result = "";
         unichar letter;
         int i = 0;
         // Цикл выполняется пока не будет достигнут конец строки
         while (phrase.get_next_char (ref i, out letter)) {
-            try {
-                //Получение буквы с конца алфавита со сдвигом, равным индексу текущей буквы
-                letter = alphabet[alphabet.length - 1 - alphabet.index_of (letter)];
-                // Конкатенируем полученную букву с результирующей строкой
-                result = @"$result$(letter.to_string())";
-            }
-            catch (OOBError ex) {
-                throw ex;
-            }
+            //Получение буквы с конца алфавита со сдвигом, равным индексу текущей буквы
+            letter = alphabet[alphabet.length - 1 - alphabet.index_of (letter)];
+            // Конкатенируем полученную букву с результирующей строкой
+            result = @"$result$(letter.to_string())";
         }
         return result;
     }

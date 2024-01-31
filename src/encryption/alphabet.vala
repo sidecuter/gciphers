@@ -71,7 +71,7 @@ class Encryption.Alphabet : Object {
      * - index - индекс буквы в алфавите
      * Возвращаемое значение: буква алфавита
      */
-    public new unichar get (int index) throws OOBError {
+    public new unichar get (int index) throws Error {
         if (index > alphabet.char_count ())
             throw new OOBError.CODE_OUT (_("Index bigger than string size"));
         if (index < 0) throw new OOBError.CODE_OUT (_("Index can't be negative"));
@@ -85,7 +85,7 @@ class Encryption.Alphabet : Object {
      * - letter - буква в алфавите
      * Возвращаемое значение: индекс буквы в алфавите
      */
-    public int index_of (unichar letter) throws OOBError {
+    public int index_of (unichar letter) throws Error {
         if (!(letter in this)) throw new OOBError.CODE_NOT_FOUND (_("Index not found"));
         int result = alphabet.index_of_char(letter);
         result = alphabet.char_count () != alphabet.length ? result / 2 : result;

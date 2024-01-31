@@ -1,35 +1,32 @@
 using Encryption;
+using Encryption.Trithemium;
 
 public void test_trithemium_enc () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "оурзсуйхччъвсъьтюруювяцщэкцэкдеягокедкшщяу",
-            GLib.CompareOperator.EQ,
-            Trithemium.encrypt(
-                alphabet,
+            CompareOperator.EQ,
+            encrypt(
                 "отодногопорченогояблокавесьвоззагниваеттчк"
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_trithemium_dec () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
-            Trithemium.decrypt (
-                alphabet,
+            CompareOperator.EQ,
+            decrypt (
                 "оурзсуйхччъвсъьтюруювяцщэкцэкдеягокедкшщяу"
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

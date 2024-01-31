@@ -3,22 +3,20 @@ using Encryption.Scrambler;
 
 public void test_register_shift () {
     Register reg = new Register (5, "10111", "10101");
-    assert_cmpint (5, GLib.CompareOperator.EQ, reg.size);
+    assert_cmpint (5, CompareOperator.EQ, reg.size);
     uint8 shift = reg.shift ();
-    assert_cmpint (shift, GLib.CompareOperator.EQ, 1);
+    assert_cmpint (shift, CompareOperator.EQ, 1);
     shift = reg.shift ();
-    assert_cmpint (13, GLib.CompareOperator.EQ, reg.value);
-    assert_cmpint (shift, GLib.CompareOperator.EQ, 0);
+    assert_cmpint (13, CompareOperator.EQ, reg.value);
+    assert_cmpint (shift, CompareOperator.EQ, 0);
 }
 
 public void test_scrambler_enc () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "яндчшэъплкюхтбсдипхмшшвъиюфзаязуккбдйквшмю",
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             encrypt(
-                alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 "10111",
                 "1001",
@@ -27,19 +25,17 @@ public void test_scrambler_enc () {
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_scrambler_dec () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             encrypt (
-                alphabet,
                 "яндчшэъплкюхтбсдипхмшшвъиюфзаязуккбдйквшмю",
                 "10111",
                 "1001",
@@ -48,7 +44,7 @@ public void test_scrambler_dec () {
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

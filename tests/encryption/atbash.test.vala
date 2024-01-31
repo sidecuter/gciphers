@@ -1,18 +1,15 @@
 using Encryption;
+using Encryption.Atbash;
 
 public void test_atbash_ru () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "снсытсьсрспиътсьсаюфсхяэъогэсшшяьтчэяънних",
-            GLib.CompareOperator.EQ,
-            Atbash.encrypt(
-                alphabet,
-                "отодногопорченогояблокавесьвоззагниваеттчк"
-            )
+            CompareOperator.EQ,
+            encrypt("отодногопорченогояблокавесьвоззагниваеттчк")
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

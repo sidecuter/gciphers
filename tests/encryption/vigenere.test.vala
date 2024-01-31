@@ -1,37 +1,34 @@
 using Encryption;
+using Encryption.Vigenere;
 
 public void test_vigenere_enc () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "маатсыссээюзьтысснамщшквзцнюрхозгрхквечдйб",
-            GLib.CompareOperator.EQ,
-            Vigenere.encrypt(
-                alphabet,
+            CompareOperator.EQ,
+            encrypt(
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 "ю"
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_vigenere_dec () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
-            Vigenere.decrypt (
-                alphabet,
+            CompareOperator.EQ,
+            decrypt (
                 "маатсыссээюзьтысснамщшквзцнюрхозгрхквечдйб",
                 "ю"
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

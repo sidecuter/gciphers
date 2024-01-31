@@ -41,13 +41,12 @@ public class GCiphers.Polybius : Adw.Bin {
             string letters = win.encode_text (text.text);
             unowned string row = rows.get_buffer ().get_text ();
             unowned string column = columns.get_buffer ().get_text ();
-            Alphabet alphabet = new Alphabet ();
             int row_int;
             int column_int;
             Encryption.Polybius.validate_string (
                 letters, row, column, out row_int, out column_int
             );
-            text.set_text (encrypt (alphabet, letters, row_int, column_int));
+            text.set_text (encrypt (letters, row_int, column_int));
         }
         catch (Error ex) {
             win.toaster (ex.message);
@@ -64,10 +63,9 @@ public class GCiphers.Polybius : Adw.Bin {
             unowned string column = columns.get_buffer ().get_text ();
             int row_int;
             int column_int;
-            Alphabet alphabet = new Alphabet ();
             Encryption.Polybius.validate_int (letters, row, column, out row_int, out column_int);
             text.set_text (win.decode_text (
-                decrypt (alphabet, letters, row_int, column_int)
+                decrypt (letters, row_int, column_int)
             ));
         }
         catch (Error ex) {

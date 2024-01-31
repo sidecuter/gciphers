@@ -1,19 +1,20 @@
 using Encryption;
+using Encryption.MultiAlphabetic;
 
 public void test_multi_alphabetic_enc () {
     Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "овпчфоупвхрзжахгюафтоъбхмсмгбозрдапвржещчъ",
-            GLib.CompareOperator.EQ,
-            MultiAlphabetic.encrypt(
+            CompareOperator.EQ,
+            encrypt(
                 alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 "арбуз"
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
@@ -23,15 +24,15 @@ public void test_multi_alphabetic_dec () {
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
-            MultiAlphabetic.decrypt (
+            CompareOperator.EQ,
+            decrypt (
                 alphabet,
                 "овпчфоупвхрзжахгюафтоъбхмсмгбозрдапвржещчъ",
                 "арбуз"
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

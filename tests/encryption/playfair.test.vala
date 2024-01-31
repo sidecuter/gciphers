@@ -1,15 +1,16 @@
 using Encryption;
+using Encryption.Playfair;
 
 public void test_playfair_key_validation () {
     string key = "респавн";
-    assert_true (Playfair.validate_key (key));
+    assert_true (validate_key (key));
 }
 
 public void test_playfair_enc () {
     assert_cmpstr (
         "тимжжижламаурблжтюгктлврспяетжжвдбтрвскшошое",
-        GLib.CompareOperator.EQ,
-        Playfair.encrypt (
+        CompareOperator.EQ,
+        encrypt (
             "отодногопорченогояблокавесьвоззагниваеттчк",
             "респавн"
         )
@@ -19,8 +20,8 @@ public void test_playfair_enc () {
 public void test_playfair_dec () {
     assert_cmpstr (
         "отодногопорченогояблокавесъвоззагниваетфтчка",
-        GLib.CompareOperator.EQ,
-        Playfair.decrypt (
+        CompareOperator.EQ,
+        decrypt (
             "тимжжижламаурблжтюгктлврспяетжжвдбтрвскшошое",
             "респавн"
         )

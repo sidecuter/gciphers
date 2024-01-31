@@ -19,7 +19,7 @@
  */
 
 namespace Encryption {
-    void validate_string (Alphabet alphabet, string text, string message) throws ValidateError {
+    void validate_string (Alphabet alphabet, string text, string message) throws Error {
         int i = 0;
         unichar letter;
         while (text.get_next_char (ref i, out letter)){
@@ -28,7 +28,7 @@ namespace Encryption {
         }
     }
 
-    void validate_int (string text, string message) throws ValidateError {
+    void validate_int (string text, string message) throws Error {
         int i = 0, num;
         unichar letter;
         while (text.get_next_char (ref i, out letter)){
@@ -38,7 +38,7 @@ namespace Encryption {
     }
 
     namespace Atbash {
-        void validate (string text) throws ValidateError {
+        void validate (string text) throws Error {
             Alphabet alphabet = new Alphabet ();
             if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Text field is empty"));
             validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
@@ -46,7 +46,7 @@ namespace Encryption {
     }
     
     namespace Belazo {
-        void validate (string text, string key) throws ValidateError {
+        void validate (string text, string key) throws Error {
             Alphabet alphabet = new Alphabet ();
             if (key.length == 0) throw new ValidateError.EMPTY_STRING (_("Key is empty"));
             if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Text field is empty"));
@@ -56,7 +56,7 @@ namespace Encryption {
     }
     
     namespace Caesar {
-        void validate (string text, string key) throws ValidateError {
+        void validate (string text, string key) throws Error {
             int num;
             Alphabet alphabet = new Alphabet ();
             if (key.length == 0) throw new ValidateError.EMPTY_STRING (_("Key is empty"));
@@ -69,7 +69,7 @@ namespace Encryption {
     }
     
     namespace Matrix {
-        int validate_n (string n) throws ValidateError {
+        int validate_n (string n) throws Error {
             int num;
             if (n.length == 0) throw new ValidateError.EMPTY_STRING (_("n is empty"));
             if (!int.try_parse (n, out num)) throw new ValidateError.NOT_NUMBER (_("n is not a valid number"));
@@ -77,21 +77,21 @@ namespace Encryption {
             return num;
         }
     
-        void validate (string text, bool state) throws ValidateError {
+        void validate (string text, bool state) throws Error {
             Alphabet alphabet = new Alphabet ();
             if (!state) throw new ValidateError.NOT_STATED (_("Matrix not determined"));
             if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Text field is empty"));
             validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
         }
     
-        void validate_int (string text) throws ValidateError {
+        void validate_int (string text) throws Error {
             if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Text field is empty"));
             Encryption.validate_int (text, _("Phrase should be only consist of numbers"));
         }
     }
     
     namespace Playfair {
-        void validate (string text, string key) throws ValidateError {
+        void validate (string text, string key) throws Error {
             Alphabet alphabet = new Alphabet ();
             string playfair_alphabet = "абвгдежзиклмнопрстуфхцчшщъыэюя";
             var p_alphabet = new Alphabet.from_str (playfair_alphabet);
@@ -107,7 +107,7 @@ namespace Encryption {
     namespace Polybius {
         void validate_string (
             string text, string rows, string columns, out int row, out int column
-        ) throws ValidateError {
+        ) throws Error {
             Alphabet alphabet = new Alphabet ();
             if (rows.length == 0) throw new ValidateError.EMPTY_STRING (_("Rows count is empty"));
             if (!int.try_parse (rows, out row)) throw new ValidateError.NOT_NUMBER (_("Rows count is not a valid number"));
@@ -121,7 +121,7 @@ namespace Encryption {
     
         void validate_int (
             string text, string rows, string columns, out int row, out int column
-        ) throws ValidateError {
+        ) throws Error {
             int num;
             if (rows.length == 0) throw new ValidateError.EMPTY_STRING (_("Rows count is empty"));
             if (!int.try_parse (rows, out row)) throw new ValidateError.NOT_NUMBER (_("Rows count is not a valid number"));
@@ -144,7 +144,7 @@ namespace Encryption {
     }
     
     namespace Scrambler {
-        void validate_bin (string text, string mes) throws ValidateError {
+        void validate_bin (string text, string mes) throws Error {
             unichar buffer;
             for (int i = 0; i < text.char_count (); i++) {
                 buffer = text.get_char (text.index_of_nth_char (i));
@@ -153,7 +153,7 @@ namespace Encryption {
         }
     
         void validate (string text, string scrambler1, string scrambler2, string key1, string key2) 
-            throws ValidateError 
+            throws Error 
         {
             int num;
             Alphabet alphabet = new Alphabet ();
@@ -179,7 +179,7 @@ namespace Encryption {
     }
     
     namespace Shenon {
-        void validate (string text, string t0, string a, string c) throws ValidateError {
+        void validate (string text, string t0, string a, string c) throws Error {
             int num;
             Alphabet alphabet = new Alphabet ();
             if (t0.length == 0) throw new ValidateError.EMPTY_STRING (_("T0 is empty"));
@@ -200,7 +200,7 @@ namespace Encryption {
     }
     
     namespace Trithemium {
-        void validate (string text) throws ValidateError {
+        void validate (string text) throws Error {
             Alphabet alphabet = new Alphabet ();
             if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Text field is empty"));
             validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
@@ -208,7 +208,7 @@ namespace Encryption {
     }
 
     namespace Vertical {
-        void validate (string text, string key) throws ValidateError {
+        void validate (string text, string key) throws Error {
             Alphabet alphabet = new Alphabet ();
             if (key.length == 0) throw new ValidateError.EMPTY_STRING (_("Key is empty"));
             if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Text field is empty"));
@@ -218,7 +218,7 @@ namespace Encryption {
     }
 
     namespace Vigenere {
-        void validate (string text, string key) throws ValidateError {
+        void validate (string text, string key) throws Error {
             Alphabet alphabet = new Alphabet ();
             if (key.char_count () == 0) throw new ValidateError.EMPTY_STRING (_("Key is empty"));
             if (key.char_count () > 1) throw new ValidateError.WRONG_STRING_LENGTH (_("Key length is bigger than 1"));
@@ -229,7 +229,7 @@ namespace Encryption {
     }
 
     namespace VigenereII {
-        void validate (string text, string key) throws ValidateError {
+        void validate (string text, string key) throws Error {
             Alphabet alphabet = new Alphabet ();
             if (key.char_count () == 0) throw new ValidateError.EMPTY_STRING (_("Key is empty"));
             if (key.char_count () > 1) throw new ValidateError.WRONG_STRING_LENGTH (_("Key length is bigger than 1"));

@@ -9,59 +9,55 @@ public void test_vertical_methods_get_order () {
         int[] res_pos = Methods.get_order (alphabet, key);
         assert_cmpint (
             key.char_count (),
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             res_pos.length
         );
         assert_cmpint (
             positions.length,
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             res_pos.length
         );
         for (int i = 0; i < res_pos.length; i++) {
             assert_cmpint (
                 positions[i],
-                GLib.CompareOperator.EQ,
+                CompareOperator.EQ,
                 res_pos[i]
             );
         }
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_vertical_enc () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "нооотдрчпгооояоенгавоблкозьесвивгзанчктает",
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             encrypt(
-                alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 "супчик"
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_vertical_dec () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             decrypt (
-                alphabet,
                 "нооотдрчпгооояоенгавоблкозьесвивгзанчктает",
                 "супчик"
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

@@ -76,7 +76,7 @@ namespace Encryption.Scrambler {
         }
 
         public uint8 process (uint8 letter_pos, uint8 size)
-            throws OOBError
+            throws Error
         {
             uint8 reg1 = 0, reg2 = 0, result;
             for (uint8 i = 0; i < 6; i++) {
@@ -94,13 +94,13 @@ namespace Encryption.Scrambler {
     }
 
     string encrypt (
-        Alphabet alphabet,
         string phrase,
         string scrambler1,
         string scrambler2,
         string key1,
         string key2
-    ) throws OOBError {
+    ) throws Error {
+        Alphabet alphabet = new Alphabet ();
         string result = "";
         int pos = 0;
         var scr = new System (
