@@ -21,75 +21,73 @@
 using Encryption;
 using Encryption.Scrambler;
 
-namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/scrambler.ui")]
-    public class Scrambler : Adw.Bin {
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/scrambler.ui")]
+public class GCiphers.Scrambler : Adw.Bin {
 
-        [GtkChild]
-        private unowned UI.TextView text_view;
+    [GtkChild]
+    private unowned UI.TextView text_view;
 
-        [GtkChild]
-        private unowned UI.Entry scrambler1;
+    [GtkChild]
+    private unowned UI.Entry scrambler1;
 
-        [GtkChild]
-        private unowned UI.Entry scrambler2;
-        
-        [GtkChild]
-        private unowned UI.Entry key1;
+    [GtkChild]
+    private unowned UI.Entry scrambler2;
+    
+    [GtkChild]
+    private unowned UI.Entry key1;
 
-        [GtkChild]
-        private unowned UI.Entry key2;
+    [GtkChild]
+    private unowned UI.Entry key2;
 
-        [GtkCallback]
-        private void on_encrypt_click (Gtk.Button self) {
-            var win = (GCiphers.Window) this.get_root ();
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = win.encode_text (text.text);
-                unowned string scrambler1 = scrambler1.get_buffer ().get_text ();
-                unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
-                unowned string key1 = key1.get_buffer ().get_text ();
-                unowned string key2 = key2.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet ();
-                validate (letters, scrambler1, scrambler2, key1, key2);
-                text.set_text (encrypt (
-                    alphabet,
-                    letters,
-                    scrambler1,
-                    scrambler2,
-                    key1,
-                    key2
-                ));
-            }
-            catch (Error ex) {
-                win.toaster (ex.message);
-            }
+    [GtkCallback]
+    private void on_encrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = win.encode_text (text.text);
+            unowned string scrambler1 = scrambler1.get_buffer ().get_text ();
+            unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
+            unowned string key1 = key1.get_buffer ().get_text ();
+            unowned string key2 = key2.get_buffer ().get_text ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, scrambler1, scrambler2, key1, key2);
+            text.set_text (encrypt (
+                alphabet,
+                letters,
+                scrambler1,
+                scrambler2,
+                key1,
+                key2
+            ));
         }
+        catch (Error ex) {
+            win.toaster (ex.message);
+        }
+    }
 
-        [GtkCallback]
-        private void on_decrypt_click (Gtk.Button self) {
-            var win = (GCiphers.Window) this.get_root ();
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ().replace (" ", "");
-                unowned string scrambler1 = scrambler1.get_buffer ().get_text ();
-                unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
-                unowned string key1 = key1.get_buffer ().get_text ();
-                unowned string key2 = key2.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet ();
-                validate (letters, scrambler1, scrambler2, key1, key2);
-                text.set_text (win.decode_text (encrypt (
-                    alphabet,
-                    letters,
-                    scrambler1,
-                    scrambler2,
-                    key1,
-                    key2
-                )));
-            }
-            catch (Error ex) {
-                win.toaster (ex.message);
-            }
+    [GtkCallback]
+    private void on_decrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = text.text.down ().replace (" ", "");
+            unowned string scrambler1 = scrambler1.get_buffer ().get_text ();
+            unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
+            unowned string key1 = key1.get_buffer ().get_text ();
+            unowned string key2 = key2.get_buffer ().get_text ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, scrambler1, scrambler2, key1, key2);
+            text.set_text (win.decode_text (encrypt (
+                alphabet,
+                letters,
+                scrambler1,
+                scrambler2,
+                key1,
+                key2
+            )));
+        }
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
     }
 }

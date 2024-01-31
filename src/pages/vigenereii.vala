@@ -21,46 +21,44 @@
 using Encryption;
 using Encryption.VigenereII;
 
-namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/vigenereii.ui")]
-    public class Vigenereii : Adw.Bin {
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/vigenereii.ui")]
+public class GCiphers.Vigenereii : Adw.Bin {
 
-        [GtkChild]
-        private unowned UI.TextView text_view;
+    [GtkChild]
+    private unowned UI.TextView text_view;
 
-        [GtkChild]
-        private unowned UI.Entry key;
+    [GtkChild]
+    private unowned UI.Entry key;
 
-        [GtkCallback]
-        private void on_encrypt_click (Gtk.Button self) {
-            var win = (GCiphers.Window) this.get_root ();
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = win.encode_text (text.text);
-                string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet ();
-                validate (letters, key);
-                text.set_text (encrypt (alphabet, letters, key));
-            }
-            catch (Error ex) {
-                win.toaster (ex.message);
-            }
+    [GtkCallback]
+    private void on_encrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = win.encode_text (text.text);
+            string key = key.get_buffer ().get_text ().down ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, key);
+            text.set_text (encrypt (alphabet, letters, key));
         }
+        catch (Error ex) {
+            win.toaster (ex.message);
+        }
+    }
 
-        [GtkCallback]
-        private void on_decrypt_click (Gtk.Button self) {
-            var win = (GCiphers.Window) this.get_root ();
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ().replace (" ", "");
-                string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet ();
-                validate (letters, key);
-                text.set_text (win.decode_text (decrypt (alphabet, letters, key)));
-            }
-            catch (Error ex) {
-                win.toaster (ex.message);
-            }
+    [GtkCallback]
+    private void on_decrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = text.text.down ().replace (" ", "");
+            string key = key.get_buffer ().get_text ().down ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, key);
+            text.set_text (win.decode_text (decrypt (alphabet, letters, key)));
+        }
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
     }
 }

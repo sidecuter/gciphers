@@ -21,67 +21,65 @@
 using Encryption;
 using Encryption.Shenon;
 
-namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/shenon.ui")]
-    public class Shenon : Adw.Bin {
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/shenon.ui")]
+public class GCiphers.Shenon : Adw.Bin {
 
-        [GtkChild]
-        private unowned UI.TextView text_view;
+    [GtkChild]
+    private unowned UI.TextView text_view;
 
-        [GtkChild]
-        private unowned UI.Entry t0;
-        
-        [GtkChild]
-        private unowned UI.Entry a;
-        
-        [GtkChild]
-        private unowned UI.Entry c;
+    [GtkChild]
+    private unowned UI.Entry t0;
+    
+    [GtkChild]
+    private unowned UI.Entry a;
+    
+    [GtkChild]
+    private unowned UI.Entry c;
 
-        [GtkCallback]
-        private void on_encrypt_click (Gtk.Button self) {
-            var win = (GCiphers.Window) this.get_root ();
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = win.encode_text (text.text);
-                unowned string t0 = t0.get_buffer ().get_text ();
-                unowned string a = a.get_buffer ().get_text ();
-                unowned string c = c.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet ();
-                validate (letters, t0, a, c);
-                text.set_text (encrypt (alphabet,
-                    letters,
-                    int.parse (t0),
-                    int.parse (a),
-                    int.parse (c)
-                ));
-            }
-            catch (Error ex) {
-                win.toaster (ex.message);
-            }
+    [GtkCallback]
+    private void on_encrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = win.encode_text (text.text);
+            unowned string t0 = t0.get_buffer ().get_text ();
+            unowned string a = a.get_buffer ().get_text ();
+            unowned string c = c.get_buffer ().get_text ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, t0, a, c);
+            text.set_text (encrypt (alphabet,
+                letters,
+                int.parse (t0),
+                int.parse (a),
+                int.parse (c)
+            ));
         }
+        catch (Error ex) {
+            win.toaster (ex.message);
+        }
+    }
 
-        [GtkCallback]
-        private void on_decrypt_click (Gtk.Button self) {
-            var win = (GCiphers.Window) this.get_root ();
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ().replace (" ", "");
-                unowned string t0 = t0.get_buffer ().get_text ();
-                unowned string a = a.get_buffer ().get_text ();
-                unowned string c = c.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet ();
-                validate (letters, t0, a, c);
-                text.set_text (win.decode_text (decrypt (
-                    alphabet,
-                    letters,
-                    int.parse (t0),
-                    int.parse (a),
-                    int.parse (c)
-                )));
-            }
-            catch (Error ex) {
-                win.toaster (ex.message);
-            }
+    [GtkCallback]
+    private void on_decrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = text.text.down ().replace (" ", "");
+            unowned string t0 = t0.get_buffer ().get_text ();
+            unowned string a = a.get_buffer ().get_text ();
+            unowned string c = c.get_buffer ().get_text ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, t0, a, c);
+            text.set_text (win.decode_text (decrypt (
+                alphabet,
+                letters,
+                int.parse (t0),
+                int.parse (a),
+                int.parse (c)
+            )));
+        }
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
     }
 }

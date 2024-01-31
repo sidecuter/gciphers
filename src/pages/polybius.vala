@@ -21,59 +21,57 @@
 using Encryption;
 using Encryption.Polybius;
 
-namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/polybius.ui")]
-    public class Polybius : Adw.Bin {
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/polybius.ui")]
+public class GCiphers.Polybius : Adw.Bin {
 
-        [GtkChild]
-        private unowned UI.TextView text_view;
+    [GtkChild]
+    private unowned UI.TextView text_view;
 
-        [GtkChild]
-        private unowned UI.Entry rows;
+    [GtkChild]
+    private unowned UI.Entry rows;
 
-        [GtkChild]
-        private unowned UI.Entry columns;
+    [GtkChild]
+    private unowned UI.Entry columns;
 
-        [GtkCallback]
-        private void on_encrypt_click (Gtk.Button self) {
-            var win = (GCiphers.Window) this.get_root ();
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = win.encode_text (text.text);
-                unowned string row = rows.get_buffer ().get_text ();
-                unowned string column = columns.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet ();
-                int row_int;
-                int column_int;
-                Encryption.Polybius.validate_string (
-                    letters, row, column, out row_int, out column_int
-                );
-                text.set_text (encrypt (alphabet, letters, row_int, column_int));
-            }
-            catch (Error ex) {
-                win.toaster (ex.message);
-            }
+    [GtkCallback]
+    private void on_encrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = win.encode_text (text.text);
+            unowned string row = rows.get_buffer ().get_text ();
+            unowned string column = columns.get_buffer ().get_text ();
+            Alphabet alphabet = new Alphabet ();
+            int row_int;
+            int column_int;
+            Encryption.Polybius.validate_string (
+                letters, row, column, out row_int, out column_int
+            );
+            text.set_text (encrypt (alphabet, letters, row_int, column_int));
         }
+        catch (Error ex) {
+            win.toaster (ex.message);
+        }
+    }
 
-        [GtkCallback]
-        private void on_decrypt_click (Gtk.Button self) {
-            var win = (GCiphers.Window) this.get_root ();
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ().replace (" ", "");
-                unowned string row = rows.get_buffer ().get_text ();
-                unowned string column = columns.get_buffer ().get_text ();
-                int row_int;
-                int column_int;
-                Alphabet alphabet = new Alphabet ();
-                Encryption.Polybius.validate_int (letters, row, column, out row_int, out column_int);
-                text.set_text (win.decode_text (
-                    decrypt (alphabet, letters, row_int, column_int)
-                ));
-            }
-            catch (Error ex) {
-                win.toaster (ex.message);
-            }
+    [GtkCallback]
+    private void on_decrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = text.text.down ().replace (" ", "");
+            unowned string row = rows.get_buffer ().get_text ();
+            unowned string column = columns.get_buffer ().get_text ();
+            int row_int;
+            int column_int;
+            Alphabet alphabet = new Alphabet ();
+            Encryption.Polybius.validate_int (letters, row, column, out row_int, out column_int);
+            text.set_text (win.decode_text (
+                decrypt (alphabet, letters, row_int, column_int)
+            ));
+        }
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
     }
 }
