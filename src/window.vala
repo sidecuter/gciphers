@@ -59,7 +59,7 @@ namespace GCiphers {
         private unowned Gtk.ListBox list_rows;
 
         [GtkChild]
-        private unowned Gtk.DropDown dropdown;
+        private unowned Gtk.Switch prettify;
 
         [GtkCallback]
         private void on_sidebar_button_toggle (Gtk.ToggleButton self) {
@@ -79,18 +79,18 @@ namespace GCiphers {
         }
 
         construct {
-            pages.append (new GCiphers.Atbash (this.toaster));
-            pages.append (new GCiphers.Caesar (this.toaster));
-            pages.append (new GCiphers.Polybius (this.toaster));
-            pages.append (new GCiphers.Trithemium (this.toaster));
-            pages.append (new GCiphers.Belazo (this.toaster));
-            pages.append (new GCiphers.Vigenere (this.toaster));
-            pages.append (new GCiphers.Vertical (this.toaster));
-            pages.append (new GCiphers.Vigenereii (this.toaster));
-            pages.append (new GCiphers.Matrix (this.toaster));
-            pages.append (new GCiphers.Playfair (this.toaster));
-            pages.append (new GCiphers.Scrambler (this.toaster));
-            pages.append (new GCiphers.Shenon (this.toaster));
+            pages.append (new GCiphers.Atbash ());
+            pages.append (new GCiphers.Caesar ());
+            pages.append (new GCiphers.Polybius ());
+            pages.append (new GCiphers.Trithemium ());
+            pages.append (new GCiphers.Belazo ());
+            pages.append (new GCiphers.Vigenere ());
+            pages.append (new GCiphers.Vertical ());
+            pages.append (new GCiphers.Vigenereii ());
+            pages.append (new GCiphers.Matrix ());
+            pages.append (new GCiphers.Playfair ());
+            pages.append (new GCiphers.Scrambler ());
+            pages.append (new GCiphers.Shenon ());
             for (int i = 0; i < labels.length; i++) {
                 list_rows.append (new GCiphers.Menu_entry (labels[i]));
             }
@@ -110,6 +110,25 @@ namespace GCiphers {
             Adw.Toast toast_message = new Adw.Toast (message);
             toast_message.set_timeout (timeout);
             toast.add_toast (toast_message);
+        }
+
+        public string encode_text (string text) {
+            string result = text.down ()
+                .replace (".", "тчк")
+                .replace (",", "зпт")
+                .replace ("-", "тире");
+            if (!prettify.get_state ()) result = result.replace (" ", "");
+            else result = result.replace (" ", "прб");
+            return result;
+        }
+
+        public string decode_text (string text) {
+            string result = text;
+            if (prettify.get_state ()) result = result.replace ("тчк", ".")
+                .replace ("зпт", ",")
+                .replace ("тире", "-")
+                .replace ("прб", " ");
+            return result;
         }
     }
 }

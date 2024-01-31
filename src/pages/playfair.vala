@@ -19,12 +19,11 @@
 */
 
 using Encryption;
+using Encryption.Playfair;
 
 namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/playfair.ui")]
     public class Playfair : Adw.Bin {
-
-        private unowned spawn_toast toast_spawner;
 
         [GtkChild]
         private unowned UI.TextView text_view;
@@ -34,53 +33,34 @@ namespace GCiphers {
 
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
-                string letters = text.text.down ()
-                    .replace (" ", "")
-                    .replace(".", "тчк")
-                    .replace(",", "зпт")
-                    .replace("-", "тире");
+                string letters = win.encode_text (text.text);
                 string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet ();
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Playfair.encrypt (letters, key));
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
+                validate (letters, key);
+                text.set_text (encrypt (letters, key));
+            }
+            catch (Error ex) {
+                win.toaster (ex.message);
+            }
         }
 
         [GtkCallback]
         private void on_decrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
                 string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet ();
-                Validate(alphabet, letters, key);
+                validate (letters, key);
                 if (letters.char_count () % 2 != 0) 
-                    throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("Length must be divisible by 2"));
-                text.set_text (Encryption.Playfair.decrypt (letters, key));
+                    throw new ValidateError.WRONG_STRING_LENGTH(_("Length must be divisible by 2"));
+                text.set_text (win.decode_text (decrypt (letters, key)));
             }
-            catch (Errors.ValidateError ex) {
-                toast_spawner(ex.message);
+            catch (Error ex) {
+                win.toaster (ex.message);
             }
-        }
-
-        public Playfair (spawn_toast toaster) {
-            toast_spawner = toaster;
-        }
-
-        private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
-            string playfair_alphabet = "абвгдежзиклмнопрстуфхцчшщъыэюя";
-            var p_alphabet = new Alphabet.from_str (playfair_alphabet);
-            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            if (!Encryption.Playfair.validate_key (key))
-                    throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("Key must contain only unique letters"));
-            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
-            Errors.validate_string (p_alphabet, text, _("No such letter from key in alphabet"));
         }
     }
 }

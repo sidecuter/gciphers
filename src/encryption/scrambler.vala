@@ -18,106 +18,104 @@
 * SPDX-License-Identifier: GPL-3.0-or-later
 */
 
-namespace Encryption {
-    namespace Scrambler {
-        class Register : Object {
-            public uint8 size { get; construct; }
-            public uint8 scrambler { get; construct; }
-            public uint8 value_start { get; construct; }
-            public uint8 value { get; private set; }
-    
-            public Register (uint8 size1, string scrambler, string value) {
-                int pos_s = 0, pos_v = 0;
-                uint8 value_buffer = 0, scrambler_buffer = 0;
-                unichar symbol;
-                for (int i = 0; i < size1; i++) {
-                    scrambler_buffer <<= 1;
-                    value_buffer <<= 1;
-                    scrambler.get_next_char (ref pos_s, out symbol);
-                    scrambler_buffer |= (uint8) int.parse(symbol.to_string ());
-                    value.get_next_char (ref pos_v, out symbol);
-                    value_buffer |= (uint8) int.parse(symbol.to_string ());
-                }
-                Object (
-                    size: size1,
-                    scrambler: scrambler_buffer,
-                    value_start: value_buffer
-                );
-                this.value = value_buffer;
+namespace Encryption.Scrambler {
+    class Register : Object {
+        public uint8 size { get; construct; }
+        public uint8 scrambler { get; construct; }
+        public uint8 value_start { get; construct; }
+        public uint8 value { get; private set; }
+
+        public Register (uint8 size1, string scrambler, string value) {
+            int pos_s = 0, pos_v = 0;
+            uint8 value_buffer = 0, scrambler_buffer = 0;
+            unichar symbol;
+            for (int i = 0; i < size1; i++) {
+                scrambler_buffer <<= 1;
+                value_buffer <<= 1;
+                scrambler.get_next_char (ref pos_s, out symbol);
+                scrambler_buffer |= (uint8) int.parse(symbol.to_string ());
+                value.get_next_char (ref pos_v, out symbol);
+                value_buffer |= (uint8) int.parse(symbol.to_string ());
             }
-    
-            public uint8 shift () {
-                uint8 and_unit = 1;
-                uint8 new_value = 0;
-                uint8 exit_value = 0;
-                new_value = exit_value = this.value & and_unit;
-                for (int i = 0; i < size - 1; i++) {
-                    new_value <<= 1;
-                    and_unit <<= 1;
-                    if ((this.scrambler & and_unit) > 0) {
-                        new_value ^= this.value;
-                        new_value &= and_unit;
-                    }
-                }
-                this.value >>= 1;
-                this.value |= new_value;
-                return exit_value;
-            }
-        }
-    
-        class System : Object {
-            public Register reg1 { private get; construct; }
-            public Register reg2 { private get; construct; }
-    
-            public System (Register reg_1, Register reg_2) {
-                Object (
-                    reg1: reg_1,
-                    reg2: reg_2
-                );
-            }
-    
-            public uint8 process (uint8 letter_pos, uint8 size)
-                throws OOBError
-            {
-                uint8 reg1 = 0, reg2 = 0, result;
-                for (uint8 i = 0; i < 6; i++) {
-                    reg1 <<= 1;
-                    reg2 <<= 1;
-                    reg1 |= this.reg1.shift ();
-                    reg2 |= this.reg2.shift ();
-                    if (this.reg1.value == this.reg1.value_start &&
-                        this.reg2.value == this.reg2.value_start)
-                        throw new OOBError.CODE_OUT (_("End of cycle before end of phrase"));
-                }
-                result = (reg1 ^ reg2) ^ letter_pos;
-                return (uint8) Encryption.mod ((int) result, size);
-            }
+            Object (
+                size: size1,
+                scrambler: scrambler_buffer,
+                value_start: value_buffer
+            );
+            this.value = value_buffer;
         }
 
-        string encrypt (
-            Encryption.Alphabet alphabet,
-            string phrase,
-            string scrambler1,
-            string scrambler2,
-            string key1,
-            string key2
-        ) throws Encryption.OOBError {
-            string result = "";
-            int pos = 0;
-            var scr = new System (
-                new Register ((uint8) scrambler1.char_count (), scrambler1, key1),
-                new Register ((uint8) scrambler2.char_count (), scrambler2, key2)
-            );
-            int i = 0;
-            unichar letter;
-            while (phrase.get_next_char (ref i, out letter)) {
-                pos = (int) scr.process (
-                    (uint8) (alphabet.index_of (letter) + 1),
-                    (uint8) alphabet.length
-                );
-                result = @"$result$(alphabet[mod (pos-1, alphabet.length)])";
+        public uint8 shift () {
+            uint8 and_unit = 1;
+            uint8 new_value = 0;
+            uint8 exit_value = 0;
+            new_value = exit_value = this.value & and_unit;
+            for (int i = 0; i < size - 1; i++) {
+                new_value <<= 1;
+                and_unit <<= 1;
+                if ((this.scrambler & and_unit) > 0) {
+                    new_value ^= this.value;
+                    new_value &= and_unit;
+                }
             }
-            return result;
+            this.value >>= 1;
+            this.value |= new_value;
+            return exit_value;
         }
+    }
+
+    class System : Object {
+        public Register reg1 { private get; construct; }
+        public Register reg2 { private get; construct; }
+
+        public System (Register reg_1, Register reg_2) {
+            Object (
+                reg1: reg_1,
+                reg2: reg_2
+            );
+        }
+
+        public uint8 process (uint8 letter_pos, uint8 size)
+            throws OOBError
+        {
+            uint8 reg1 = 0, reg2 = 0, result;
+            for (uint8 i = 0; i < 6; i++) {
+                reg1 <<= 1;
+                reg2 <<= 1;
+                reg1 |= this.reg1.shift ();
+                reg2 |= this.reg2.shift ();
+                if (this.reg1.value == this.reg1.value_start &&
+                    this.reg2.value == this.reg2.value_start)
+                    throw new OOBError.CODE_OUT (_("End of cycle before end of phrase"));
+            }
+            result = (reg1 ^ reg2) ^ letter_pos;
+            return (uint8) mod ((int) result, size);
+        }
+    }
+
+    string encrypt (
+        Alphabet alphabet,
+        string phrase,
+        string scrambler1,
+        string scrambler2,
+        string key1,
+        string key2
+    ) throws OOBError {
+        string result = "";
+        int pos = 0;
+        var scr = new System (
+            new Register ((uint8) scrambler1.char_count (), scrambler1, key1),
+            new Register ((uint8) scrambler2.char_count (), scrambler2, key2)
+        );
+        int i = 0;
+        unichar letter;
+        while (phrase.get_next_char (ref i, out letter)) {
+            pos = (int) scr.process (
+                (uint8) (alphabet.index_of (letter) + 1),
+                (uint8) alphabet.length
+            );
+            result = @"$result$(alphabet[mod (pos-1, alphabet.length)])";
+        }
+        return result;
     }
 }

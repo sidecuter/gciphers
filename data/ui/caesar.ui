@@ -9,45 +9,49 @@
     <property name="margin-start">20</property>
     <property name="margin-top">20</property>
     <child>
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="UIEntry" id="key">
-            <property name="placeholder_text" translatable="yes">Enter key</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Enter you text</property>
-            <property name="margin-top">10</property>
-          </object>
-        </child>
-        <child>
-          <object class="UITextView" id="text_view"/>
-        </child>
+      <object class="GtkScrolledWindow">
         <child>
           <object class="GtkBox">
-            <property name="hexpand">True</property>
-            <property name="margin-top">10</property>
-            <property name="valign">start</property>
+            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkButton">
-                <signal name="clicked" handler="on_encrypt_click"/>
-                <property name="label" translatable="yes">Encrypt</property>
-                <property name="valign">center</property>
+              <object class="UIEntry" id="key">
+                <property name="placeholder_text" translatable="yes">Enter key</property>
               </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Enter you text</property>
+                <property name="margin-top">10</property>
+              </object>
+            </child>
+            <child>
+              <object class="UITextView" id="text_view"/>
             </child>
             <child>
               <object class="GtkBox">
                 <property name="hexpand">True</property>
-                <property name="valign">center</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton">
-                <signal name="clicked" handler="on_decrypt_click"/>
-                <property name="label" translatable="yes">Decrypt</property>
-                <property name="valign">center</property>
+                <property name="margin-top">10</property>
+                <property name="valign">start</property>
+                <child>
+                  <object class="GtkButton">
+                    <signal name="clicked" handler="on_encrypt_click"/>
+                    <property name="label" translatable="yes">Encrypt</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="hexpand">True</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton">
+                    <signal name="clicked" handler="on_decrypt_click"/>
+                    <property name="label" translatable="yes">Decrypt</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>

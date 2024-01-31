@@ -19,12 +19,11 @@
  */
 
 using Encryption;
+using Encryption.Shenon;
 
 namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/shenon.ui")]
     public class Shenon : Adw.Bin {
-
-        private unowned spawn_toast toast_spawner;
 
         [GtkChild]
         private unowned UI.TextView text_view;
@@ -40,30 +39,30 @@ namespace GCiphers {
 
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
-                string letters = text.text.down ()
-                    .replace (" ", "")
-                    .replace(".", "тчк")
-                    .replace(",", "зпт")
-                    .replace("-", "тире");
+                string letters = win.encode_text (text.text);
                 unowned string t0 = t0.get_buffer ().get_text ();
                 unowned string a = a.get_buffer ().get_text ();
                 unowned string c = c.get_buffer ().get_text ();
                 Alphabet alphabet = new Alphabet ();
-                Validate (alphabet, letters, t0, a, c);
-                text.set_text (Encryption.Shenon.encrypt (alphabet, letters, int.parse (t0), int.parse (a), int.parse (c)));
-             }
-             catch (OOBError ex) {
-                 toast_spawner(ex.message);
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
+                validate (letters, t0, a, c);
+                text.set_text (encrypt (alphabet,
+                    letters,
+                    int.parse (t0),
+                    int.parse (a),
+                    int.parse (c)
+                ));
+            }
+            catch (Error ex) {
+                win.toaster (ex.message);
+            }
         }
 
         [GtkCallback]
         private void on_decrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
@@ -71,37 +70,18 @@ namespace GCiphers {
                 unowned string a = a.get_buffer ().get_text ();
                 unowned string c = c.get_buffer ().get_text ();
                 Alphabet alphabet = new Alphabet ();
-                Validate (alphabet, letters, t0, a, c);
-                text.set_text (Encryption.Shenon.decrypt (alphabet, letters, int.parse (t0), int.parse (a), int.parse (c)));
+                validate (letters, t0, a, c);
+                text.set_text (win.decode_text (decrypt (
+                    alphabet,
+                    letters,
+                    int.parse (t0),
+                    int.parse (a),
+                    int.parse (c)
+                )));
             }
-            catch (OOBError ex) {
-                toast_spawner(ex.message);
+            catch (Error ex) {
+                win.toaster (ex.message);
             }
-            catch (Errors.ValidateError ex) {
-                toast_spawner(ex.message);
-            }
-        }
-
-        public Shenon (spawn_toast toaster) {
-            toast_spawner = toaster;  
-        }
-
-        private void Validate (Alphabet alphabet, string text, string t0, string a, string c) throws Errors.ValidateError {
-            int num;
-            if (t0.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("T0 is empty"));
-            if (!int.try_parse (t0, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("T0 is not a valid number"));
-            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("T0 is below or equal zero"));
-            if (num > alphabet.length) throw new Errors.ValidateError.INCORRECT_NUMBER (_("T0 is bigger than alphabet length"));
-            if (a.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("A is empty"));
-            if (!int.try_parse (a, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("A is not a valid number"));
-            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("A is below or equal zero"));
-            if (num % 4 != 1) throw new Errors.ValidateError.INCORRECT_NUMBER (_("The remainder of A divided by 4 is not equal to 1"));
-            if (c.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("C is empty"));
-            if (!int.try_parse (c, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("C is not a valid number"));
-            if (num <= 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("C is below or equal zero"));
-            if (num % 2 == 0) throw new Errors.ValidateError.INCORRECT_NUMBER (_("C is not odd"));
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
         }
     }
 }

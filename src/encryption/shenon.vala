@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption {
+namespace Encryption.Shenon {
     class Generator : Object {
         private int state { get; set; }
         private int a { get; set; }
@@ -38,30 +38,28 @@ namespace Encryption {
         }
     }
 
-    class Shenon : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, int t0, int a, int c) throws Encryption.OOBError {
-            Generator generator = new Generator (t0, a, c, alphabet.length);
-            string result = "";
-            int pos = 0, i = 0;
-            unichar letter;
-            while (phrase.get_next_char (ref i, out letter)) {
-                pos = (generator.step () + alphabet.index_of (letter)) % alphabet.length;
-                result = @"$result$(alphabet[pos].to_string ())";
-            }
-            return result;
+    string encrypt (Alphabet alphabet, string phrase, int t0, int a, int c) throws OOBError {
+        Generator generator = new Generator (t0, a, c, alphabet.length);
+        string result = "";
+        int pos = 0, i = 0;
+        unichar letter;
+        while (phrase.get_next_char (ref i, out letter)) {
+            pos = (generator.step () + alphabet.index_of (letter)) % alphabet.length;
+            result = @"$result$(alphabet[pos].to_string ())";
         }
+        return result;
+    }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase, int t0, int a, int c) throws Encryption.OOBError {
-            Generator generator = new Generator (t0, a, c, alphabet.length);
-            string result = "";
-            int pos = 0, i = 0;
-            unichar letter;
-            while (phrase.get_next_char (ref i, out letter)) {
-                pos = alphabet.index_of (letter) - generator.step ();
-                if (pos < 0) pos += alphabet.length;
-                result = @"$result$(alphabet[pos].to_string ())";
-            }
-            return result;
+    string decrypt (Alphabet alphabet, string phrase, int t0, int a, int c) throws OOBError {
+        Generator generator = new Generator (t0, a, c, alphabet.length);
+        string result = "";
+        int pos = 0, i = 0;
+        unichar letter;
+        while (phrase.get_next_char (ref i, out letter)) {
+            pos = alphabet.index_of (letter) - generator.step ();
+            if (pos < 0) pos += alphabet.length;
+            result = @"$result$(alphabet[pos].to_string ())";
         }
+        return result;
     }
 }

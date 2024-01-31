@@ -18,69 +18,77 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption {
-    errordomain OOBError {
-        CODE_OUT,
-        CODE_NOT_FOUND,
-        CODE_PASSTHROUGH,
+errordomain Encryption.OOBError {
+    CODE_OUT,
+    CODE_NOT_FOUND,
+    CODE_PASSTHROUGH,
+}
+
+errordomain Encryption.ValidateError {
+    LETTERS_NOT_IN_STRING,
+    NOT_NUMBER,
+    NUMBER_BELOW_ZERO,
+    EMPTY_STRING,
+    INCORRECT_NUMBER,
+    WRONG_STRING_LENGTH,
+    NOT_STATED,
+}
+
+/*
+ * Класс Alphabet
+ * Содержит методы поиска позиции буквы в алфавите,
+ * а так же поиска буквы по позиции
+ */
+class Encryption.Alphabet : Object {
+    public string alphabet { get; private set; }
+    public int length { get; construct; }
+
+    public Alphabet () {
+        string alphabet = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
+        Object (
+            length: alphabet.char_count ()
+        );
+        this.alphabet = alphabet;
     }
 
-    /**
-     * Класс алфавита
-     * Содержит методы поиска позиции буквы в алфавите,
-     * а так же поиска буквы по позиции
+    public Alphabet.from_str (string alphabet) {
+        this.alphabet = alphabet;
+    }
+
+    /*
+     * Метод contains проверяет, содержится ли буква в алфавите
+     * Входные параметры:
+     * - letter - искомый символ в кодировке юникод
+     * Возвращаемое значение: true/false в зависимости от наличия буквы в алфавите
      */
-    class Alphabet : Object {
-        public string alphabet { get; private set; }
-        public int length { get; construct; }
+    public bool contains (unichar letter) {
+        return letter.to_string() in alphabet;
+    }
 
-        public Alphabet () {
-            string alphabet = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
-            Object (
-                length: alphabet.char_count ()
-            );
-            this.alphabet = alphabet;
-        }
+    /*
+     * Метод get возвращает букву по индексу
+     * Входные параметры:
+     * - index - индекс буквы в алфавите
+     * Возвращаемое значение: буква алфавита
+     */
+    public new unichar get (int index) throws OOBError {
+        if (index > alphabet.char_count ())
+            throw new OOBError.CODE_OUT (_("Index bigger than string size"));
+        if (index < 0) throw new OOBError.CODE_OUT (_("Index can't be negative"));
+        unichar result = alphabet.get_char (alphabet.index_of_nth_char (index));
+        return result;
+    }
 
-        public Alphabet.from_str (string alphabet) {
-            this.alphabet = alphabet;
-        }
-
-        /**
-         * Метод contains проверяет, содержится ли буква в алфавите
-         * Входные параметры:
-         * letter - искомый символ в кодировке юникод
-         * Возвращаемое значение: true/false в зависимости от наличия буквы в алфавите
-         */
-        public bool contains (unichar letter) {
-            return letter.to_string() in alphabet;
-        }
-
-        /**
-         * Метод get возвращает букву по индексу
-         * Входные параметры:
-         * index - индекс буквы в алфавите
-         * Возвращаемое значение: буква алфавита
-         */
-        public new unichar get (int index) throws Encryption.OOBError {
-            if (index > alphabet.char_count ())
-                throw new Encryption.OOBError.CODE_OUT (_("Index bigger than string size"));
-            if (index < 0) throw new Encryption.OOBError.CODE_OUT (_("Index can't be negative"));
-            unichar result = alphabet.get_char (alphabet.index_of_nth_char (index));
-            return result;
-        }
-
-        /**
-         * Метод index_of возвращает индекс буквы в алфавите
-         * Входные параметры:
-         * letter - буква в алфавите
-         * Возвращаемое значение: индекс буквы в алфавите
-         */
-        public int index_of (unichar letter) throws Encryption.OOBError {
-            if (!(letter in this)) throw new Encryption.OOBError.CODE_NOT_FOUND (_("Index not found"));
-            int result = alphabet.index_of_char(letter);
-            result = alphabet.char_count () != alphabet.length ? result / 2 : result;
-            return result;
-        }
+    /*
+     * Метод index_of возвращает индекс буквы в алфавите
+     * Входные параметры:
+     * - letter - буква в алфавите
+     * Возвращаемое значение: индекс буквы в алфавите
+     */
+    public int index_of (unichar letter) throws OOBError {
+        if (!(letter in this)) throw new OOBError.CODE_NOT_FOUND (_("Index not found"));
+        int result = alphabet.index_of_char(letter);
+        result = alphabet.char_count () != alphabet.length ? result / 2 : result;
+        return result;
     }
 }

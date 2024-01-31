@@ -1,7 +1,7 @@
 using Encryption;
 
 public void test_alphabet_ru () {
-    Alphabet alphabet = new Alphabet();
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpint (
             32,
@@ -20,12 +20,12 @@ public void test_alphabet_ru () {
             alphabet.index_of (letter.get_char (0))
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
-public static int main (string[] args) {
+int main (string[] args) {
     Test.init (ref args);
     Test.add_func ("/encryption/alphabet_ru", test_alphabet_ru);
     return Test.run ();

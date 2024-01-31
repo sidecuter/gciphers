@@ -19,61 +19,43 @@
  */
 
 using Encryption;
+using Encryption.Trithemium;
 
 namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/trithemium.ui")]
     public class Trithemium : Adw.Bin {
-
-        private unowned spawn_toast toast_spawner;
 
         [GtkChild]
         private unowned UI.TextView text_view;
 
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
-                string letters = text.text.down ()
-                    .replace (" ", "")
-                    .replace(".", "тчк")
-                    .replace(",", "зпт")
-                    .replace("-", "тире");
+                string letters = win.encode_text (text.text);
                 Alphabet alphabet = new Alphabet ();
-                Validate(alphabet, letters);
-                text.set_text (Encryption.Trithemium.encrypt (alphabet, letters));
-             }
-             catch (OOBError ex) {
-                 toast_spawner(ex.message);
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
+                validate (letters);
+                text.set_text (encrypt (alphabet, letters));
+            }
+            catch (Error ex) {
+                win.toaster (ex.message);
+            }
         }
 
         [GtkCallback]
         private void on_decrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
                 Alphabet alphabet = new Alphabet ();
-                Validate(alphabet, letters);
-                text.set_text (Encryption.Trithemium.decrypt (alphabet, letters));
+                validate (letters);
+                text.set_text (win.decode_text (decrypt (alphabet, letters)));
             }
-            catch (OOBError ex) {
-                toast_spawner(ex.message);
+            catch (Error ex) {
+                win.toaster (ex.message);
             }
-            catch (Errors.ValidateError ex) {
-                toast_spawner(ex.message);
-            }
-        }
-
-        public Trithemium (spawn_toast toaster) {
-            toast_spawner = toaster;
-        }
-
-        private void Validate (Alphabet alphabet, string text) throws Errors.ValidateError {
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
         }
     }
 }

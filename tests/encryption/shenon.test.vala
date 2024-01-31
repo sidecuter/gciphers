@@ -1,12 +1,12 @@
 using Encryption;
 
 public void test_shenon_enc () {
-    Alphabet alphabet = new Alphabet();
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "очалсчщщчыкжсюмцюфгввгжээожбкихггтъйдоиэяч",
             GLib.CompareOperator.EQ,
-            Encryption.Shenon.encrypt(
+            Shenon.encrypt(
                 alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 3, 
@@ -15,18 +15,18 @@ public void test_shenon_enc () {
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
 public void test_shenon_dec () {
-    Alphabet alphabet = new Alphabet();
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
             GLib.CompareOperator.EQ,
-            Encryption.Shenon.decrypt (
+            Shenon.decrypt (
                 alphabet,
                 "очалсчщщчыкжсюмцюфгввгжээожбкихггтъйдоиэяч",
                 3,
@@ -35,12 +35,12 @@ public void test_shenon_dec () {
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
-public static int main (string[] args) {
+int main (string[] args) {
     Test.init (ref args);
     Test.add_func ("/encryption/shenon_enc", test_shenon_enc);
     Test.add_func ("/encryption/shenon_dec", test_shenon_dec);

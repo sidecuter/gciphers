@@ -18,44 +18,42 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption {
-    namespace MultiAlphabetic {
-        string proto_crypt (
-            Encryption.Alphabet alphabet, string phrase, string key, bool reverse = false
-        ) throws Encryption.OOBError {
-            string result = "";
-            unichar buffer, letter;
-            int k = 0, i = 0;
-            while (phrase.get_next_char (ref i, out letter)) {
-                if (key.length == k) k %= key.length;
-                key.get_next_char (ref k, out buffer);
-                try {
-                    letter = alphabet[
-                        mod (
-                            alphabet.index_of (letter) 
-                            + alphabet.index_of(buffer) * (reverse ? -1 : 1),
-                            alphabet.length
-                        )
-                    ];
-                    result = @"$result$(letter.to_string())";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
+namespace Encryption.MultiAlphabetic {
+    string proto_crypt (
+        Alphabet alphabet, string phrase, string key, bool reverse = false
+    ) throws OOBError {
+        string result = "";
+        unichar buffer, letter;
+        int k = 0, i = 0;
+        while (phrase.get_next_char (ref i, out letter)) {
+            if (key.length == k) k %= key.length;
+            key.get_next_char (ref k, out buffer);
+            try {
+                letter = alphabet[
+                    mod (
+                        alphabet.index_of (letter) 
+                        + alphabet.index_of(buffer) * (reverse ? -1 : 1),
+                        alphabet.length
+                    )
+                ];
+                result = @"$result$(letter.to_string())";
             }
-            return result;
+            catch (OOBError ex) {
+                throw ex;
+            }
         }
+        return result;
+    }
 
-        string encrypt (Encryption.Alphabet alphabet, string phrase, string key) 
-            throws Encryption.OOBError
-        {
-            return proto_crypt (alphabet, phrase, key);
-        }
+    string encrypt (Alphabet alphabet, string phrase, string key) 
+        throws OOBError
+    {
+        return proto_crypt (alphabet, phrase, key);
+    }
 
-        string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
-            throws Encryption.OOBError
-        {
-            return proto_crypt (alphabet, phrase, key, true);
-        }
+    string decrypt (Alphabet alphabet, string phrase, string key)
+        throws OOBError
+    {
+        return proto_crypt (alphabet, phrase, key, true);
     }
 }

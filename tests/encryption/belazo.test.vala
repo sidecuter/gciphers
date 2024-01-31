@@ -1,42 +1,42 @@
 using Encryption;
 
 public void test_belazo_enc () {
-    Alphabet alphabet = new Alphabet();
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "овпчфоупвхрзжахгюафтоъбхмсмгбозрдапвржещчъ",
             GLib.CompareOperator.EQ,
-            Encryption.Belazo.encrypt(
+            Belazo.encrypt(
                 alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 "арбуз"
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
 public void test_belazo_dec () {
-    Alphabet alphabet = new Alphabet();
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
             GLib.CompareOperator.EQ,
-            Encryption.Belazo.decrypt (
+            Belazo.decrypt (
                 alphabet,
                 "овпчфоупвхрзжахгюафтоъбхмсмгбозрдапвржещчъ",
                 "арбуз"
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
-public static int main (string[] args) {
+int main (string[] args) {
     Test.init (ref args);
     Test.add_func ("/encryption/belazo_enc", test_belazo_enc);
     Test.add_func ("/encryption/belazo_dec", test_belazo_dec);

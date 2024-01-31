@@ -19,12 +19,11 @@
 */
 
 using Encryption;
+using Encryption.Vigenere;
 
 namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/vigenere.ui")]
     public class Vigenere : Adw.Bin {
-
-        private unowned spawn_toast toast_spawner;
 
         [GtkChild]
         private unowned UI.TextView text_view;
@@ -34,54 +33,34 @@ namespace GCiphers {
 
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
-                string letters = text.text.down ()
-                    .replace (" ", "")
-                    .replace(".", "тчк")
-                    .replace(",", "зпт")
-                    .replace("-", "тире");
+                string letters = win.encode_text (text.text);
                 string key = key.get_buffer ().get_text ().down ();
                 Alphabet alphabet = new Alphabet ();
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Vigenere.encrypt (alphabet, letters, key));
-             }
-             catch (OOBError ex) {
-                 toast_spawner(ex.message);
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
+                validate (letters, key);
+                text.set_text (encrypt (alphabet, letters, key));
+            }
+            catch (Error ex) {
+                win.toaster (ex.message);
+            }
         }
 
         [GtkCallback]
         private void on_decrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
                 string key = key.get_buffer ().get_text ().down ();
                 Alphabet alphabet = new Alphabet ();
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Vigenere.decrypt (alphabet, letters, key));
+                validate (letters, key);
+                text.set_text (win.decode_text (decrypt (alphabet, letters, key)));
             }
-            catch (OOBError ex) {
-                toast_spawner(ex.message);
+            catch (Error ex) {
+                win.toaster (ex.message);
             }
-            catch (Errors.ValidateError ex) {
-                toast_spawner(ex.message);
-            }
-        }
-
-        public Vigenere (spawn_toast toaster) {
-            toast_spawner = toaster;
-        }
-
-        private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
-            if (key.char_count () == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
-            if (key.char_count () > 1) throw new Errors.ValidateError.WRONG_STRING_LENGTH (_("Key length is bigger than 1"));
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
-            Errors.validate_string (alphabet, text, _("No such letter from key in alphabet"));
         }
     }
 }

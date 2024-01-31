@@ -19,12 +19,11 @@
  */
 
 using Encryption;
+using Encryption.Caesar;
 
 namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/caesar.ui")]
     public class Caesar : Adw.Bin {
-
-        private unowned spawn_toast toast_spawner;
 
         [GtkChild]
         private unowned UI.TextView text_view;
@@ -34,60 +33,36 @@ namespace GCiphers {
 
         [GtkCallback]
         private void on_encrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
-                string letters = text.text.down ()
-                    .replace (" ", "прб")
-                    .replace(".", "тчк")
-                    .replace(",", "зпт")
-                    .replace("-", "тире");
+                string letters = win.encode_text (text.text);
                 string key = key.get_buffer ().get_text ();
                 Alphabet alphabet = new Alphabet ();
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Caesar.encrypt (alphabet, letters, int.parse (key)));
-             }
-             catch (OOBError ex) {
-                 toast_spawner(ex.message);
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
+                validate (letters, key);
+                text.set_text (encrypt (alphabet, letters, int.parse (key)));
+            }
+            catch (Error ex) {
+                win.toaster (ex.message);
+            }
         }
 
         [GtkCallback]
         private void on_decrypt_click (Gtk.Button self) {
+            var win = (GCiphers.Window) this.get_root ();
             try {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
                 string key = key.get_buffer ().get_text ();
                 Alphabet alphabet = new Alphabet ();
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Caesar.decrypt (alphabet, letters, int.parse (key))
-                .replace ("тчк", ".")
-                .replace ("зпт", ",")
-                .replace ("тире", "-")
-                .replace ("прб", " "));
+                validate (letters, key);
+                text.set_text (win.decode_text (
+                    decrypt (alphabet, letters, int.parse (key)))
+                );
             }
-            catch (OOBError ex) {
-                toast_spawner(ex.message);
+            catch (Error ex) {
+                win.toaster (ex.message);
             }
-            catch (Errors.ValidateError ex) {
-                toast_spawner(ex.message);
-            }
-        }
-
-        public Caesar (spawn_toast toaster) {
-            toast_spawner = toaster;
-        }
-
-        private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
-            int num;
-            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
-            if (!int.try_parse (key, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("Key is not a valid number"));
-            if (num < 1) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Number is below zero"));
-            if (num + 1> alphabet.length) throw new Errors.ValidateError.INCORRECT_NUMBER (_("Number is bigger, than alphabet number"));
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
         }
     }
 }

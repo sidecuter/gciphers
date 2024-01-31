@@ -1,3 +1,4 @@
+using Encryption;
 using Encryption.Matrix;
 
 public void test_matrix_max () {
@@ -5,7 +6,7 @@ public void test_matrix_max () {
         2, 4,
         4, 3
     };
-    Matrix matr = new Matrix.from_int (
+    Matr matr = new Matr.from_int (
         2,
         2,
         elems
@@ -19,14 +20,14 @@ public void test_matrix_det () {
             2, 4,
             4, 3
         };
-        Matrix matr = new Matrix.from_int (
+        Matr matr = new Matr.from_int (
             2,
             2,
             elems
         );
         assert_cmpfloat (-10, GLib.CompareOperator.EQ, matr.det ());
     }
-    catch (Encryption.MatrixError ex) {
+    catch (MatrixError ex) {
         assert_true (false);
     }
 }
@@ -42,17 +43,17 @@ public void test_matrix_reverse () {
             0, 1
         };
         
-        Matrix matr = new Matrix.from_int (
+        Matr matr = new Matr.from_int (
             2,
             2,
             elems
         );
-        Matrix matr_E = new Matrix.from_int (
+        Matr matr_E = new Matr.from_int (
             2,
             2,
             elems_E
         );
-        Matrix matr_r_mult_matr = matr.reverse ().mult (matr);
+        Matr matr_r_mult_matr = matr.reverse ().mult (matr);
         for (int i = 0; i < matr_r_mult_matr.rows; i++) {
             for (int j = 0; j < matr_r_mult_matr.columns; j++) {
                 assert_cmpfloat (
@@ -63,13 +64,13 @@ public void test_matrix_reverse () {
             }
         }
     }
-    catch (Encryption.MatrixError ex) {
+    catch (MatrixError ex) {
         assert_true (false);
     }
 }
 
 public void test_matrix_enc () {
-    Encryption.Alphabet alphabet = new Encryption.Alphabet ();
+    Alphabet alphabet = new Alphabet ();
     try {
         int[] elems = {
             2, 5, 6,
@@ -88,13 +89,13 @@ public void test_matrix_enc () {
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
 public void test_matrix_dec () {
-    Encryption.Alphabet alphabet = new Encryption.Alphabet ();
+    Alphabet alphabet = new Alphabet ();
     try {
         int[] elems = {
             2, 5, 6,
@@ -113,12 +114,12 @@ public void test_matrix_dec () {
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
-public static int main (string[] args) {
+int main (string[] args) {
     Test.init (ref args);
     Test.add_func ("/encryption/matrix_enc", test_matrix_enc);
     Test.add_func ("/encryption/matrix_dec", test_matrix_dec);

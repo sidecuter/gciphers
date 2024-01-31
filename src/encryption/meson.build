@@ -14,4 +14,5 @@ gciphers_sources += files(
     'playfair.vala',
     'scrambler.vala',
     'shenon.vala',
+    'validation.vala',
 )

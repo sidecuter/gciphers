@@ -18,52 +18,50 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption {
-    namespace Caesar {
-        /**
-         * Метод proto_crypt зашифровывает/расшифровывает исходное сообщение используя шифр Цезаря
-         * Входные параметры:
-         * alphabet - алфавит шифрования
-         * phrase - фраза для зашифровки
-         * shift - сдвиг
-         * reverse - флаг, управляющий поведением функции
-         * Возвращаемое значение: зашифрованная/расшифрованная фраза
-         */
-        string proto_crypt (
-            Encryption.Alphabet alphabet, string phrase,
-            int shift, bool reverse = false
-        ) throws Encryption.OOBError {
-            string result = "";
-            unichar letter;
-            int i = 0;
-            while (phrase.get_next_char (ref i, out letter)) {
-                try {
-                    // Получает букву, согласно сдвигу
-                    letter = alphabet[
-                        mod (
-                            alphabet.index_of (letter) + (reverse ? -shift : shift),
-                            alphabet.length
-                        )
-                    ];
-                    result = @"$result$(letter.to_string())";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
+namespace Encryption.Caesar {
+    /*
+     * Метод proto_crypt зашифровывает/расшифровывает исходное сообщение используя шифр Цезаря
+     * Входные параметры:
+     * - alphabet - алфавит шифрования
+     * - phrase - фраза для зашифровки
+     * - shift - сдвиг
+     * - reverse - флаг, управляющий поведением функции
+     * Возвращаемое значение: зашифрованная/расшифрованная фраза
+     */
+    string proto_crypt (
+        Alphabet alphabet, string phrase,
+        int shift, bool reverse = false
+    ) throws OOBError {
+        string result = "";
+        unichar letter;
+        int i = 0;
+        while (phrase.get_next_char (ref i, out letter)) {
+            try {
+                // Получает букву, согласно сдвигу
+                letter = alphabet[
+                    mod (
+                        alphabet.index_of (letter) + (reverse ? -shift : shift),
+                        alphabet.length
+                    )
+                ];
+                result = @"$result$(letter.to_string())";
             }
-            return result;
+            catch (OOBError ex) {
+                throw ex;
+            }
         }
+        return result;
+    }
 
-        string encrypt (
-            Encryption.Alphabet alphabet, string phrase, int shift
-        ) throws Encryption.OOBError {
-            return proto_crypt (alphabet, phrase, shift);
-        }
+    string encrypt (
+        Alphabet alphabet, string phrase, int shift
+    ) throws OOBError {
+        return proto_crypt (alphabet, phrase, shift);
+    }
 
-        string decrypt (
-            Encryption.Alphabet alphabet, string phrase, int shift
-        ) throws Encryption.OOBError {
-            return proto_crypt (alphabet, phrase, shift, true);
-        }
+    string decrypt (
+        Alphabet alphabet, string phrase, int shift
+    ) throws OOBError {
+        return proto_crypt (alphabet, phrase, shift, true);
     }
 }
