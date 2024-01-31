@@ -24,4 +24,4 @@ build-appimage:
 	COPY . .
 	RUN apt-get install squashfs-tools zsync
 	RUN appimage-builder --recipe AppImageBuilder.yml --skip-tests
-	SAVE ARTIFACT GCiphers-0.1.2-x86_64.AppImage AS LOCAL GCiphers-0.1.2-x86_64.AppImage
+	SAVE ARTIFACT GCiphers-0.2.0-x86_64.AppImage AS LOCAL GCiphers-0.2.0-x86_64.AppImage
