@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-31 23:27+0300\n"
+"POT-Creation-Date: 2024-02-01 00:26+0300\n"
 "PO-Revision-Date: 2024-01-31 23:29+0300\n"
 "Last-Translator: Alexander Svobodov\n"
 "Language-Team: Alexander Svobodov sidecuter@outlook.com\n"
@@ -226,7 +226,7 @@ msgstr "Индекс столбца превышает максимальный"
 msgid "Column index bigger than maximum for last row"
 msgstr "Индекс столбца превышает максимальный для последней строки"
 
-#: src/encryption/polybius.vala:146
+#: src/encryption/polybius.vala:138
 msgid "Letters count in text for decryption must be a multiple of two"
 msgstr "Количество символов должно быть кратно двум"
 
@@ -235,8 +235,8 @@ msgstr "Количество символов должно быть кратно
 msgid "This matrix is not square"
 msgstr "Матрица не является квадратной"
 
-#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:283
-#: src/encryption/matrix.vala:320
+#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:272
+#: src/encryption/matrix.vala:296
 msgid "Determinant is zero"
 msgstr "Детерминант равен нулю"
 
@@ -244,11 +244,11 @@ msgstr "Детерминант равен нулю"
 msgid "m1 != n2"
 msgstr "m1 != n2"
 
-#: src/encryption/matrix.vala:255
+#: src/encryption/matrix.vala:250
 msgid "Not a valid phrase"
 msgstr "Фраза не корректна"
 
-#: src/encryption/matrix.vala:332
+#: src/encryption/matrix.vala:308
 msgid "Phrase contains wrong encrypted components"
 msgstr "Фраза содержит неверно защифрованнные фрагменты"
 

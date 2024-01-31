@@ -45,7 +45,7 @@ public class GCiphers.Matrix : Adw.Bin {
             placeholder.set_child (new MatrixGrid (parsed_n, parsed_n));
             state = true;
         }
-        catch (ValidateError ex) {
+        catch (Error ex) {
             win.toaster (ex.message);
         }
     }
@@ -56,18 +56,13 @@ public class GCiphers.Matrix : Adw.Bin {
         try {
             var text = text_view.get_text_buffer ();
             string letters = win.encode_text (text.text);
-            Alphabet alphabet = new Alphabet ();
             validate (letters, state);
             int rows;
             int columns;
             var items = parse_entries (
                 (MatrixGrid) placeholder.child, out rows, out columns
             );
-            text.set_text (
-                encrypt (
-                    alphabet, letters, rows, columns, items
-                )
-            );
+            text.set_text (encrypt (letters, rows, columns, items));
         }
         catch (Error ex) {
             win.toaster (ex.message);
@@ -87,12 +82,9 @@ public class GCiphers.Matrix : Adw.Bin {
                 out rows,
                 out columns
             );
-            Alphabet alphabet = new Alphabet ();
             Encryption.Matrix.validate_int (letters);
             text.set_text (
-                win.decode_text (decrypt (
-                    alphabet, letters, rows, columns, items
-                ))
+                win.decode_text (decrypt (letters, rows, columns, items))
             );
         }
         catch (Error ex) {
@@ -104,7 +96,7 @@ public class GCiphers.Matrix : Adw.Bin {
         state = false;
     }
 
-    private int[] parse_entries (GCiphers.MatrixGrid grid, out int rows, out int columns) throws ValidateError {
+    private int[] parse_entries (GCiphers.MatrixGrid grid, out int rows, out int columns) throws Error {
         rows = grid.rows;
         columns = grid.columns;
         int[] result = new int[rows * columns];

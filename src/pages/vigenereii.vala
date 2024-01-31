@@ -37,9 +37,8 @@ public class GCiphers.Vigenereii : Adw.Bin {
             var text = text_view.get_text_buffer ();
             string letters = win.encode_text (text.text);
             string key = key.get_buffer ().get_text ().down ();
-            Alphabet alphabet = new Alphabet ();
             validate (letters, key);
-            text.set_text (encrypt (alphabet, letters, key));
+            text.set_text (encrypt (letters, key));
         }
         catch (Error ex) {
             win.toaster (ex.message);
@@ -53,9 +52,8 @@ public class GCiphers.Vigenereii : Adw.Bin {
             var text = text_view.get_text_buffer ();
             string letters = text.text.down ().replace (" ", "");
             string key = key.get_buffer ().get_text ().down ();
-            Alphabet alphabet = new Alphabet ();
             validate (letters, key);
-            text.set_text (win.decode_text (decrypt (alphabet, letters, key)));
+            text.set_text (win.decode_text (decrypt (letters, key)));
         }
         catch (Error ex) {
             win.toaster (ex.message);

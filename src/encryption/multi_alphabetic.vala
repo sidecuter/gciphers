@@ -21,38 +21,33 @@
 namespace Encryption.MultiAlphabetic {
     string proto_crypt (
         Alphabet alphabet, string phrase, string key, bool reverse = false
-    ) throws OOBError {
+    ) throws Error {
         string result = "";
         unichar buffer, letter;
         int k = 0, i = 0;
         while (phrase.get_next_char (ref i, out letter)) {
             if (key.length == k) k %= key.length;
             key.get_next_char (ref k, out buffer);
-            try {
-                letter = alphabet[
-                    mod (
-                        alphabet.index_of (letter) 
-                        + alphabet.index_of(buffer) * (reverse ? -1 : 1),
-                        alphabet.length
-                    )
-                ];
-                result = @"$result$(letter.to_string())";
-            }
-            catch (OOBError ex) {
-                throw ex;
-            }
+            letter = alphabet[
+                mod (
+                    alphabet.index_of (letter) 
+                    + alphabet.index_of(buffer) * (reverse ? -1 : 1),
+                    alphabet.length
+                )
+            ];
+            result = @"$result$(letter.to_string())";
         }
         return result;
     }
 
     string encrypt (Alphabet alphabet, string phrase, string key) 
-        throws OOBError
+        throws Error
     {
         return proto_crypt (alphabet, phrase, key);
     }
 
     string decrypt (Alphabet alphabet, string phrase, string key)
-        throws OOBError
+        throws Error
     {
         return proto_crypt (alphabet, phrase, key, true);
     }

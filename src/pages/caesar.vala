@@ -37,9 +37,8 @@ public class GCiphers.Caesar : Adw.Bin {
             var text = text_view.get_text_buffer ();
             string letters = win.encode_text (text.text);
             string key = key.get_buffer ().get_text ();
-            Alphabet alphabet = new Alphabet ();
             validate (letters, key);
-            text.set_text (encrypt (alphabet, letters, int.parse (key)));
+            text.set_text (encrypt (letters, int.parse (key)));
         }
         catch (Error ex) {
             win.toaster (ex.message);
@@ -53,10 +52,9 @@ public class GCiphers.Caesar : Adw.Bin {
             var text = text_view.get_text_buffer ();
             string letters = text.text.down ().replace (" ", "");
             string key = key.get_buffer ().get_text ();
-            Alphabet alphabet = new Alphabet ();
             validate (letters, key);
             text.set_text (win.decode_text (
-                decrypt (alphabet, letters, int.parse (key)))
+                decrypt (letters, int.parse (key)))
             );
         }
         catch (Error ex) {

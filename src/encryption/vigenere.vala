@@ -19,11 +19,13 @@
  */
 
 namespace Encryption.Vigenere {
-    string encrypt (Alphabet alphabet, string phrase, string key) throws OOBError {
+    string encrypt (string phrase, string key) throws Error {
+        Alphabet alphabet = new Alphabet ();
         return MultiAlphabetic.encrypt(alphabet, phrase, @"$key$phrase");
     }
 
-    string decrypt (Alphabet alphabet, string phrase, string key) throws OOBError {
+    string decrypt (string phrase, string key) throws Error {
+        Alphabet alphabet = new Alphabet ();
         string result = "";
         int i = 0, k = 0;
         unichar buffer, letter;

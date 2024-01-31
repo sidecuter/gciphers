@@ -62,7 +62,7 @@ namespace Encryption.Matrix {
             }
         }
 
-        public double det () throws MatrixError {
+        public double det () throws Error {
             if (this.rows != this.columns)
                 throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
             if (this.rows == 1) return this.elements.get(0);
@@ -98,7 +98,7 @@ namespace Encryption.Matrix {
             return p;
         }
 
-        public Matr trasnp () throws MatrixError {
+        public Matr trasnp () throws Error {
             if (this.rows != this.columns)
                 throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
             double tmp;
@@ -120,7 +120,7 @@ namespace Encryption.Matrix {
             return this;
         }
 
-        public Matr get_minor (int iski, int iskj) throws MatrixError {
+        public Matr get_minor (int iski, int iskj) throws Error {
             if (this.rows != this.columns)
                 throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
             int r = this.rows - 1;
@@ -143,7 +143,7 @@ namespace Encryption.Matrix {
             return new Matr (r, c, elems);
         }
 
-        public void swap_zero () throws MatrixError {
+        public void swap_zero () throws Error {
             bool flag = false;
             double tmp;
             for (int i = 0; i < this.rows; i++) {
@@ -165,7 +165,7 @@ namespace Encryption.Matrix {
             if (!flag) throw new MatrixError.CODE_ALL_ELEMENTS_IS_ZERO ("");
         }
 
-        public Matr reverse () throws MatrixError {
+        public Matr reverse () throws Error {
             if (this.rows != this.columns)
                 throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
             double det = this.det ();
@@ -186,7 +186,7 @@ namespace Encryption.Matrix {
             return result.trasnp ();
         }
 
-        public Matr mult (Matr m) throws MatrixError.CODE_SIZE_NOT_MATCH {
+        public Matr mult (Matr m) throws Error {
             if (this.columns != m.rows) 
                 throw new MatrixError.CODE_SIZE_NOT_MATCH (_("m1 != n2"));
             double sum;
@@ -220,13 +220,12 @@ namespace Encryption.Matrix {
         return number.to_string ().length;
     }
 
-    bool check_det (Matr matr) throws MatrixError {
+    bool check_det (Matr matr) throws Error {
         if (matr.det () == 0) return false;
         else return true;
     }
 
-    List<Matr> get_letters (Alphabet alphabet, string letters, int n) 
-    throws OOBError {
+    List<Matr> get_letters (Alphabet alphabet, string letters, int n) throws Error {
         unichar letter;
         int count, k = 0, char_count = letters.char_count ();
         if (char_count % 3 == 0) count = char_count / 3;
@@ -243,11 +242,7 @@ namespace Encryption.Matrix {
         return result;
     }
 
-    List<Matr> get_numbers (
-        string phrase,
-        int avg_length,
-        int n
-    ) throws OOBError {
+    List<Matr> get_numbers (string phrase, int avg_length, int n) throws Error {
         string buffer;
         int[] matr_buffer = new int[n];
         List<Matr> result = new List<Matr> ();
@@ -268,29 +263,16 @@ namespace Encryption.Matrix {
         return result;
     }
 
-    string encrypt (
-        Alphabet alphabet,
-        string phrase,
-        int r,
-        int c,
-        int[] elems
-    ) throws OOBError {
+    string encrypt (string phrase, int r, int c, int[] elems) throws Error {
+        Alphabet alphabet = new Alphabet ();
         Matr matr = new Matr.from_int (r, c, elems);
         List<Matr> result_m = new List<Matr> ();
         string result = "";
         string buffer = "";
-        try {
-            if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
-            List<Matr> letters = get_letters (alphabet, phrase, matr.rows);
-            foreach (var letter_m in letters) {
-                result_m.append (matr.mult (letter_m));
-            }
-        }
-        catch (OOBError ex) {
-            throw ex;
-        }
-        catch (MatrixError ex) {
-            throw new OOBError.CODE_PASSTHROUGH (ex.message);
+        if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
+        List<Matr> letters = get_letters (alphabet, phrase, matr.rows);
+        foreach (var letter_m in letters) {
+            result_m.append (matr.mult (letter_m));
         }
         int count = count_digits (
             (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * matr.rows
@@ -305,41 +287,28 @@ namespace Encryption.Matrix {
         return result;
     }
 
-    string decrypt (
-        Alphabet alphabet,
-        string phrase,
-        int r,
-        int c,
-        int[] elems
-    ) throws OOBError {
+    string decrypt (string phrase, int r, int c, int[] elems) throws Error {
+        Alphabet alphabet = new Alphabet ();
         Matr matr = new Matr.from_int (r, c, elems);
         string result = "";
         string buffer = "";
         double temp;
-        try {
-            if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
-            int count = count_digits (
-                (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * matr.rows
-            );
-            List<Matr> numbers = get_numbers (phrase, count, matr.rows);
-            matr = matr.reverse ();
-            Matr buff;
-            foreach (var number_m in numbers) {
-                buff = matr.mult (number_m);
-                for (int i = 0; i < buff.rows; i++) {
-                    temp = Math.round (buff.elements.get(i) * 100) / 100;
-                    if ((double) ((int) temp) != temp)
-                        throw new OOBError.CODE_PASSTHROUGH (_("Phrase contains wrong encrypted components"));
-                    buffer = alphabet[((int) temp) - 1].to_string ();
-                    result = @"$result$buffer";
-                }
+        if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
+        int count = count_digits (
+            (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * matr.rows
+        );
+        List<Matr> numbers = get_numbers (phrase, count, matr.rows);
+        matr = matr.reverse ();
+        Matr buff;
+        foreach (var number_m in numbers) {
+            buff = matr.mult (number_m);
+            for (int i = 0; i < buff.rows; i++) {
+                temp = Math.round (buff.elements.get(i) * 100) / 100;
+                if ((double) ((int) temp) != temp)
+                    throw new OOBError.CODE_PASSTHROUGH (_("Phrase contains wrong encrypted components"));
+                buffer = alphabet[((int) temp) - 1].to_string ();
+                result = @"$result$buffer";
             }
-        }
-        catch (OOBError ex) {
-            throw ex;
-        }
-        catch (MatrixError ex) {
-            throw new OOBError.CODE_PASSTHROUGH (ex.message);
         }
         return result;
     }

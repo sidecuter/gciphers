@@ -45,9 +45,8 @@ public class GCiphers.Shenon : Adw.Bin {
             unowned string t0 = t0.get_buffer ().get_text ();
             unowned string a = a.get_buffer ().get_text ();
             unowned string c = c.get_buffer ().get_text ();
-            Alphabet alphabet = new Alphabet ();
             validate (letters, t0, a, c);
-            text.set_text (encrypt (alphabet,
+            text.set_text (encrypt (
                 letters,
                 int.parse (t0),
                 int.parse (a),
@@ -68,10 +67,8 @@ public class GCiphers.Shenon : Adw.Bin {
             unowned string t0 = t0.get_buffer ().get_text ();
             unowned string a = a.get_buffer ().get_text ();
             unowned string c = c.get_buffer ().get_text ();
-            Alphabet alphabet = new Alphabet ();
             validate (letters, t0, a, c);
             text.set_text (win.decode_text (decrypt (
-                alphabet,
                 letters,
                 int.parse (t0),
                 int.parse (a),

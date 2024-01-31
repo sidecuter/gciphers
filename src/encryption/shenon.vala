@@ -38,7 +38,8 @@ namespace Encryption.Shenon {
         }
     }
 
-    string encrypt (Alphabet alphabet, string phrase, int t0, int a, int c) throws OOBError {
+    string encrypt (string phrase, int t0, int a, int c) throws Error {
+        Alphabet alphabet = new Alphabet ();
         Generator generator = new Generator (t0, a, c, alphabet.length);
         string result = "";
         int pos = 0, i = 0;
@@ -50,7 +51,8 @@ namespace Encryption.Shenon {
         return result;
     }
 
-    string decrypt (Alphabet alphabet, string phrase, int t0, int a, int c) throws OOBError {
+    string decrypt (string phrase, int t0, int a, int c) throws Error {
+        Alphabet alphabet = new Alphabet ();
         Generator generator = new Generator (t0, a, c, alphabet.length);
         string result = "";
         int pos = 0, i = 0;

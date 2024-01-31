@@ -11,7 +11,7 @@ public void test_matrix_max () {
         2,
         elems
     );
-    assert_cmpfloat (4, GLib.CompareOperator.EQ, matr.max ());
+    assert_cmpfloat (4, CompareOperator.EQ, matr.max ());
 }
 
 public void test_matrix_det () {
@@ -25,9 +25,9 @@ public void test_matrix_det () {
             2,
             elems
         );
-        assert_cmpfloat (-10, GLib.CompareOperator.EQ, matr.det ());
+        assert_cmpfloat (-10, CompareOperator.EQ, matr.det ());
     }
-    catch (MatrixError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
@@ -58,19 +58,18 @@ public void test_matrix_reverse () {
             for (int j = 0; j < matr_r_mult_matr.columns; j++) {
                 assert_cmpfloat (
                     matr_E.elements.get(i * matr_E.columns + j),
-                    GLib.CompareOperator.EQ,
+                    CompareOperator.EQ,
                     matr_r_mult_matr.elements.get(i * matr_r_mult_matr.columns + j)
                 );
             }
         }
     }
-    catch (MatrixError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_matrix_enc () {
-    Alphabet alphabet = new Alphabet ();
     try {
         int[] elems = {
             2, 5, 6,
@@ -79,9 +78,8 @@ public void test_matrix_enc () {
         };
         assert_cmpstr (
             "215147199170092124179093123259159242172096131275125203154074101045053093276136205129073076045043077091089122146060108224170212",
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             encrypt(
-                alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 3,
                 3,
@@ -89,13 +87,12 @@ public void test_matrix_enc () {
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_matrix_dec () {
-    Alphabet alphabet = new Alphabet ();
     try {
         int[] elems = {
             2, 5, 6,
@@ -104,9 +101,8 @@ public void test_matrix_dec () {
         };
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
+            CompareOperator.EQ,
             decrypt (
-                alphabet,
                 "215147199170092124179093123259159242172096131275125203154074101045053093276136205129073076045043077091089122146060108224170212",
                 3,
                 3,
@@ -114,7 +110,7 @@ public void test_matrix_dec () {
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

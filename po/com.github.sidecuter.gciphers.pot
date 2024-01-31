@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-31 23:27+0300\n"
+"POT-Creation-Date: 2024-02-01 00:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,7 +222,7 @@ msgstr ""
 msgid "Column index bigger than maximum for last row"
 msgstr ""
 
-#: src/encryption/polybius.vala:146
+#: src/encryption/polybius.vala:138
 msgid "Letters count in text for decryption must be a multiple of two"
 msgstr ""
 
@@ -231,8 +231,8 @@ msgstr ""
 msgid "This matrix is not square"
 msgstr ""
 
-#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:283
-#: src/encryption/matrix.vala:320
+#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:272
+#: src/encryption/matrix.vala:296
 msgid "Determinant is zero"
 msgstr ""
 
@@ -240,11 +240,11 @@ msgstr ""
 msgid "m1 != n2"
 msgstr ""
 
-#: src/encryption/matrix.vala:255
+#: src/encryption/matrix.vala:250
 msgid "Not a valid phrase"
 msgstr ""
 
-#: src/encryption/matrix.vala:332
+#: src/encryption/matrix.vala:308
 msgid "Phrase contains wrong encrypted components"
 msgstr ""
 

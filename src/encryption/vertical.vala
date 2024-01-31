@@ -31,55 +31,41 @@
             return pos;
         }
 
-        public static int[] get_order (Alphabet alphabet, string key) 
-            throws OOBError
-        {
+        public static int[] get_order (Alphabet alphabet, string key) throws Error {
             int[] buffer_a = new int[key.char_count ()];
             int[] result = new int[key.char_count ()];
-            try {
-                for (int i = 0; i < key.char_count (); i++) {
-                    unichar symb = key.get_char (key.index_of_nth_char (i));
-                    buffer_a[i] = alphabet.index_of (symb);
-                }
-                List<int> positions = new List<int>();
-                foreach (var buffer_key in buffer_a) positions.append (buffer_key);
-                positions.sort ((a,b) => {return (int) (a > b) - (int) (a < b);});
-                int i = 0;
-                for (int j = 0; j < positions.length (); j++) {
-                    while (find(buffer_a, positions.nth_data(j)) >= 0) {
-                        int pos = find(buffer_a, positions.nth_data(j));
-                        result[pos] = ++i;
-                        buffer_a[pos] = -1;
-                    }
-                }
-                return result;
+            for (int i = 0; i < key.char_count (); i++) {
+                unichar symb = key.get_char (key.index_of_nth_char (i));
+                buffer_a[i] = alphabet.index_of (symb);
             }
-            catch (OOBError ex) {
-                throw ex;
+            List<int> positions = new List<int>();
+            foreach (var buffer_key in buffer_a) positions.append (buffer_key);
+            positions.sort ((a,b) => {return (int) (a > b) - (int) (a < b);});
+            int i = 0;
+            for (int j = 0; j < positions.length (); j++) {
+                while (find(buffer_a, positions.nth_data(j)) >= 0) {
+                    int pos = find(buffer_a, positions.nth_data(j));
+                    result[pos] = ++i;
+                    buffer_a[pos] = -1;
+                }
             }
+            return result;
         }
 
         public static void get_rows_and_keys(
             Alphabet alphabet,
             string phrase, string key, out int[] keys,
             out int row, out int row_o, out int[] rows
-        ) 
-            throws OOBError 
-        {
-            try {
-                keys = get_order (alphabet, key);
-                row = phrase.char_count () / keys.length;
-                row_o = row;
-                rows = new int[keys.length];
-                if (phrase.char_count () % keys.length != 0) row++;
-                int last_row = keys.length - (row * keys.length - phrase.char_count ());
-                for (int i = 0; i < keys.length; i++) {
-                    if (i >= last_row) rows[i] = row_o;
-                    else rows[i] = row;
-                }
-            }
-            catch (OOBError ex) {
-                throw ex;
+        ) throws Error {
+            keys = get_order (alphabet, key);
+            row = phrase.char_count () / keys.length;
+            row_o = row;
+            rows = new int[keys.length];
+            if (phrase.char_count () % keys.length != 0) row++;
+            int last_row = keys.length - (row * keys.length - phrase.char_count ());
+            for (int i = 0; i < keys.length; i++) {
+                if (i >= last_row) rows[i] = row_o;
+                else rows[i] = row;
             }
         }
 
@@ -100,87 +86,76 @@
         }
 
         public static string get_result (Alphabet alphabet, int row, int[] keys, int[,] result_array)
-            throws OOBError
+            throws Error
         {
-            try {
-                string result = "";
-                for (int i = 0; i < row; i++) {
-                    for (int j = 0; j < keys.length; j++)
-                        if (result_array[i, j] != -1) {
-                            result = @"$result$(alphabet[result_array[i, j]])";
-                        }
-                }
-                return result;
-            }
-            catch (OOBError ex) {
-                throw ex;
-            }
-        }
-    }
-
-    string proto_crypt (Alphabet alphabet, string phrase, string key, bool enc = true)
-        throws OOBError
-    {
-        try {
-            int row, row_other;
-            int[] keys, rows;
-            Methods.get_rows_and_keys (
-                alphabet, phrase, key,
-                out keys, out row,
-                out row_other, out rows);
-            int[,] buffer = new int[row, keys.length];
-            int k = 0, u = 0;
-            int[] dec;
-            bool flag = phrase.char_count () % keys.length != 0;
-            if (flag && !enc) dec =  Methods.get_dec (
-                keys, row * keys.length - phrase.char_count ());
-            else dec = new int[0];
-            unichar symb;
+            string result = "";
             for (int i = 0; i < row; i++) {
-                for (int j = 0; j < keys.length; j++) {
-                    if (enc) {
-                        if (k < phrase.length) {
-                            phrase.get_next_char (ref k, out symb);
-                            buffer[i, j] = alphabet.index_of (symb);
-                        }
-                        else buffer[i, j] = -1;
+                for (int j = 0; j < keys.length; j++)
+                    if (result_array[i, j] != -1) {
+                        result = @"$result$(alphabet[result_array[i, j]])";
                     }
-                    else {
-                        if (!flag) {
-                            phrase.get_next_char (ref k, out symb);
-                            buffer[i, j] = alphabet.index_of (symb);
-                        } else {
-                            if (i + 1 == row && u < dec.length && dec[u] - 1 == j) {
-                                buffer[i, j] = -1;
-                                u++;
-                            }
-                            else {
-                                phrase.get_next_char (ref k, out symb);
-                                buffer[i, j] = alphabet.index_of (symb);
-                            }
-                        }
-                    }
-                }
             }
-            int[,] result_array = new int[row, keys.length];
+            return result;
+        }
+    }
+
+    string proto_crypt (string phrase, string key, bool enc = true) throws Error {
+        Alphabet alphabet = new Alphabet ();
+        int row, row_other;
+        int[] keys, rows;
+        Methods.get_rows_and_keys (
+            alphabet, phrase, key,
+            out keys, out row,
+            out row_other, out rows);
+        int[,] buffer = new int[row, keys.length];
+        int k = 0, u = 0;
+        int[] dec;
+        bool flag = phrase.char_count () % keys.length != 0;
+        if (flag && !enc) dec =  Methods.get_dec (
+            keys, row * keys.length - phrase.char_count ());
+        else dec = new int[0];
+        unichar symb;
+        for (int i = 0; i < row; i++) {
             for (int j = 0; j < keys.length; j++) {
-                for (int i = 0; i < row; i++) {
-                    if (enc) result_array[i, keys[j] - 1] = buffer[i, j];
-                    else result_array[i, j] = buffer[i, keys[j] - 1]; 
+                if (enc) {
+                    if (k < phrase.length) {
+                        phrase.get_next_char (ref k, out symb);
+                        buffer[i, j] = alphabet.index_of (symb);
+                    }
+                    else buffer[i, j] = -1;
+                }
+                else {
+                    if (!flag) {
+                        phrase.get_next_char (ref k, out symb);
+                        buffer[i, j] = alphabet.index_of (symb);
+                    } else {
+                        if (i + 1 == row && u < dec.length && dec[u] - 1 == j) {
+                            buffer[i, j] = -1;
+                            u++;
+                        }
+                        else {
+                            phrase.get_next_char (ref k, out symb);
+                            buffer[i, j] = alphabet.index_of (symb);
+                        }
+                    }
                 }
             }
-            return Methods.get_result (alphabet, row, keys, result_array);
         }
-        catch (OOBError ex) {
-            throw ex;
+        int[,] result_array = new int[row, keys.length];
+        for (int j = 0; j < keys.length; j++) {
+            for (int i = 0; i < row; i++) {
+                if (enc) result_array[i, keys[j] - 1] = buffer[i, j];
+                else result_array[i, j] = buffer[i, keys[j] - 1]; 
+            }
         }
+        return Methods.get_result (alphabet, row, keys, result_array);
     }
 
-    string encrypt (Alphabet alphabet, string phrase, string key) throws OOBError {
-        return proto_crypt (alphabet, phrase, key);
+    string encrypt (string phrase, string key) throws Error {
+        return proto_crypt (phrase, key);
     }
 
-    string decrypt (Alphabet alphabet, string phrase, string key) throws OOBError {
-        return proto_crypt (alphabet, phrase, key, false);
+    string decrypt (string phrase, string key) throws Error {
+        return proto_crypt (phrase, key, false);
     }
 }

@@ -1,39 +1,36 @@
 using Encryption;
+using Encryption.Polybius;
 
 public void test_polybius_enc () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "334133153233143334333546163233143362122633251113163655133322221114322313111641414625",
-            GLib.CompareOperator.EQ,
-            Polybius.encrypt(
-                alphabet,
+            CompareOperator.EQ,
+            encrypt(
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 6,
                 6
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_polybius_dec () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
-            Polybius.decrypt (
-                alphabet,
+            CompareOperator.EQ,
+            decrypt (
                 "334133153233143334333546163233143362122633251113163655133322221114322313111641414625",
                 6,
                 6
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

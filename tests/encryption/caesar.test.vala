@@ -1,73 +1,66 @@
 using Encryption;
+using Encryption.Caesar;
 
 public void test_caesar_ru_shift_3_enc () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "схсзрсжстсуъирсжсвдоснгеифяесккгжрлегиххън",
-            GLib.CompareOperator.EQ,
-            Caesar.encrypt(
-                alphabet,
+            CompareOperator.EQ,
+            encrypt(
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 3
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_caesar_ru_shift_4_enc () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "тцтистзтутфыйстзтгептоджйхажтллдзсмждйццыо",
-            GLib.CompareOperator.EQ,
-            Caesar.encrypt(
-                alphabet,
+            CompareOperator.EQ,
+            encrypt(
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 4
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_caesar_ru_shift_3_dec () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
-            Caesar.decrypt(
-                alphabet,
+            CompareOperator.EQ,
+            decrypt(
                 "схсзрсжстсуъирсжсвдоснгеифяесккгжрлегиххън",
                 3
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }
 
 public void test_caesar_ru_shift_4_dec () {
-    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
-            GLib.CompareOperator.EQ,
-            Caesar.decrypt(
-                alphabet,
+            CompareOperator.EQ,
+            decrypt(
                 "тцтистзтутфыйстзтгептоджйхажтллдзсмждйццыо",
                 4
             )
         );
     }
-    catch (OOBError ex) {
+    catch (Error ex) {
         assert_true (false);
     }
 }

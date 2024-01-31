@@ -18,16 +18,14 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption.Belazo {
-    string encrypt (Alphabet alphabet, string phrase, string key)
-        throws OOBError
-    {
+namespace Encryption.Belazo { 
+    string encrypt (string phrase, string key) throws Error {
+        Alphabet alphabet = new Alphabet ();
         return MultiAlphabetic.encrypt(alphabet, phrase, key);
     }
 
-    string decrypt (Alphabet alphabet, string phrase, string key)
-        throws OOBError
-    {
+    string decrypt (string phrase, string key) throws Error {
+        Alphabet alphabet = new Alphabet ();
         return MultiAlphabetic.decrypt(alphabet, phrase, key);
     }
 }
