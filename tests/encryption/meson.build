@@ -53,7 +53,6 @@ unit_tests = {
     ),
     'playfair': files (
         meson.project_source_root() + '/src/encryption/playfair.vala',
-        meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
     'scrambler': files (
         meson.project_source_root() + '/src/encryption/scrambler.vala',

@@ -32,7 +32,7 @@ jobs:
         run: |
           sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
           sudo chmod +x /usr/local/bin/appimagetool
-          sudo pip3 install appimage-builder
+          sudo pip3 install appimage-builder --break-system-packages
       - name: Build appimage
         run: appimage-builder --recipe AppImageBuilder.yml --skip-tests
       - name: Release
