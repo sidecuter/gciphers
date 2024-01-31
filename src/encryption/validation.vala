@@ -62,7 +62,7 @@ namespace Encryption {
             if (key.length == 0) throw new ValidateError.EMPTY_STRING (_("Key is empty"));
             if (!int.try_parse (key, out num)) throw new ValidateError.NOT_NUMBER (_("Key is not a valid number"));
             if (num < 1) throw new ValidateError.NUMBER_BELOW_ZERO (_("Number is below zero"));
-            if (num + 1> alphabet.length) throw new ValidateError.INCORRECT_NUMBER (_("Number is bigger, than alphabet number"));
+            if (num >= alphabet.length) throw new ValidateError.INCORRECT_NUMBER (_("Number is bigger, than alphabet length"));
             if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Text field is empty"));
             validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
         }

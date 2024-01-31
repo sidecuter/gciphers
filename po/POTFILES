@@ -3,22 +3,7 @@ data/com.github.sidecuter.gciphers.gschema.xml
 
 src/main.vala
 src/application.vala
-
 src/window.vala
-src/menu_entry.vala
-src/pages/atbash.vala
-src/pages/caesar.vala
-src/pages/belazo.vala
-src/pages/pages_errors.vala
-src/pages/polybius.vala
-src/pages/trithemium.vala
-src/pages/vigenere.vala
-src/pages/vertical.vala
-src/pages/vigenereii.vala
-src/pages/matrix.vala
-src/pages/playfair.vala
-src/pages/scrambler.vala
-src/pages/shenon.vala
 
 data/ui/window.ui
 data/ui/atbash.ui
@@ -49,3 +34,4 @@ src/encryption/scrambler.vala
 src/encryption/shenon.vala
 src/encryption/alphabet.vala
 src/encryption/multi_alphabetic.vala
+src/encryption/validation.vala
