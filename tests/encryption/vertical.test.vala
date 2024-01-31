@@ -1,12 +1,12 @@
 using Encryption;
+using Encryption.Vertical;
 
 public void test_vertical_methods_get_order () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+    Alphabet alphabet = new Alphabet ();
     try {
         string key = "супчик";
         int[] positions = {4, 5, 3, 6, 1, 2};
-        int[] res_pos = VerticalMethods.get_order (alphabet, key);
+        int[] res_pos = Methods.get_order (alphabet, key);
         assert_cmpint (
             key.char_count (),
             GLib.CompareOperator.EQ,
@@ -25,19 +25,18 @@ public void test_vertical_methods_get_order () {
             );
         }
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
-public void test_vertical_ru_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_vertical_enc () {
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "нооотдрчпгооояоенгавоблкозьесвивгзанчктает",
             GLib.CompareOperator.EQ,
-            Encryption.Vertical.encrypt(
+            encrypt(
                 alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 "супчик"
@@ -49,29 +48,28 @@ public void test_vertical_ru_enc () {
     }
 }
 
-public void test_vertical_ru_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_vertical_dec () {
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
             GLib.CompareOperator.EQ,
-            Encryption.Vertical.decrypt (
+            decrypt (
                 alphabet,
                 "нооотдрчпгооояоенгавоблкозьесвивгзанчктает",
                 "супчик"
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
-public static int main (string[] args) {
+int main (string[] args) {
     Test.init (ref args);
-    Test.add_func ("/encryption/vertical_ru_enc", test_vertical_ru_enc);
-    Test.add_func ("/encryption/vertical_ru_dec", test_vertical_ru_dec);
+    Test.add_func ("/encryption/vertical_enc", test_vertical_enc);
+    Test.add_func ("/encryption/vertical_dec", test_vertical_dec);
     Test.add_func ("/encryption/vertical_methods_get_order", test_vertical_methods_get_order);
     return Test.run ();
 }

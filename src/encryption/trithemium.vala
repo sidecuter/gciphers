@@ -18,18 +18,12 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption {
-    class Trithemium : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase)
-            throws Encryption.OOBError
-        {
-            return Encryption.MultiAlphabetic.encrypt(alphabet, phrase, alphabet.alphabet);
-        }
+namespace Encryption.Trithemium {
+    string encrypt (Alphabet alphabet, string phrase) throws OOBError {
+        return MultiAlphabetic.encrypt(alphabet, phrase, alphabet.alphabet);
+    }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase)
-            throws Encryption.OOBError
-        {
-            return Encryption.MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
-        }
+    string decrypt (Alphabet alphabet, string phrase) throws OOBError {
+        return MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
     }
 }

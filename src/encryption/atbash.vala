@@ -18,22 +18,32 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption {
-    class Atbash : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
-            string result = "";
-            unichar letter;
-            int i = 0;
-            while (phrase.get_next_char (ref i, out letter)) {
-                try {
-                    letter = alphabet[alphabet.length - 1 - alphabet.index_of (letter)];
-                    result = @"$result$(letter.to_string())";
-                }
-                catch (Encryption.OOBError ex) {
-                    throw ex;
-                }
+namespace Encryption.Atbash {
+    /*
+     * Метод encrypt зашифровывает исходное сообщение используя шифр АТБАШ
+     * Входные параметры:
+     * - alphabet - алфавит шифрования
+     * - phrase - фраза для зашифровки
+     * Возвращаемое значение: зашифрованная фраза
+     * Тк шифр атбаш имеет одинаковый шифр для зашифровки и расшифровки, то
+     * реализовали только эту функцию
+     */
+    string encrypt (Alphabet alphabet, string phrase) throws OOBError {
+        string result = "";
+        unichar letter;
+        int i = 0;
+        // Цикл выполняется пока не будет достигнут конец строки
+        while (phrase.get_next_char (ref i, out letter)) {
+            try {
+                //Получение буквы с конца алфавита со сдвигом, равным индексу текущей буквы
+                letter = alphabet[alphabet.length - 1 - alphabet.index_of (letter)];
+                // Конкатенируем полученную букву с результирующей строкой
+                result = @"$result$(letter.to_string())";
             }
-            return result;
+            catch (OOBError ex) {
+                throw ex;
+            }
         }
+        return result;
     }
 }

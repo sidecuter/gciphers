@@ -19,71 +19,46 @@
 */
 
 using Encryption;
+using Encryption.Vertical;
 
-namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/vertical.ui")]
-    public class Vertical : Adw.Bin {
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/vertical.ui")]
+public class GCiphers.Vertical : Adw.Bin {
 
-        private unowned spawn_toast toast_spawner;
+    [GtkChild]
+    private unowned UI.TextView text_view;
 
-        private unowned get_alphabet alphabet_getter;
+    [GtkChild]
+    private unowned UI.Entry key;
 
-        [GtkChild]
-        private unowned UI.TextView text_view;
-
-        [GtkChild]
-        private unowned UI.Entry key;
-
-        [GtkCallback]
-        private void on_encrypt_click (Gtk.Button self) {
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ()
-                    .replace (" ", "")
-                    .replace(".", "тчк")
-                    .replace(",", "зпт")
-                    .replace("-", "тире");
-                string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Vertical.encrypt (alphabet, letters, key));
-             }
-             catch (OOBError ex) {
-                 toast_spawner(ex.message);
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
+    [GtkCallback]
+    private void on_encrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = win.encode_text (text.text);
+            string key = key.get_buffer ().get_text ().down ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, key);
+            text.set_text (encrypt (alphabet, letters, key));
         }
-
-        [GtkCallback]
-        private void on_decrypt_click (Gtk.Button self) {
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ().replace (" ", "");
-                string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Vertical.decrypt (alphabet, letters, key));
-            }
-            catch (OOBError ex) {
-                toast_spawner(ex.message);
-            }
-            catch (Errors.ValidateError ex) {
-                toast_spawner(ex.message);
-            }
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
+    }
 
-        public Vertical (spawn_toast toaster, get_alphabet alphabet_get) {
-            toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
+    [GtkCallback]
+    private void on_decrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = text.text.down ().replace (" ", "");
+            string key = key.get_buffer ().get_text ().down ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, key);
+            text.set_text (win.decode_text (decrypt (alphabet, letters, key)));
         }
-
-        private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
-            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
-            Errors.validate_string (alphabet, text, _("No such letter from key in alphabet"));
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
     }
 }

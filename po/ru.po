@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sidecuter.gciphers\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-18 18:24+0300\n"
-"PO-Revision-Date: 2024-01-18 18:25+0300\n"
+"POT-Creation-Date: 2024-01-31 23:27+0300\n"
+"PO-Revision-Date: 2024-01-31 23:29+0300\n"
 "Last-Translator: Alexander Svobodov\n"
 "Language-Team: Alexander Svobodov sidecuter@outlook.com\n"
 "Language: ru\n"
@@ -95,256 +95,57 @@ msgstr "Скрэмблер"
 msgid "Shenon"
 msgstr "Шенон"
 
-#: src/pages/atbash.vala:78 src/pages/caesar.vala:87 src/pages/belazo.vala:84
-#: src/pages/polybius.vala:97 src/pages/polybius.vala:109
-#: src/pages/trithemium.vala:78 src/pages/vigenere.vala:85
-#: src/pages/vertical.vala:84 src/pages/vigenereii.vala:85
-#: src/pages/matrix.vala:159 src/pages/matrix.vala:164
-#: src/pages/playfair.vala:82 src/pages/scrambler.vala:144
-#: src/pages/shenon.vala:106
-msgid "Text field is empty"
-msgstr "Фраза отсутствует"
-
-#: src/pages/atbash.vala:79 src/pages/caesar.vala:88 src/pages/belazo.vala:85
-#: src/pages/polybius.vala:98 src/pages/trithemium.vala:79
-#: src/pages/vigenere.vala:86 src/pages/vertical.vala:85
-#: src/pages/vigenereii.vala:86 src/pages/matrix.vala:160
-#: src/pages/playfair.vala:85 src/pages/scrambler.vala:145
-#: src/pages/shenon.vala:107
-msgid "No such letter from phrase in alphabet"
-msgstr "В фразе содержится некорректный символ"
-
-#: src/pages/caesar.vala:84 src/pages/belazo.vala:83 src/pages/vigenere.vala:83
-#: src/pages/vertical.vala:83 src/pages/vigenereii.vala:83
-#: src/pages/playfair.vala:81
-msgid "Key is empty"
-msgstr "Ключ отсутствует"
-
-#: src/pages/caesar.vala:85
-msgid "Key is not a valid number"
-msgstr "Ключ не является корректным числом"
-
-#: src/pages/caesar.vala:86
-msgid "Number is below zero"
-msgstr "Ключ не может быть меньше нуля"
-
-#: src/pages/belazo.vala:86 src/pages/vigenere.vala:87
-#: src/pages/vertical.vala:86 src/pages/vigenereii.vala:87
-#: src/pages/playfair.vala:86
-msgid "No such letter from key in alphabet"
-msgstr "В ключе содержится некорректный символ"
-
-#: src/pages/polybius.vala:91 src/pages/polybius.vala:103
-msgid "Rows count is empty"
-msgstr "Количество строк не указано"
-
-#: src/pages/polybius.vala:92 src/pages/polybius.vala:104
-msgid "Rows count is not a valid number"
-msgstr "Количество строк не является корректным числом"
-
-#: src/pages/polybius.vala:93 src/pages/polybius.vala:105
-msgid "Rows count is below or equal zero"
-msgstr "Количество строк не может быть меньше либо равно нулю"
-
-#: src/pages/polybius.vala:94 src/pages/polybius.vala:106
-msgid "Columns count is empty"
-msgstr "Количество столбцов не указано"
-
-#: src/pages/polybius.vala:95 src/pages/polybius.vala:107
-msgid "Columns count is not a valid number"
-msgstr "Количество столбцов не является корректным числом"
-
-#: src/pages/polybius.vala:96 src/pages/polybius.vala:108
-msgid "Columns count is below or equal zero"
-msgstr "Количество столбцов не может быть меньше либо равно нулю"
-
-#: src/pages/polybius.vala:114 src/pages/matrix.vala:165
-msgid "Phrase should be only consist of numbers"
-msgstr "Фраза должна состоять из цифр"
-
-#: src/pages/polybius.vala:116
-msgid "Row in string cannot be bigger than table rows count"
-msgstr "Показатель строки не должен быть больше количества строк"
-
-#: src/pages/polybius.vala:118
-msgid "Column in string cannot be bigger than table columns count"
-msgstr "Показатель столбца не должен быть больше количества столбцов"
-
-#: src/pages/vigenere.vala:84 src/pages/vigenereii.vala:84
-msgid "Key length is bigger than 1"
-msgstr "Длина ключа превышает один символ"
-
-#: src/pages/matrix.vala:132 src/pages/matrix.vala:148
-msgid "n is empty"
-msgstr "n не указано"
-
-#: src/pages/matrix.vala:133 src/pages/matrix.vala:149
-msgid "n is not a valid number"
-msgstr "n не является корректным числом"
-
-#: src/pages/matrix.vala:134
-msgid "n is below or equal one or greater than 10"
-msgstr "n меньше либо равно единице или больше чем 10"
-
-#: src/pages/matrix.vala:158
-msgid "Matrix not determined"
-msgstr "Матрица не указана"
-
-#: src/pages/playfair.vala:65
-msgid "Length must be divisible by 2"
-msgstr "Длина должна делиться нацело на 2"
-
-#: src/pages/playfair.vala:84
-msgid "Key must contain only unique letters"
-msgstr "Ключ должен содержать только уникальные значения"
-
-#: src/pages/scrambler.vala:128
-msgid "First scrambler is empty"
-msgstr "Первый скрэмблер пуст"
-
-#: src/pages/scrambler.vala:130
-msgid "First scrambler is not a valid number"
-msgstr "Первый скрэмблер не является корректным числом"
-
-#: src/pages/scrambler.vala:131
-msgid "First scrambler can contain only 1 or 0"
-msgstr "Первый скрэмблер может содержать только 1 или 0"
-
-#: src/pages/scrambler.vala:132
-msgid "Second scrambler is empty"
-msgstr "Второй скрэмблер пуст"
-
-#: src/pages/scrambler.vala:134
-msgid "Second scrambler is not a valid number"
-msgstr "Второй скрэмблер не является корректным числом"
-
-#: src/pages/scrambler.vala:135
-msgid "Second scrambler can contain only 1 or 0"
-msgstr "Второй скрэмблер может содержать только 1 или 0"
-
-#: src/pages/scrambler.vala:136
-msgid "First key is empty"
-msgstr "Первый ключ пуст"
-
-#: src/pages/scrambler.vala:138
-msgid "First key is not a valid number"
-msgstr "Первый ключ не является корректным числом"
-
-#: src/pages/scrambler.vala:139
-msgid "First key can contain only 1 or 0"
-msgstr "Первый ключ может содержать только 1 или 0"
-
-#: src/pages/scrambler.vala:140
-msgid "Second key is empty"
-msgstr "Второй скрэмблер пуст"
-
-#: src/pages/scrambler.vala:142
-msgid "Second key is not a valid number"
-msgstr "Второй ключ не является корректным числом"
-
-#: src/pages/scrambler.vala:143
-msgid "Second key can contain only 1 or 0"
-msgstr "Второй ключ может содержать только 1 или 0"
-
-#: src/pages/shenon.vala:94
-msgid "T0 is empty"
-msgstr "T0 отсутствует"
-
-#: src/pages/shenon.vala:95
-msgid "T0 is not a valid number"
-msgstr "T0 не является корректным числом"
-
-#: src/pages/shenon.vala:96
-msgid "T0 is below or equal zero"
-msgstr "T0 меньше либо равен нулю"
-
-#: src/pages/shenon.vala:97
-msgid "T0 is bigger than alphabet length"
-msgstr "T0 больше чем размер алфавита"
-
-#: src/pages/shenon.vala:98
-msgid "A is empty"
-msgstr "A отсутствует"
-
-#: src/pages/shenon.vala:99
-msgid "A is not a valid number"
-msgstr "A не является корректным числом"
-
-#: src/pages/shenon.vala:100
-msgid "A is below or equal zero"
-msgstr "A меньше либо равен нулю"
-
-#: src/pages/shenon.vala:101
-msgid "The remainder of A divided by 4 is not equal to 1"
-msgstr "Остаток от деления A на 4 не равен 1"
-
-#: src/pages/shenon.vala:102
-msgid "C is empty"
-msgstr "C отсутствует"
-
-#: src/pages/shenon.vala:103
-msgid "C is not a valid number"
-msgstr "C не является корректным числом"
-
-#: src/pages/shenon.vala:104
-msgid "C is below or equal zero"
-msgstr "C is below or equal zero"
-
-#: src/pages/shenon.vala:105
-msgid "C is not odd"
-msgstr "C не является нечетным"
-
 #: data/ui/window.ui:56
 msgid "Show sidebar"
 msgstr "Показать боковую панель"
 
-#: data/ui/window.ui:78
+#: data/ui/window.ui:68
 msgid "Menu"
 msgstr "Меню"
 
-#: data/ui/window.ui:100
+#: data/ui/window.ui:90
 msgid "_Preferences"
 msgstr "Настройки"
 
-#: data/ui/window.ui:104
+#: data/ui/window.ui:94
 msgid "_Keyboard Shortcuts"
 msgstr "Горячие клавиши"
 
-#: data/ui/window.ui:108
+#: data/ui/window.ui:98
 msgid "_About GCiphers"
 msgstr "О GCiphers"
 
-#: data/ui/atbash.ui:16 data/ui/caesar.ui:21 data/ui/belazo.ui:21
-#: data/ui/polybius.ui:32 data/ui/trithemium.ui:16 data/ui/vigenere.ui:21
-#: data/ui/vertical.ui:21 data/ui/vigenereii.ui:21 data/ui/matrix.ui:41
-#: data/ui/playfair.ui:21 data/ui/scrambler.ui:49 data/ui/shenon.ui:38
+#: data/ui/atbash.ui:18 data/ui/caesar.ui:23 data/ui/belazo.ui:23
+#: data/ui/polybius.ui:34 data/ui/trithemium.ui:18 data/ui/vigenere.ui:23
+#: data/ui/vertical.ui:23 data/ui/vigenereii.ui:23 data/ui/matrix.ui:41
+#: data/ui/playfair.ui:23 data/ui/scrambler.ui:51 data/ui/shenon.ui:40
 msgid "Enter you text"
 msgstr "Введите фразу"
 
-#: data/ui/atbash.ui:30 data/ui/caesar.ui:36 data/ui/belazo.ui:36
-#: data/ui/polybius.ui:47 data/ui/trithemium.ui:30 data/ui/vigenere.ui:36
-#: data/ui/vertical.ui:36 data/ui/vigenereii.ui:36 data/ui/matrix.ui:56
-#: data/ui/playfair.ui:36 data/ui/scrambler.ui:64 data/ui/shenon.ui:53
+#: data/ui/atbash.ui:32 data/ui/caesar.ui:38 data/ui/belazo.ui:38
+#: data/ui/polybius.ui:49 data/ui/trithemium.ui:32 data/ui/vigenere.ui:38
+#: data/ui/vertical.ui:38 data/ui/vigenereii.ui:38 data/ui/matrix.ui:56
+#: data/ui/playfair.ui:38 data/ui/scrambler.ui:66 data/ui/shenon.ui:55
 msgid "Encrypt"
 msgstr "Зашифровать"
 
-#: data/ui/atbash.ui:43 data/ui/caesar.ui:49 data/ui/belazo.ui:49
-#: data/ui/polybius.ui:60 data/ui/trithemium.ui:43 data/ui/vigenere.ui:49
-#: data/ui/vertical.ui:49 data/ui/vigenereii.ui:49 data/ui/matrix.ui:69
-#: data/ui/playfair.ui:49 data/ui/scrambler.ui:77 data/ui/shenon.ui:66
+#: data/ui/atbash.ui:45 data/ui/caesar.ui:51 data/ui/belazo.ui:51
+#: data/ui/polybius.ui:62 data/ui/trithemium.ui:45 data/ui/vigenere.ui:51
+#: data/ui/vertical.ui:51 data/ui/vigenereii.ui:51 data/ui/matrix.ui:69
+#: data/ui/playfair.ui:51 data/ui/scrambler.ui:79 data/ui/shenon.ui:68
 msgid "Decrypt"
 msgstr "Расшифровать"
 
-#: data/ui/caesar.ui:16 data/ui/belazo.ui:16 data/ui/vigenere.ui:16
-#: data/ui/vertical.ui:16 data/ui/vigenereii.ui:16 data/ui/playfair.ui:16
+#: data/ui/caesar.ui:18 data/ui/belazo.ui:18 data/ui/vigenere.ui:18
+#: data/ui/vertical.ui:18 data/ui/vigenereii.ui:18 data/ui/playfair.ui:18
 msgid "Enter key"
 msgstr "Введите ключ"
 
-#: data/ui/polybius.ui:19
+#: data/ui/polybius.ui:21
 msgid "Enter rows count"
 msgstr "Введите количество строк"
 
-#: data/ui/polybius.ui:25
+#: data/ui/polybius.ui:27
 msgid "Enter columns count"
 msgstr "Введите количество столбцов"
 
@@ -356,31 +157,31 @@ msgstr "Введите n"
 msgid "Get"
 msgstr "Получить"
 
-#: data/ui/scrambler.ui:19
+#: data/ui/scrambler.ui:21
 msgid "Enter first scrambler"
 msgstr "Введите первый скрэмблер"
 
-#: data/ui/scrambler.ui:25
+#: data/ui/scrambler.ui:27
 msgid "Enter first key"
 msgstr "Введите первый ключ"
 
-#: data/ui/scrambler.ui:36
+#: data/ui/scrambler.ui:38
 msgid "Enter second scrambler"
 msgstr "Введите второй скрэмблер"
 
-#: data/ui/scrambler.ui:42
+#: data/ui/scrambler.ui:44
 msgid "Enter second key"
 msgstr "Введите второй ключ"
 
-#: data/ui/shenon.ui:19
+#: data/ui/shenon.ui:21
 msgid "Enter t0"
 msgstr "Введите t0"
 
-#: data/ui/shenon.ui:26
+#: data/ui/shenon.ui:28
 msgid "Enter a"
 msgstr "Введите a"
 
-#: data/ui/shenon.ui:31
+#: data/ui/shenon.ui:33
 msgid "Enter c"
 msgstr "Введите c"
 
@@ -399,32 +200,32 @@ msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Закрыть"
 
-#: src/encryption/polybius.vala:31
+#: src/encryption/polybius.vala:35
 msgid "Columns*Rows must be bigger than length of alphabet"
 msgstr ""
 "Произведение количества строк на столбцов должно превышать длину алфавита"
 
-#: src/encryption/polybius.vala:61
+#: src/encryption/polybius.vala:71
 msgid "No such letter in table"
 msgstr "Такого символа нет в таблице"
 
-#: src/encryption/polybius.vala:66
+#: src/encryption/polybius.vala:82
 msgid "Indexes must be bigger than 0"
 msgstr "Индексы не могут быть нулевыми"
 
-#: src/encryption/polybius.vala:68
+#: src/encryption/polybius.vala:84
 msgid "Row index is higher than maximum"
 msgstr "Индекс строки превышает максимальный"
 
-#: src/encryption/polybius.vala:70
+#: src/encryption/polybius.vala:86
 msgid "Column index bigger than maximum"
 msgstr "Индекс столбца превышает максимальный"
 
-#: src/encryption/polybius.vala:72
+#: src/encryption/polybius.vala:88
 msgid "Column index bigger than maximum for last row"
 msgstr "Индекс столбца превышает максимальный для последней строки"
 
-#: src/encryption/polybius.vala:113
+#: src/encryption/polybius.vala:146
 msgid "Letters count in text for decryption must be a multiple of two"
 msgstr "Количество символов должно быть кратно двум"
 
@@ -433,8 +234,8 @@ msgstr "Количество символов должно быть кратно
 msgid "This matrix is not square"
 msgstr "Матрица не является квадратной"
 
-#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:284
-#: src/encryption/matrix.vala:321
+#: src/encryption/matrix.vala:173 src/encryption/matrix.vala:283
+#: src/encryption/matrix.vala:320
 msgid "Determinant is zero"
 msgstr "Детерминант равен нулю"
 
@@ -442,11 +243,11 @@ msgstr "Детерминант равен нулю"
 msgid "m1 != n2"
 msgstr "m1 != n2"
 
-#: src/encryption/matrix.vala:256
+#: src/encryption/matrix.vala:255
 msgid "Not a valid phrase"
 msgstr "Фраза не корректна"
 
-#: src/encryption/matrix.vala:333
+#: src/encryption/matrix.vala:332
 msgid "Phrase contains wrong encrypted components"
 msgstr "Фраза содержит неверно защифрованнные фрагменты"
 
@@ -454,23 +255,213 @@ msgstr "Фраза содержит неверно защифрованнные 
 msgid "End of cycle before end of phrase"
 msgstr "Конец цикла перед концом фразы"
 
-#: src/encryption/alphabet.vala:59
+#: src/encryption/alphabet.vala:76
 msgid "Index bigger than string size"
 msgstr "Индекс выходит за пределы алфавита"
 
-#: src/encryption/alphabet.vala:60
+#: src/encryption/alphabet.vala:77
 msgid "Index can't be negative"
 msgstr "Индекс не может быть отрицательным"
 
-#: src/encryption/alphabet.vala:66
+#: src/encryption/alphabet.vala:89
 msgid "Index not found"
 msgstr "Индекс не найден"
 
-#~ msgid "No such letter in alphabet"
-#~ msgstr "Нет такой буквы в алфавите"
+#: src/encryption/validation.vala:43 src/encryption/validation.vala:52
+#: src/encryption/validation.vala:66 src/encryption/validation.vala:83
+#: src/encryption/validation.vala:88 src/encryption/validation.vala:99
+#: src/encryption/validation.vala:118 src/encryption/validation.vala:132
+#: src/encryption/validation.vala:176 src/encryption/validation.vala:197
+#: src/encryption/validation.vala:205 src/encryption/validation.vala:214
+#: src/encryption/validation.vala:225 src/encryption/validation.vala:236
+msgid "Text field is empty"
+msgstr "Фраза отсутствует"
 
-#~ msgid "No such key letter in alphabet"
-#~ msgstr "Ключ содержит некорректный символ"
+#: src/encryption/validation.vala:44 src/encryption/validation.vala:53
+#: src/encryption/validation.vala:67 src/encryption/validation.vala:84
+#: src/encryption/validation.vala:102 src/encryption/validation.vala:119
+#: src/encryption/validation.vala:177 src/encryption/validation.vala:198
+#: src/encryption/validation.vala:206 src/encryption/validation.vala:215
+#: src/encryption/validation.vala:226 src/encryption/validation.vala:237
+msgid "No such letter from phrase in alphabet"
+msgstr "В фразе содержится некорректный символ"
 
-#~ msgid "No such phrase letter in alphabet"
-#~ msgstr "Фраза содержит некорректный символ"
+#: src/encryption/validation.vala:51 src/encryption/validation.vala:62
+#: src/encryption/validation.vala:98 src/encryption/validation.vala:213
+#: src/encryption/validation.vala:223 src/encryption/validation.vala:234
+msgid "Key is empty"
+msgstr "Ключ отсутствует"
+
+#: src/encryption/validation.vala:54 src/encryption/validation.vala:103
+#: src/encryption/validation.vala:216 src/encryption/validation.vala:227
+#: src/encryption/validation.vala:238
+msgid "No such letter from key in alphabet"
+msgstr "В ключе содержится некорректный символ"
+
+#: src/encryption/validation.vala:63
+msgid "Key is not a valid number"
+msgstr "Ключ не является корректным числом"
+
+#: src/encryption/validation.vala:64
+msgid "Number is below zero"
+msgstr "Ключ не может быть меньше нуля"
+
+#: src/encryption/validation.vala:65
+msgid "Number is bigger, than alphabet length"
+msgstr "Сдвиг больше, чем размер алфавита"
+
+#: src/encryption/validation.vala:74
+msgid "n is empty"
+msgstr "n не указано"
+
+#: src/encryption/validation.vala:75
+msgid "n is not a valid number"
+msgstr "n не является корректным числом"
+
+#: src/encryption/validation.vala:76
+msgid "n is below or equal one or greater than 10"
+msgstr "n меньше либо равно единице или больше чем 10"
+
+#: src/encryption/validation.vala:82
+msgid "Matrix not determined"
+msgstr "Матрица не указана"
+
+#: src/encryption/validation.vala:89 src/encryption/validation.vala:137
+msgid "Phrase should be only consist of numbers"
+msgstr "Фраза должна состоять из цифр"
+
+#: src/encryption/validation.vala:101
+msgid "Key must contain only unique letters"
+msgstr "Ключ должен содержать только уникальные значения"
+
+#: src/encryption/validation.vala:112 src/encryption/validation.vala:126
+msgid "Rows count is empty"
+msgstr "Количество строк не указано"
+
+#: src/encryption/validation.vala:113 src/encryption/validation.vala:127
+msgid "Rows count is not a valid number"
+msgstr "Количество строк не является корректным числом"
+
+#: src/encryption/validation.vala:114 src/encryption/validation.vala:128
+msgid "Rows count is below or equal zero"
+msgstr "Количество строк не может быть меньше либо равно нулю"
+
+#: src/encryption/validation.vala:115 src/encryption/validation.vala:129
+msgid "Columns count is empty"
+msgstr "Количество столбцов не указано"
+
+#: src/encryption/validation.vala:116 src/encryption/validation.vala:130
+msgid "Columns count is not a valid number"
+msgstr "Количество столбцов не является корректным числом"
+
+#: src/encryption/validation.vala:117 src/encryption/validation.vala:131
+msgid "Columns count is below or equal zero"
+msgstr "Количество столбцов не может быть меньше либо равно нулю"
+
+#: src/encryption/validation.vala:139
+msgid "Row in string cannot be bigger than table rows count"
+msgstr "Показатель строки не должен быть больше количества строк"
+
+#: src/encryption/validation.vala:141
+msgid "Column in string cannot be bigger than table columns count"
+msgstr "Показатель столбца не должен быть больше количества столбцов"
+
+#: src/encryption/validation.vala:160
+msgid "First scrambler is empty"
+msgstr "Первый скрэмблер пуст"
+
+#: src/encryption/validation.vala:162
+msgid "First scrambler is not a valid number"
+msgstr "Первый скрэмблер не является корректным числом"
+
+#: src/encryption/validation.vala:163
+msgid "First scrambler can contain only 1 or 0"
+msgstr "Первый скрэмблер может содержать только 1 или 0"
+
+#: src/encryption/validation.vala:164
+msgid "Second scrambler is empty"
+msgstr "Второй скрэмблер пуст"
+
+#: src/encryption/validation.vala:166
+msgid "Second scrambler is not a valid number"
+msgstr "Второй скрэмблер не является корректным числом"
+
+#: src/encryption/validation.vala:167
+msgid "Second scrambler can contain only 1 or 0"
+msgstr "Второй скрэмблер может содержать только 1 или 0"
+
+#: src/encryption/validation.vala:168
+msgid "First key is empty"
+msgstr "Первый ключ пуст"
+
+#: src/encryption/validation.vala:170
+msgid "First key is not a valid number"
+msgstr "Первый ключ не является корректным числом"
+
+#: src/encryption/validation.vala:171
+msgid "First key can contain only 1 or 0"
+msgstr "Первый ключ может содержать только 1 или 0"
+
+#: src/encryption/validation.vala:172
+msgid "Second key is empty"
+msgstr "Второй скрэмблер пуст"
+
+#: src/encryption/validation.vala:174
+msgid "Second key is not a valid number"
+msgstr "Второй ключ не является корректным числом"
+
+#: src/encryption/validation.vala:175
+msgid "Second key can contain only 1 or 0"
+msgstr "Второй ключ может содержать только 1 или 0"
+
+#: src/encryption/validation.vala:185
+msgid "T0 is empty"
+msgstr "T0 отсутствует"
+
+#: src/encryption/validation.vala:186
+msgid "T0 is not a valid number"
+msgstr "T0 не является корректным числом"
+
+#: src/encryption/validation.vala:187
+msgid "T0 is below or equal zero"
+msgstr "T0 меньше либо равен нулю"
+
+#: src/encryption/validation.vala:188
+msgid "T0 is bigger than alphabet length"
+msgstr "T0 больше чем размер алфавита"
+
+#: src/encryption/validation.vala:189
+msgid "A is empty"
+msgstr "A отсутствует"
+
+#: src/encryption/validation.vala:190
+msgid "A is not a valid number"
+msgstr "A не является корректным числом"
+
+#: src/encryption/validation.vala:191
+msgid "A is below or equal zero"
+msgstr "A меньше либо равен нулю"
+
+#: src/encryption/validation.vala:192
+msgid "The remainder of A divided by 4 is not equal to 1"
+msgstr "Остаток от деления A на 4 не равен 1"
+
+#: src/encryption/validation.vala:193
+msgid "C is empty"
+msgstr "C отсутствует"
+
+#: src/encryption/validation.vala:194
+msgid "C is not a valid number"
+msgstr "C не является корректным числом"
+
+#: src/encryption/validation.vala:195
+msgid "C is below or equal zero"
+msgstr "C is below or equal zero"
+
+#: src/encryption/validation.vala:196
+msgid "C is not odd"
+msgstr "C не является нечетным"
+
+#: src/encryption/validation.vala:224 src/encryption/validation.vala:235
+msgid "Key length is bigger than 1"
+msgstr "Длина ключа превышает один символ"

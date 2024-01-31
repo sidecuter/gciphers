@@ -19,6 +19,13 @@
  */
 
 namespace Encryption {
+    /*
+     * Функция mod, вычисляет модуль числа по основанию
+     * Входные параметры:
+     * - value - исходное число
+     * - modd - основание
+     * Возвращаемое значение: число по модулю 
+     */
     int mod (int value, int modd) {
         if ( value >= modd ) value %= modd;
         if ( value < 0 ) value = modd - (-value) % modd;

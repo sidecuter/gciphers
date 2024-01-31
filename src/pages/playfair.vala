@@ -19,71 +19,46 @@
 */
 
 using Encryption;
+using Encryption.Playfair;
 
-namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/playfair.ui")]
-    public class Playfair : Adw.Bin {
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/playfair.ui")]
+public class GCiphers.Playfair : Adw.Bin {
 
-        private unowned spawn_toast toast_spawner;
+    [GtkChild]
+    private unowned UI.TextView text_view;
 
-        private unowned get_alphabet alphabet_getter;
+    [GtkChild]
+    private unowned UI.Entry key;
 
-        [GtkChild]
-        private unowned UI.TextView text_view;
-
-        [GtkChild]
-        private unowned UI.Entry key;
-
-        [GtkCallback]
-        private void on_encrypt_click (Gtk.Button self) {
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ()
-                    .replace (" ", "")
-                    .replace(".", "тчк")
-                    .replace(",", "зпт")
-                    .replace("-", "тире");
-                string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Playfair.encrypt (letters, key));
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
+    [GtkCallback]
+    private void on_encrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = win.encode_text (text.text);
+            string key = key.get_buffer ().get_text ().down ();
+            validate (letters, key);
+            text.set_text (encrypt (letters, key));
         }
-
-        [GtkCallback]
-        private void on_decrypt_click (Gtk.Button self) {
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ().replace (" ", "");
-                string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
-                Validate(alphabet, letters, key);
-                if (letters.char_count () % 2 != 0) 
-                    throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("Length must be divisible by 2"));
-                text.set_text (Encryption.Playfair.decrypt (letters, key));
-            }
-            catch (Errors.ValidateError ex) {
-                toast_spawner(ex.message);
-            }
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
+    }
 
-        public Playfair (spawn_toast toaster, get_alphabet alphabet_get) {
-            toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
+    [GtkCallback]
+    private void on_decrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = text.text.down ().replace (" ", "");
+            string key = key.get_buffer ().get_text ().down ();
+            validate (letters, key);
+            if (letters.char_count () % 2 != 0) 
+                throw new ValidateError.WRONG_STRING_LENGTH(_("Length must be divisible by 2"));
+            text.set_text (win.decode_text (decrypt (letters, key)));
         }
-
-        private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
-            string playfair_alphabet = "абвгдежзиклмнопрстуфхцчшщъыэюя";
-            var p_alphabet = new Alphabet (playfair_alphabet);
-            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            if (!Encryption.Playfair.validate_key (key))
-                    throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("Key must contain only unique letters"));
-            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
-            Errors.validate_string (p_alphabet, text, _("No such letter from key in alphabet"));
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
     }
 }

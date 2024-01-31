@@ -59,17 +59,7 @@
                     <child type="end">
                       <object class="GtkBox">
                         <child>
-                          <object class="GtkDropDown" id="dropdown">
-                            <property name="model">
-                              <object class="GtkStringList">
-                                <items>
-                                  <item>ru</item>
-                                  <item>ru_full</item>
-                                  <item>en</item>
-                                </items>
-                              </object>
-                            </property>
-                          </object>
+                          <object class="GtkSwitch" id="prettify"/>
                         </child>
                         <child>
                           <object class="GtkMenuButton">

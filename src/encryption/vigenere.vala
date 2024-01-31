@@ -18,31 +18,25 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption {
-    class Vigenere : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
-            throws Encryption.OOBError
-        {
-            return Encryption.MultiAlphabetic.encrypt(alphabet, phrase, @"$key$phrase");
-        }
+namespace Encryption.Vigenere {
+    string encrypt (Alphabet alphabet, string phrase, string key) throws OOBError {
+        return MultiAlphabetic.encrypt(alphabet, phrase, @"$key$phrase");
+    }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
-            throws Encryption.OOBError
-        {
-            string result = "";
-            int i = 0, k = 0;
-            unichar buffer, letter;
-            key.get_next_char (ref k, out buffer);
-            while (phrase.get_next_char (ref i, out letter)) {
-                buffer = alphabet[
-                    mod (
-                        alphabet.index_of (letter) - alphabet.index_of (buffer),
-                        alphabet.length
-                    )
-                ];
-                result = @"$result$(buffer.to_string ())";
-            }
-            return result;
+    string decrypt (Alphabet alphabet, string phrase, string key) throws OOBError {
+        string result = "";
+        int i = 0, k = 0;
+        unichar buffer, letter;
+        key.get_next_char (ref k, out buffer);
+        while (phrase.get_next_char (ref i, out letter)) {
+            buffer = alphabet[
+                mod (
+                    alphabet.index_of (letter) - alphabet.index_of (buffer),
+                    alphabet.length
+                )
+            ];
+            result = @"$result$(buffer.to_string ())";
         }
+        return result;
     }
 }

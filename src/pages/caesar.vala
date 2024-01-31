@@ -19,73 +19,48 @@
  */
 
 using Encryption;
+using Encryption.Caesar;
 
-namespace GCiphers {
-    [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/caesar.ui")]
-    public class Caesar : Adw.Bin {
+[GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/caesar.ui")]
+public class GCiphers.Caesar : Adw.Bin {
 
-        private unowned spawn_toast toast_spawner;
+    [GtkChild]
+    private unowned UI.TextView text_view;
 
-        private unowned get_alphabet alphabet_getter;
+    [GtkChild]
+    private unowned UI.Entry key;
 
-        [GtkChild]
-        private unowned UI.TextView text_view;
-
-        [GtkChild]
-        private unowned UI.Entry key;
-
-        [GtkCallback]
-        private void on_encrypt_click (Gtk.Button self) {
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ()
-                    .replace (" ", "")
-                    .replace(".", "тчк")
-                    .replace(",", "зпт")
-                    .replace("-", "тире");
-                string key = key.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Caesar.encrypt (alphabet, letters, int.parse (key)));
-             }
-             catch (OOBError ex) {
-                 toast_spawner(ex.message);
-             }
-             catch (Errors.ValidateError ex) {
-                 toast_spawner(ex.message);
-             }
+    [GtkCallback]
+    private void on_encrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = win.encode_text (text.text);
+            string key = key.get_buffer ().get_text ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, key);
+            text.set_text (encrypt (alphabet, letters, int.parse (key)));
         }
-
-        [GtkCallback]
-        private void on_decrypt_click (Gtk.Button self) {
-            try {
-                var text = text_view.get_text_buffer ();
-                string letters = text.text.down ().replace (" ", "");
-                string key = key.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
-                Validate(alphabet, letters, key);
-                text.set_text (Encryption.Caesar.decrypt (alphabet, letters, int.parse (key)));
-            }
-            catch (OOBError ex) {
-                toast_spawner(ex.message);
-            }
-            catch (Errors.ValidateError ex) {
-                toast_spawner(ex.message);
-            }
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
+    }
 
-        public Caesar (spawn_toast toaster, get_alphabet alphabet_get) {
-            toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
+    [GtkCallback]
+    private void on_decrypt_click (Gtk.Button self) {
+        var win = (GCiphers.Window) this.get_root ();
+        try {
+            var text = text_view.get_text_buffer ();
+            string letters = text.text.down ().replace (" ", "");
+            string key = key.get_buffer ().get_text ();
+            Alphabet alphabet = new Alphabet ();
+            validate (letters, key);
+            text.set_text (win.decode_text (
+                decrypt (alphabet, letters, int.parse (key)))
+            );
         }
-
-        private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
-            int num;
-            if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
-            if (!int.try_parse (key, out num)) throw new Errors.ValidateError.NOT_NUMBER (_("Key is not a valid number"));
-            if (num < 0) throw new Errors.ValidateError.NUMBER_BELOW_ZERO (_("Number is below zero"));
-            if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
-            Errors.validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
+        catch (Error ex) {
+            win.toaster (ex.message);
         }
     }
 }

@@ -18,7 +18,7 @@
 * SPDX-License-Identifier: GPL-3.0-or-later
 */
 
-namespace Encryption {
+namespace Encryption.Scrambler {
     class Register : Object {
         public uint8 size { get; construct; }
         public uint8 scrambler { get; construct; }
@@ -64,11 +64,11 @@ namespace Encryption {
         }
     }
 
-    class ScramblerSystem : Object {
+    class System : Object {
         public Register reg1 { private get; construct; }
         public Register reg2 { private get; construct; }
 
-        public ScramblerSystem (Register reg_1, Register reg_2) {
+        public System (Register reg_1, Register reg_2) {
             Object (
                 reg1: reg_1,
                 reg2: reg_2
@@ -89,35 +89,33 @@ namespace Encryption {
                     throw new OOBError.CODE_OUT (_("End of cycle before end of phrase"));
             }
             result = (reg1 ^ reg2) ^ letter_pos;
-            return (uint8) Encryption.mod ((int) result, size);
+            return (uint8) mod ((int) result, size);
         }
     }
 
-    class Scrambler : Object {
-        public static string encrypt (
-            Encryption.Alphabet alphabet,
-            string phrase,
-            string scrambler1,
-            string scrambler2,
-            string key1,
-            string key2
-        ) throws Encryption.OOBError {
-            string result = "";
-            int pos = 0;
-            var scr = new ScramblerSystem (
-                new Register ((uint8) scrambler1.char_count (), scrambler1, key1),
-                new Register ((uint8) scrambler2.char_count (), scrambler2, key2)
+    string encrypt (
+        Alphabet alphabet,
+        string phrase,
+        string scrambler1,
+        string scrambler2,
+        string key1,
+        string key2
+    ) throws OOBError {
+        string result = "";
+        int pos = 0;
+        var scr = new System (
+            new Register ((uint8) scrambler1.char_count (), scrambler1, key1),
+            new Register ((uint8) scrambler2.char_count (), scrambler2, key2)
+        );
+        int i = 0;
+        unichar letter;
+        while (phrase.get_next_char (ref i, out letter)) {
+            pos = (int) scr.process (
+                (uint8) (alphabet.index_of (letter) + 1),
+                (uint8) alphabet.length
             );
-            int i = 0;
-            unichar letter;
-            while (phrase.get_next_char (ref i, out letter)) {
-                pos = (int) scr.process (
-                    (uint8) (alphabet.index_of (letter) + 1),
-                    (uint8) alphabet.length
-                );
-                result = @"$result$(alphabet[mod (pos-1, alphabet.length)])";
-            }
-            return result;
+            result = @"$result$(alphabet[mod (pos-1, alphabet.length)])";
         }
+        return result;
     }
 }

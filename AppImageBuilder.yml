@@ -6,7 +6,7 @@ AppDir:
     id: com.github.sidecuter.gciphers
     name: GCiphers
     icon: com.github.sidecuter.gciphers
-    version: 0.1.2
+    version: 0.2.0
     exec: usr/bin/com.github.sidecuter.gciphers
     exec_args: $@
   files:

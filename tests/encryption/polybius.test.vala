@@ -1,13 +1,12 @@
 using Encryption;
 
-public void test_polybius_ru_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_polybius_enc () {
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "334133153233143334333546163233143362122633251113163655133322221114322313111641414625",
             GLib.CompareOperator.EQ,
-            Encryption.Polybius.encrypt(
+            Polybius.encrypt(
                 alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 6,
@@ -15,19 +14,18 @@ public void test_polybius_ru_enc () {
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
-public void test_polybius_ru_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_polybius_dec () {
+    Alphabet alphabet = new Alphabet ();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
             GLib.CompareOperator.EQ,
-            Encryption.Polybius.decrypt (
+            Polybius.decrypt (
                 alphabet,
                 "334133153233143334333546163233143362122633251113163655133322221114322313111641414625",
                 6,
@@ -35,14 +33,14 @@ public void test_polybius_ru_dec () {
             )
         );
     }
-    catch (Encryption.OOBError ex) {
+    catch (OOBError ex) {
         assert_true (false);
     }
 }
 
-public static int main (string[] args) {
+int main (string[] args) {
     Test.init (ref args);
-    Test.add_func ("/encryption/polybius_enc", test_polybius_ru_enc);
-    Test.add_func ("/encryption/polybius_dec", test_polybius_ru_dec);
+    Test.add_func ("/encryption/polybius_enc", test_polybius_enc);
+    Test.add_func ("/encryption/polybius_dec", test_polybius_dec);
     return Test.run ();
 }

@@ -18,18 +18,16 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
- namespace Encryption {
-    class Belazo : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
-            throws Encryption.OOBError
-        {
-            return Encryption.MultiAlphabetic.encrypt(alphabet, phrase, key);
-        }
+namespace Encryption.Belazo {
+    string encrypt (Alphabet alphabet, string phrase, string key)
+        throws OOBError
+    {
+        return MultiAlphabetic.encrypt(alphabet, phrase, key);
+    }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
-            throws Encryption.OOBError
-        {
-            return Encryption.MultiAlphabetic.decrypt(alphabet, phrase, key);
-        }
+    string decrypt (Alphabet alphabet, string phrase, string key)
+        throws OOBError
+    {
+        return MultiAlphabetic.decrypt(alphabet, phrase, key);
     }
 }
