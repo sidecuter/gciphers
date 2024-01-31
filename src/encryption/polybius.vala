@@ -52,23 +52,10 @@ namespace Encryption.Polybius {
         */
         public Indexes index_ofes (unichar letter) throws Error{
             Indexes indexes = new Indexes ();
-            for (int i = 0; i < this.rows; i++) {
-                if (i + 1 > this.last_row) continue;
-                for (int j = 0; j < this.columns; j++) {
-                    if (i + 1 == this.last_row && j + 1 > this.last_column) break;
-                    if (this.alphabet.alphabet.get_char (
-                            this.alphabet.alphabet.index_of_nth_char (
-                                i * this.columns + j
-                            )
-                        ) == letter
-                    ) {
-                        indexes.row = i + 1;
-                        indexes.column = j + 1;
-                        return indexes;
-                    }
-                }
-            }
-            throw new OOBError.CODE_NOT_FOUND (_("No such letter in table"));
+            int index = alphabet.index_of (letter);
+            indexes.row = index / this.columns + 1;
+            indexes.column = index % this.columns + 1;
+            return indexes;
         }
 
         /*
@@ -86,11 +73,7 @@ namespace Encryption.Polybius {
                 throw new OOBError.CODE_OUT (_("Column index bigger than maximum"));
             if (indexes.column > this.last_column && indexes.row == this.last_row)
                 throw new OOBError.CODE_OUT (_("Column index bigger than maximum for last row"));
-            return this.alphabet.alphabet.get_char (
-                this.alphabet.alphabet.index_of_nth_char (
-                    (indexes.row - 1) * this.columns + (indexes.column - 1)
-                )
-            );
+            return this.alphabet[(indexes.row - 1) * this.columns + (indexes.column - 1)];
         }
     }
 
