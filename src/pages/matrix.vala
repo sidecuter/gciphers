@@ -26,8 +26,6 @@ namespace GCiphers {
 
         private unowned spawn_toast toast_spawner;
 
-        private unowned get_alphabet alphabet_getter;
-
         private bool state;
 
         [GtkChild]
@@ -62,7 +60,7 @@ namespace GCiphers {
                     .replace(".", "тчк")
                     .replace(",", "зпт")
                     .replace("-", "тире");
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate (alphabet, letters);
                 int rows;
                 int columns;
@@ -72,7 +70,7 @@ namespace GCiphers {
                     out columns
                 );
                 text.set_text (
-                    Encryption.MatrixCipher.encrypt (
+                    Encryption.Matrix.encrypt (
                         alphabet,
                         letters,
                         rows,
@@ -101,10 +99,10 @@ namespace GCiphers {
                     out rows,
                     out columns
                 );
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate_int(letters);
                 text.set_text (
-                    Encryption.MatrixCipher.decrypt (
+                    Encryption.Matrix.decrypt (
                         alphabet,
                         letters,
                         rows,
@@ -121,9 +119,8 @@ namespace GCiphers {
             }
         }
 
-        public Matrix (spawn_toast toaster, get_alphabet alphabet_get) {
+        public Matrix (spawn_toast toaster) {
             toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
             state = false;
         }
 

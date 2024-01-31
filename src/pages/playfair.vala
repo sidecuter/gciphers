@@ -26,8 +26,6 @@ namespace GCiphers {
 
         private unowned spawn_toast toast_spawner;
 
-        private unowned get_alphabet alphabet_getter;
-
         [GtkChild]
         private unowned UI.TextView text_view;
 
@@ -44,7 +42,7 @@ namespace GCiphers {
                     .replace(",", "зпт")
                     .replace("-", "тире");
                 string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate(alphabet, letters, key);
                 text.set_text (Encryption.Playfair.encrypt (letters, key));
              }
@@ -59,7 +57,7 @@ namespace GCiphers {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
                 string key = key.get_buffer ().get_text ().down ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate(alphabet, letters, key);
                 if (letters.char_count () % 2 != 0) 
                     throw new Errors.ValidateError.WRONG_STRING_LENGTH(_("Length must be divisible by 2"));
@@ -70,14 +68,13 @@ namespace GCiphers {
             }
         }
 
-        public Playfair (spawn_toast toaster, get_alphabet alphabet_get) {
+        public Playfair (spawn_toast toaster) {
             toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
         }
 
         private void Validate (Alphabet alphabet, string text, string key) throws Errors.ValidateError {
             string playfair_alphabet = "абвгдежзиклмнопрстуфхцчшщъыэюя";
-            var p_alphabet = new Alphabet (playfair_alphabet);
+            var p_alphabet = new Alphabet.from_str (playfair_alphabet);
             if (key.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Key is empty"));
             if (text.length == 0) throw new Errors.ValidateError.EMPTY_STRING (_("Text field is empty"));
             if (!Encryption.Playfair.validate_key (key))

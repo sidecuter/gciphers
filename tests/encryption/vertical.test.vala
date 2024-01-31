@@ -1,8 +1,7 @@
 using Encryption;
 
 public void test_vertical_methods_get_order () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+    Alphabet alphabet = new Alphabet();
     try {
         string key = "супчик";
         int[] positions = {4, 5, 3, 6, 1, 2};
@@ -30,9 +29,8 @@ public void test_vertical_methods_get_order () {
     }
 }
 
-public void test_vertical_ru_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_vertical_enc () {
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "нооотдрчпгооояоенгавоблкозьесвивгзанчктает",
@@ -49,9 +47,8 @@ public void test_vertical_ru_enc () {
     }
 }
 
-public void test_vertical_ru_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_vertical_dec () {
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
@@ -70,8 +67,8 @@ public void test_vertical_ru_dec () {
 
 public static int main (string[] args) {
     Test.init (ref args);
-    Test.add_func ("/encryption/vertical_ru_enc", test_vertical_ru_enc);
-    Test.add_func ("/encryption/vertical_ru_dec", test_vertical_ru_dec);
+    Test.add_func ("/encryption/vertical_enc", test_vertical_enc);
+    Test.add_func ("/encryption/vertical_dec", test_vertical_dec);
     Test.add_func ("/encryption/vertical_methods_get_order", test_vertical_methods_get_order);
     return Test.run ();
 }

@@ -1,8 +1,7 @@
 using Encryption;
 
 public void test_caesar_ru_shift_3_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "схсзрсжстсуъирсжсвдоснгеифяесккгжрлегиххън",
@@ -20,8 +19,7 @@ public void test_caesar_ru_shift_3_enc () {
 }
 
 public void test_caesar_ru_shift_4_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "тцтистзтутфыйстзтгептоджйхажтллдзсмждйццыо",
@@ -39,8 +37,7 @@ public void test_caesar_ru_shift_4_enc () {
 }
 
 public void test_caesar_ru_shift_3_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
@@ -58,8 +55,7 @@ public void test_caesar_ru_shift_3_dec () {
 }
 
 public void test_caesar_ru_shift_4_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",

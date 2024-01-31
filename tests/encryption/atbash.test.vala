@@ -1,8 +1,7 @@
 using Encryption;
 
 public void test_atbash_ru () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "снсытсьсрспиътсьсаюфсхяэъогэсшшяьтчэяънних",

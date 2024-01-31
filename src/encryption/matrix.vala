@@ -26,207 +26,207 @@ namespace Encryption {
         CODE_ZERO_DETERMINANT
     }
 
-    class Matrix : Object {
-        public int rows { get; construct; }
-        public int columns { get; construct; }
-        public Gee.ArrayList<double?> elements { get; private set; }
-
-        public Matrix (int rows, int columns, double?[] elems) {
-            Object (
-                rows: rows,
-                columns: columns
-            );
-            elements = new Gee.ArrayList<double?> ();
-            elements.add_all_array (elems);
-        }
-
-        public Matrix.from_int (int rows, int columns, int[] elems) {
-            Object (
-                rows: rows,
-                columns: columns
-            );
-            elements = new Gee.ArrayList<double?> ();
-            foreach (var elem in elems) {
-                elements.add (elem);
+    namespace Matrix {
+        class Matrix : Object {
+            public int rows { get; construct; }
+            public int columns { get; construct; }
+            public Gee.ArrayList<double?> elements { get; private set; }
+    
+            public Matrix (int rows, int columns, double?[] elems) {
+                Object (
+                    rows: rows,
+                    columns: columns
+                );
+                elements = new Gee.ArrayList<double?> ();
+                elements.add_all_array (elems);
             }
-        }
-
-        public Matrix.from_GeeArrayList (int rows, int columns, Gee.ArrayList<double?> elems) {
-            Object (
-                rows: rows,
-                columns: columns
-            );
-            elements = new Gee.ArrayList<double?> ();
-            foreach (var elem in elems) {
-                elements.add (elem);
-            }
-        }
-
-        public double det () throws MatrixError {
-            if (this.rows != this.columns)
-                throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
-            if (this.rows == 1) return this.elements.get(0);
-            Matrix self = new Matrix.from_GeeArrayList (
-                this.rows,
-                this.columns,
-                this.elements
-            );
-            double mnoj;
-            double p = 1.0;
-            if (self.elements.get(0) == 0) {
-                try {
-                    self.swap_zero ();
-                    p *= -1;
-                }
-                catch (MatrixError err) {
-                    return 0;
+    
+            public Matrix.from_int (int rows, int columns, int[] elems) {
+                Object (
+                    rows: rows,
+                    columns: columns
+                );
+                elements = new Gee.ArrayList<double?> ();
+                foreach (var elem in elems) {
+                    elements.add (elem);
                 }
             }
-            for (int i = 1; i < self.rows; i++) {
-                if (self.elements.get(i * self.columns) != 0) {
-                    mnoj = self.elements.get(i * self.columns) / self.elements.get(0);
-                    for (int j = 0; j < self.columns; j++) {
-                        self.elements.set (
-                            i * self.columns + j,
-                            self.elements.get (i * self.columns + j) -
-                                self.elements.get(j) * mnoj
-                        );
+    
+            public Matrix.from_GeeArrayList (int rows, int columns, Gee.ArrayList<double?> elems) {
+                Object (
+                    rows: rows,
+                    columns: columns
+                );
+                elements = new Gee.ArrayList<double?> ();
+                foreach (var elem in elems) {
+                    elements.add (elem);
+                }
+            }
+    
+            public double det () throws MatrixError {
+                if (this.rows != this.columns)
+                    throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
+                if (this.rows == 1) return this.elements.get(0);
+                Matrix self = new Matrix.from_GeeArrayList (
+                    this.rows,
+                    this.columns,
+                    this.elements
+                );
+                double mnoj;
+                double p = 1.0;
+                if (self.elements.get(0) == 0) {
+                    try {
+                        self.swap_zero ();
+                        p *= -1;
+                    }
+                    catch (MatrixError err) {
+                        return 0;
                     }
                 }
-            }
-            p *= self.elements.get(0) * self.get_minor (0, 0).det ();
-            return p;
-        }
-
-        public Matrix trasnp () throws MatrixError {
-            if (this.rows != this.columns)
-                throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
-            double tmp;
-            for (int i = 0; i < this.rows; i++)
-            {
-                for (int j = 0; j < i; j++)
-                {
-                    tmp = this.elements.get(i * this.columns + j);
-                    this.elements.set (
-                        i * this.columns + j,
-                        this.elements.get(j * this.columns + i)
-                    );
-                    this.elements.set (
-                        j * this.columns + i,
-                        tmp
-                    );
-                }
-            }
-            return this;
-        }
-
-        public Matrix get_minor (int iski, int iskj) throws MatrixError {
-            if (this.rows != this.columns)
-                throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
-            int r = this.rows - 1;
-            int c = this.columns - 1;
-            double?[] elems = new double?[r * c];
-            int k;
-            int l = 0;
-            for (int i = 0; i < this.rows; i++) {
-                if (i != iski) {
-                    k = 0;
-                    for (int j = 0; j < this.columns; j++) {
-                        if (j != iskj) {
-                            elems[l * c + k] = this.elements.get(i * this.columns + j);
-                            k++;
+                for (int i = 1; i < self.rows; i++) {
+                    if (self.elements.get(i * self.columns) != 0) {
+                        mnoj = self.elements.get(i * self.columns) / self.elements.get(0);
+                        for (int j = 0; j < self.columns; j++) {
+                            self.elements.set (
+                                i * self.columns + j,
+                                self.elements.get (i * self.columns + j) -
+                                    self.elements.get(j) * mnoj
+                            );
                         }
                     }
-                    l++;
                 }
+                p *= self.elements.get(0) * self.get_minor (0, 0).det ();
+                return p;
             }
-            return new Matrix (r, c, elems);
-        }
-
-        public void swap_zero () throws MatrixError {
-            bool flag = false;
-            double tmp;
-            for (int i = 0; i < this.rows; i++) {
-                if (this.elements.get(i * this.columns) == 0 && !flag) {
-                    for (int j = 0; j < this.columns; j++) {
-                        tmp = elements.get(j);
-                        elements.set(
-                            j,
-                            elements.get(i * this.columns + j)
-                        );
-                        elements.set(
+    
+            public Matrix trasnp () throws MatrixError {
+                if (this.rows != this.columns)
+                    throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
+                double tmp;
+                for (int i = 0; i < this.rows; i++)
+                {
+                    for (int j = 0; j < i; j++)
+                    {
+                        tmp = this.elements.get(i * this.columns + j);
+                        this.elements.set (
                             i * this.columns + j,
+                            this.elements.get(j * this.columns + i)
+                        );
+                        this.elements.set (
+                            j * this.columns + i,
                             tmp
                         );
                     }
-                    flag = true;
                 }
+                return this;
             }
-            if (!flag) throw new MatrixError.CODE_ALL_ELEMENTS_IS_ZERO ("");
-        }
-
-        public Matrix reverse () throws MatrixError {
-            if (this.rows != this.columns)
-                throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
-            double det = this.det ();
-            if (det == 0) 
-                throw new MatrixError.CODE_ZERO_DETERMINANT (_("Determinant is zero"));
-            int r = this.rows;
-            int c = this.columns;
-            double?[] elems = new double?[r * c];
-            double mnoj = 1.0;
-            for (int i = 0; i < this.rows; i++) {
-                for (int j = 0; j < this.columns; j++) {
-                    elems[i * c + j] = mnoj / det * this.get_minor (i, j).det ();
-                    mnoj *= -1.0;
-                }
-                if (this.rows % 2 == 0) mnoj *= -1.0;
-            }
-            Matrix result = new Matrix (r, c, elems);
-            return result.trasnp ();
-        }
-
-        public Matrix mult (Matrix m) throws MatrixError.CODE_SIZE_NOT_MATCH {
-            if (this.columns != m.rows) 
-                throw new MatrixError.CODE_SIZE_NOT_MATCH (_("m1 != n2"));
-            double sum;
-            double?[] elems = new double?[this.rows * m.columns];
-            for (int i = 0; i < this.rows; i++) {
-                for (int j = 0; j < m.columns; j++) {
-                    sum = 0.0;
-                    for (int k = 0; k < this.columns; k++) {
-                        sum += this.elements.get(i * this.columns + k) *
-                            m.elements.get(k * m.columns + j);
+    
+            public Matrix get_minor (int iski, int iskj) throws MatrixError {
+                if (this.rows != this.columns)
+                    throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
+                int r = this.rows - 1;
+                int c = this.columns - 1;
+                double?[] elems = new double?[r * c];
+                int k;
+                int l = 0;
+                for (int i = 0; i < this.rows; i++) {
+                    if (i != iski) {
+                        k = 0;
+                        for (int j = 0; j < this.columns; j++) {
+                            if (j != iskj) {
+                                elems[l * c + k] = this.elements.get(i * this.columns + j);
+                                k++;
+                            }
+                        }
+                        l++;
                     }
-                    elems[i * m.columns + j] = sum;
                 }
+                return new Matrix (r, c, elems);
             }
-            return new Matrix (this.rows, m.columns, elems);
+    
+            public void swap_zero () throws MatrixError {
+                bool flag = false;
+                double tmp;
+                for (int i = 0; i < this.rows; i++) {
+                    if (this.elements.get(i * this.columns) == 0 && !flag) {
+                        for (int j = 0; j < this.columns; j++) {
+                            tmp = elements.get(j);
+                            elements.set(
+                                j,
+                                elements.get(i * this.columns + j)
+                            );
+                            elements.set(
+                                i * this.columns + j,
+                                tmp
+                            );
+                        }
+                        flag = true;
+                    }
+                }
+                if (!flag) throw new MatrixError.CODE_ALL_ELEMENTS_IS_ZERO ("");
+            }
+    
+            public Matrix reverse () throws MatrixError {
+                if (this.rows != this.columns)
+                    throw new MatrixError.CODE_IS_NOT_N_X_N (_("This matrix is not square"));
+                double det = this.det ();
+                if (det == 0) 
+                    throw new MatrixError.CODE_ZERO_DETERMINANT (_("Determinant is zero"));
+                int r = this.rows;
+                int c = this.columns;
+                double?[] elems = new double?[r * c];
+                double mnoj = 1.0;
+                for (int i = 0; i < this.rows; i++) {
+                    for (int j = 0; j < this.columns; j++) {
+                        elems[i * c + j] = mnoj / det * this.get_minor (i, j).det ();
+                        mnoj *= -1.0;
+                    }
+                    if (this.rows % 2 == 0) mnoj *= -1.0;
+                }
+                Matrix result = new Matrix (r, c, elems);
+                return result.trasnp ();
+            }
+    
+            public Matrix mult (Matrix m) throws MatrixError.CODE_SIZE_NOT_MATCH {
+                if (this.columns != m.rows) 
+                    throw new MatrixError.CODE_SIZE_NOT_MATCH (_("m1 != n2"));
+                double sum;
+                double?[] elems = new double?[this.rows * m.columns];
+                for (int i = 0; i < this.rows; i++) {
+                    for (int j = 0; j < m.columns; j++) {
+                        sum = 0.0;
+                        for (int k = 0; k < this.columns; k++) {
+                            sum += this.elements.get(i * this.columns + k) *
+                                m.elements.get(k * m.columns + j);
+                        }
+                        elems[i * m.columns + j] = sum;
+                    }
+                }
+                return new Matrix (this.rows, m.columns, elems);
+            }
+    
+            public double max () {
+                double max = -double.MAX;
+                for (int i = 0; i < this.rows; i++) {
+                    for (int j = 0; j < this.columns; j++) {
+                        if (max < elements.get(i * this.columns + j))
+                            max = elements.get(i * this.columns + j);
+                    }
+                }
+                return max;
+            }
         }
 
-        public double max () {
-            double max = -double.MAX;
-            for (int i = 0; i < this.rows; i++) {
-                for (int j = 0; j < this.columns; j++) {
-                    if (max < elements.get(i * this.columns + j))
-                        max = elements.get(i * this.columns + j);
-                }
-            }
-            return max;
-        }
-    }
-
-    class MatrixCipher : Object {
-        private static int count_digits (int number) {
+        int count_digits (int number) {
             return number.to_string ().length;
         }
 
-        private static bool check_det (Matrix matr) throws MatrixError {
+        bool check_det (Matrix matr) throws MatrixError {
             if (matr.det () == 0) return false;
             else return true;
         }
 
-        private static List<Matrix> get_letters (Alphabet alphabet, string letters, int n) 
+        List<Matrix> get_letters (Alphabet alphabet, string letters, int n) 
         throws Encryption.OOBError {
             unichar letter;
             int count, k = 0, char_count = letters.char_count ();
@@ -244,7 +244,7 @@ namespace Encryption {
             return result;
         }
 
-        private static List<Matrix> get_numbers (
+        List<Matrix> get_numbers (
             string phrase,
             int avg_length,
             int n
@@ -269,7 +269,7 @@ namespace Encryption {
             return result;
         }
 
-        public static string encrypt (
+        string encrypt (
             Encryption.Alphabet alphabet,
             string phrase,
             int r,
@@ -281,8 +281,8 @@ namespace Encryption {
             string result = "";
             string buffer = "";
             try {
-                if (!MatrixCipher.check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
-                List<Matrix> letters = MatrixCipher.get_letters (alphabet, phrase, matr.rows);
+                if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
+                List<Matrix> letters = get_letters (alphabet, phrase, matr.rows);
                 foreach (var letter_m in letters) {
                     result_m.append (matr.mult (letter_m));
                 }
@@ -293,7 +293,7 @@ namespace Encryption {
             catch (MatrixError ex) {
                 throw new OOBError.CODE_PASSTHROUGH (ex.message);
             }
-            int count = MatrixCipher.count_digits (
+            int count = count_digits (
                 (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * matr.rows
             );
             string format = @"%0$(count)i";
@@ -306,7 +306,7 @@ namespace Encryption {
             return result;
         }
 
-        public static string decrypt (
+        string decrypt (
             Encryption.Alphabet alphabet,
             string phrase,
             int r,
@@ -319,10 +319,10 @@ namespace Encryption {
             double temp;
             try {
                 if (!check_det (matr)) throw new OOBError.CODE_PASSTHROUGH (_("Determinant is zero"));
-                int count = MatrixCipher.count_digits (
+                int count = count_digits (
                     (int) matr.max () * (int) Math.round ((1 + alphabet.length) / 2) * matr.rows
                 );
-                List<Matrix> numbers = MatrixCipher.get_numbers (phrase, count, matr.rows);
+                List<Matrix> numbers = get_numbers (phrase, count, matr.rows);
                 matr = matr.reverse ();
                 Matrix buff;
                 foreach (var number_m in numbers) {

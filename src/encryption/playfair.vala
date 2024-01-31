@@ -19,8 +19,8 @@
  */
 
 namespace Encryption {
-    class Playfair : Object {
-        public static bool validate_key (string key) {
+    namespace Playfair {
+        bool validate_key (string key) {
             var dup = new Gee.HashMap<string, int> ();
             int i = 0;
             unichar buf;
@@ -38,7 +38,7 @@ namespace Encryption {
             return true;
         }
 
-        private static void find_letter (
+        void find_letter (
             string [,] table,
             string letter,
             ref int i,
@@ -54,12 +54,12 @@ namespace Encryption {
             }
         }
 
-        private static int mod (int num, int del) {
+        int mod (int num, int del) {
             if (num >= 0) return num % del;
             else return del - (-num) % del;
         }
 
-        private static string get_letter_pair(string[,] table, string letter1, string letter2, bool rev) {
+        string get_letter_pair(string[,] table, string letter1, string letter2, bool rev) {
             string r = "";
             int dir = rev ? -1 : 1;
             int i1 = 0, i2 = 0, j1 = 0, j2 = 0;
@@ -81,7 +81,7 @@ namespace Encryption {
             return r;
         }
 
-        private static string[,] get_table (string key) {
+        string[,] get_table (string key) {
             string playfair_alphabet = "абвгдежзиклмнопрстуфхцчшщъыэюя";
             var table = new string[5,6];
             int k = 0, l = 0;
@@ -103,7 +103,7 @@ namespace Encryption {
             return table;
         }
 
-        private static string process_letters(string[,] table, string phrase, bool rev = false) {
+        string process_letters(string[,] table, string phrase, bool rev = false) {
             string r = "";
             int i = 0;
             string buffer;
@@ -140,12 +140,12 @@ namespace Encryption {
             return r;
         }
 
-        public static string encrypt (string phrase, string key) {
+        string encrypt (string phrase, string key) {
             var playfair_table = get_table(key);
             return process_letters (playfair_table, phrase);
         }
 
-        public static string decrypt (string phrase, string key) {
+        string decrypt (string phrase, string key) {
             var playfair_table = get_table(key);
             return process_letters (playfair_table, phrase, true);
         }

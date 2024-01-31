@@ -1,11 +1,11 @@
-using Encryption;
+using Encryption.Matrix;
 
 public void test_matrix_max () {
     int[] elems = {
         2, 4,
         4, 3
     };
-    Encryption.Matrix matr = new Encryption.Matrix.from_int (
+    Matrix matr = new Matrix.from_int (
         2,
         2,
         elems
@@ -19,7 +19,7 @@ public void test_matrix_det () {
             2, 4,
             4, 3
         };
-        Encryption.Matrix matr = new Encryption.Matrix.from_int (
+        Matrix matr = new Matrix.from_int (
             2,
             2,
             elems
@@ -42,17 +42,17 @@ public void test_matrix_reverse () {
             0, 1
         };
         
-        Encryption.Matrix matr = new Encryption.Matrix.from_int (
+        Matrix matr = new Matrix.from_int (
             2,
             2,
             elems
         );
-        Encryption.Matrix matr_E = new Encryption.Matrix.from_int (
+        Matrix matr_E = new Matrix.from_int (
             2,
             2,
             elems_E
         );
-        Encryption.Matrix matr_r_mult_matr = matr.reverse ().mult (matr);
+        Matrix matr_r_mult_matr = matr.reverse ().mult (matr);
         for (int i = 0; i < matr_r_mult_matr.rows; i++) {
             for (int j = 0; j < matr_r_mult_matr.columns; j++) {
                 assert_cmpfloat (
@@ -68,9 +68,8 @@ public void test_matrix_reverse () {
     }
 }
 
-public void test_matrix_ru_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_matrix_enc () {
+    Encryption.Alphabet alphabet = new Encryption.Alphabet ();
     try {
         int[] elems = {
             2, 5, 6,
@@ -80,7 +79,7 @@ public void test_matrix_ru_enc () {
         assert_cmpstr (
             "215147199170092124179093123259159242172096131275125203154074101045053093276136205129073076045043077091089122146060108224170212",
             GLib.CompareOperator.EQ,
-            Encryption.MatrixCipher.encrypt(
+            encrypt(
                 alphabet,
                 "отодногопорченогояблокавесьвоззагниваеттчк",
                 3,
@@ -94,9 +93,8 @@ public void test_matrix_ru_enc () {
     }
 }
 
-public void test_matrix_ru_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_matrix_dec () {
+    Encryption.Alphabet alphabet = new Encryption.Alphabet ();
     try {
         int[] elems = {
             2, 5, 6,
@@ -106,7 +104,7 @@ public void test_matrix_ru_dec () {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
             GLib.CompareOperator.EQ,
-            Encryption.MatrixCipher.decrypt (
+            decrypt (
                 alphabet,
                 "215147199170092124179093123259159242172096131275125203154074101045053093276136205129073076045043077091089122146060108224170212",
                 3,
@@ -122,8 +120,8 @@ public void test_matrix_ru_dec () {
 
 public static int main (string[] args) {
     Test.init (ref args);
-    Test.add_func ("/encryption/matrix_enc", test_matrix_ru_enc);
-    Test.add_func ("/encryption/matrix_dec", test_matrix_ru_dec);
+    Test.add_func ("/encryption/matrix_enc", test_matrix_enc);
+    Test.add_func ("/encryption/matrix_dec", test_matrix_dec);
     Test.add_func ("/encryption/matrix_max", test_matrix_max);
     Test.add_func ("/encryption/matrix_det", test_matrix_det);
     Test.add_func ("/encryption/matrix_reverse", test_matrix_reverse);

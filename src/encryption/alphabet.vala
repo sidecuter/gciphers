@@ -26,38 +26,24 @@ namespace Encryption {
     }
 
     /**
-     * Класс алфавитов
-     * Содержит поддерживаемые алфавиты
-     */
-    class Alphabets : Object {
-        public string ru { get; construct; }
-        public string ru_full { get; construct; }
-        public string en { get; construct; }
-
-        public Alphabets () {
-            Object (
-                ru: "абвгдежзийклмнопрстуфхцчшщъыьэюя",
-                ru_full: "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
-                en: "abcdefghijklmnopqrstuvwxyz"
-            );
-        }
-    }
-
-
-    /**
      * Класс алфавита
      * Содержит методы поиска позиции буквы в алфавите,
      * а так же поиска буквы по позиции
      */
     class Alphabet : Object {
-        public string alphabet { get; construct; }
+        public string alphabet { get; private set; }
         public int length { get; construct; }
 
-        public Alphabet (string alphabet) {
+        public Alphabet () {
+            string alphabet = "абвгдежзийклмнопрстуфхцчшщъыьэюя";
             Object (
-                alphabet: alphabet,
                 length: alphabet.char_count ()
             );
+            this.alphabet = alphabet;
+        }
+
+        public Alphabet.from_str (string alphabet) {
+            this.alphabet = alphabet;
         }
 
         /**

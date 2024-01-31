@@ -19,7 +19,7 @@
  */
 
 namespace Encryption {
-    class Atbash : Object {
+    namespace Atbash {
         /**
          * Метод encrypt зашифровывает исходное сообщение используя шифр АТБАШ
          * Входные параметры:
@@ -29,7 +29,7 @@ namespace Encryption {
          * Тк шифр атбаш имеет одинаковый шифр для зашифровки и расшифровки, то
          * реализовали только эту функцию
          */
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
+        string encrypt (Encryption.Alphabet alphabet, string phrase) throws Encryption.OOBError {
             string result = "";
             unichar letter;
             int i = 0;

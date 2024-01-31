@@ -1,8 +1,7 @@
 using Encryption;
 
-public void test_polybius_ru_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_polybius_enc () {
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "334133153233143334333546163233143362122633251113163655133322221114322313111641414625",
@@ -20,9 +19,8 @@ public void test_polybius_ru_enc () {
     }
 }
 
-public void test_polybius_ru_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_polybius_dec () {
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
@@ -42,7 +40,7 @@ public void test_polybius_ru_dec () {
 
 public static int main (string[] args) {
     Test.init (ref args);
-    Test.add_func ("/encryption/polybius_enc", test_polybius_ru_enc);
-    Test.add_func ("/encryption/polybius_dec", test_polybius_ru_dec);
+    Test.add_func ("/encryption/polybius_enc", test_polybius_enc);
+    Test.add_func ("/encryption/polybius_dec", test_polybius_dec);
     return Test.run ();
 }

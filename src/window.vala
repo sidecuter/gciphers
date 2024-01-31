@@ -45,9 +45,7 @@ namespace GCiphers {
         };
 
         private List<Adw.Bin> pages;
-
-        private Encryption.Alphabets alphabets;
-
+        
         [GtkChild]
         private unowned Adw.ToastOverlay toast;
 
@@ -81,19 +79,18 @@ namespace GCiphers {
         }
 
         construct {
-            alphabets = new Encryption.Alphabets ();
-            pages.append (new GCiphers.Atbash (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Caesar (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Polybius (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Trithemium (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Belazo (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Vigenere (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Vertical (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Vigenereii (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Matrix (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Playfair (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Scrambler (this.toaster, this.alphabet_getter));
-            pages.append (new GCiphers.Shenon (this.toaster, this.alphabet_getter));
+            pages.append (new GCiphers.Atbash (this.toaster));
+            pages.append (new GCiphers.Caesar (this.toaster));
+            pages.append (new GCiphers.Polybius (this.toaster));
+            pages.append (new GCiphers.Trithemium (this.toaster));
+            pages.append (new GCiphers.Belazo (this.toaster));
+            pages.append (new GCiphers.Vigenere (this.toaster));
+            pages.append (new GCiphers.Vertical (this.toaster));
+            pages.append (new GCiphers.Vigenereii (this.toaster));
+            pages.append (new GCiphers.Matrix (this.toaster));
+            pages.append (new GCiphers.Playfair (this.toaster));
+            pages.append (new GCiphers.Scrambler (this.toaster));
+            pages.append (new GCiphers.Shenon (this.toaster));
             for (int i = 0; i < labels.length; i++) {
                 list_rows.append (new GCiphers.Menu_entry (labels[i]));
             }
@@ -113,18 +110,6 @@ namespace GCiphers {
             Adw.Toast toast_message = new Adw.Toast (message);
             toast_message.set_timeout (timeout);
             toast.add_toast (toast_message);
-        }
-
-        public string alphabet_getter () {
-            string value = ((Gtk.StringObject)dropdown.get_selected_item ()).get_string ();
-            switch (value) {
-                case "ru":
-                    return alphabets.ru;
-                case "ru_full":
-                    return alphabets.ru_full;
-                default:
-                    return alphabets.en;
-            }
         }
     }
 }

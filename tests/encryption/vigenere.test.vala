@@ -1,8 +1,7 @@
 using Encryption;
 
-public void test_vigenere_ru_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_vigenere_enc () {
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "маатсыссээюзьтысснамщшквзцнюрхозгрхквечдйб",
@@ -19,9 +18,8 @@ public void test_vigenere_ru_enc () {
     }
 }
 
-public void test_vigenere_ru_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_vigenere_dec () {
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
@@ -40,7 +38,7 @@ public void test_vigenere_ru_dec () {
 
 public static int main (string[] args) {
     Test.init (ref args);
-    Test.add_func ("/encryption/vigenere_enc", test_vigenere_ru_enc);
-    Test.add_func ("/encryption/vigenere_dec", test_vigenere_ru_dec);
+    Test.add_func ("/encryption/vigenere_enc", test_vigenere_enc);
+    Test.add_func ("/encryption/vigenere_dec", test_vigenere_dec);
     return Test.run ();
 }

@@ -26,8 +26,6 @@ namespace GCiphers {
 
         private unowned spawn_toast toast_spawner;
 
-        private unowned get_alphabet alphabet_getter;
-
         [GtkChild]
         private unowned UI.TextView text_view;
 
@@ -52,7 +50,7 @@ namespace GCiphers {
                 unowned string t0 = t0.get_buffer ().get_text ();
                 unowned string a = a.get_buffer ().get_text ();
                 unowned string c = c.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate (alphabet, letters, t0, a, c);
                 text.set_text (Encryption.Shenon.encrypt (alphabet, letters, int.parse (t0), int.parse (a), int.parse (c)));
              }
@@ -72,7 +70,7 @@ namespace GCiphers {
                 unowned string t0 = t0.get_buffer ().get_text ();
                 unowned string a = a.get_buffer ().get_text ();
                 unowned string c = c.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate (alphabet, letters, t0, a, c);
                 text.set_text (Encryption.Shenon.decrypt (alphabet, letters, int.parse (t0), int.parse (a), int.parse (c)));
             }
@@ -84,9 +82,8 @@ namespace GCiphers {
             }
         }
 
-        public Shenon (spawn_toast toaster, get_alphabet alphabet_get) {
-            toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
+        public Shenon (spawn_toast toaster) {
+            toast_spawner = toaster;  
         }
 
         private void Validate (Alphabet alphabet, string text, string t0, string a, string c) throws Errors.ValidateError {

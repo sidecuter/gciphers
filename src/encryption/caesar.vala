@@ -19,7 +19,7 @@
  */
 
 namespace Encryption {
-    class Caesar : Object {
+    namespace Caesar {
         /**
          * Метод proto_crypt зашифровывает/расшифровывает исходное сообщение используя шифр Цезаря
          * Входные параметры:
@@ -29,7 +29,7 @@ namespace Encryption {
          * reverse - флаг, управляющий поведением функции
          * Возвращаемое значение: зашифрованная/расшифрованная фраза
          */
-        private static string proto_crypt (
+        string proto_crypt (
             Encryption.Alphabet alphabet, string phrase,
             int shift, bool reverse = false
         ) throws Encryption.OOBError {
@@ -54,13 +54,13 @@ namespace Encryption {
             return result;
         }
 
-        public static string encrypt (
+        string encrypt (
             Encryption.Alphabet alphabet, string phrase, int shift
         ) throws Encryption.OOBError {
             return proto_crypt (alphabet, phrase, shift);
         }
 
-        public static string decrypt (
+        string decrypt (
             Encryption.Alphabet alphabet, string phrase, int shift
         ) throws Encryption.OOBError {
             return proto_crypt (alphabet, phrase, shift, true);

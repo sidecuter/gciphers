@@ -19,8 +19,8 @@
  */
 
 namespace Encryption {
-    class MultiAlphabetic : Object {
-        private static string proto_crypt (
+    namespace MultiAlphabetic {
+        string proto_crypt (
             Encryption.Alphabet alphabet, string phrase, string key, bool reverse = false
         ) throws Encryption.OOBError {
             string result = "";
@@ -46,13 +46,13 @@ namespace Encryption {
             return result;
         }
 
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key) 
+        string encrypt (Encryption.Alphabet alphabet, string phrase, string key) 
             throws Encryption.OOBError
         {
             return proto_crypt (alphabet, phrase, key);
         }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
+        string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
             return proto_crypt (alphabet, phrase, key, true);

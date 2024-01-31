@@ -26,8 +26,6 @@ namespace GCiphers {
 
         private unowned spawn_toast toast_spawner;
 
-        private unowned get_alphabet alphabet_getter;
-
         [GtkChild]
         private unowned UI.TextView text_view;
 
@@ -36,11 +34,12 @@ namespace GCiphers {
             try {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ()
+                    .replace (" ", "")
                     //.replace (" ", "прб")
                     .replace (".", "тчк")
                     .replace (",", "зпт")
                     .replace ("-", "тире");
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate(alphabet, letters);
                 text.set_text (Encryption.Atbash.encrypt (alphabet, letters));
             }
@@ -57,7 +56,7 @@ namespace GCiphers {
             try {
                 var text = text_view.get_text_buffer ();
                 string letters = text.text.down ().replace (" ", "");
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate(alphabet, letters);
                 text.set_text (Encryption.Atbash.encrypt (alphabet, letters)
                     .replace ("тчк", ".")
@@ -74,9 +73,8 @@ namespace GCiphers {
             }
         }
 
-        public Atbash (spawn_toast toaster, get_alphabet alphabet_get) {
+        public Atbash (spawn_toast toaster) {
             toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
         }
 
         private void Validate (Alphabet alphabet, string text) throws Errors.ValidateError {

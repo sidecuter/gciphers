@@ -26,8 +26,6 @@ namespace GCiphers {
 
         private unowned spawn_toast toast_spawner;
 
-        private unowned get_alphabet alphabet_getter;
-
         [GtkChild]
         private unowned UI.TextView text_view;
 
@@ -48,7 +46,7 @@ namespace GCiphers {
                     .replace("-", "тире");
                 unowned string row = rows.get_buffer ().get_text ();
                 unowned string column = columns.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate_string(alphabet, letters, row, column);
                 text.set_text (Encryption.Polybius.encrypt (alphabet, letters, int.parse (row), int.parse (column)));
              }
@@ -69,7 +67,7 @@ namespace GCiphers {
                 unowned string column = columns.get_buffer ().get_text ();
                 int row_int;
                 int column_int;
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate_int(letters, row, column, out row_int, out column_int);
                 text.set_text (Encryption.Polybius.decrypt (alphabet, letters, row_int, column_int)
                     .replace ("тчк", ".")
@@ -86,9 +84,8 @@ namespace GCiphers {
             }
         }
 
-        public Polybius (spawn_toast toaster, get_alphabet alphabet_get) {
+        public Polybius (spawn_toast toaster) {
             toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
         }
 
         private void Validate_string (Alphabet alphabet, string text, string rows, string columns) throws Errors.ValidateError {

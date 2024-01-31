@@ -19,14 +19,14 @@
  */
 
  namespace Encryption {
-    class Belazo : Object {
-        public static string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
+    namespace Belazo {
+        string encrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
             return Encryption.MultiAlphabetic.encrypt(alphabet, phrase, key);
         }
 
-        public static string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
+        string decrypt (Encryption.Alphabet alphabet, string phrase, string key)
             throws Encryption.OOBError
         {
             return Encryption.MultiAlphabetic.decrypt(alphabet, phrase, key);

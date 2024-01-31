@@ -24,9 +24,7 @@ namespace GCiphers {
     [GtkTemplate (ui = "/com/github/sidecuter/gciphers/ui/scrambler.ui")]
     public class Scrambler : Adw.Bin {
 
-        private unowned spawn_toast toast_spawner;
-
-        private unowned get_alphabet alphabet_getter;
+        private unowned spawn_toast toast_spawner; 
 
         [GtkChild]
         private unowned UI.TextView text_view;
@@ -56,7 +54,7 @@ namespace GCiphers {
                 unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
                 unowned string key1 = key1.get_buffer ().get_text ();
                 unowned string key2 = key2.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate (alphabet, letters, scrambler1, scrambler2, key1, key2);
                 text.set_text (Encryption.Scrambler.encrypt (
                     alphabet,
@@ -84,7 +82,7 @@ namespace GCiphers {
                 unowned string scrambler2 = scrambler2.get_buffer ().get_text ();
                 unowned string key1 = key1.get_buffer ().get_text ();
                 unowned string key2 = key2.get_buffer ().get_text ();
-                Alphabet alphabet = new Alphabet (alphabet_getter ());
+                Alphabet alphabet = new Alphabet ();
                 Validate (alphabet, letters, scrambler1, scrambler2, key1, key2);
                 text.set_text (Encryption.Scrambler.encrypt (
                     alphabet,
@@ -103,9 +101,8 @@ namespace GCiphers {
              }
         }
 
-        public Scrambler (spawn_toast toaster, get_alphabet alphabet_get) {
+        public Scrambler (spawn_toast toaster) {
             toast_spawner = toaster;
-            alphabet_getter = alphabet_get;
         }
 
         private void Validate_bin (string text, string mes) throws Errors.ValidateError {

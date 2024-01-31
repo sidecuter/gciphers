@@ -1,8 +1,7 @@
 using Encryption;
 
-public void test_shenon_ru_enc () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_shenon_enc () {
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "очалсчщщчыкжсюмцюфгввгжээожбкихггтъйдоиэяч",
@@ -21,9 +20,8 @@ public void test_shenon_ru_enc () {
     }
 }
 
-public void test_shenon_ru_dec () {
-    Alphabets alphabets = new Alphabets ();
-    Alphabet alphabet = new Alphabet (alphabets.ru);
+public void test_shenon_dec () {
+    Alphabet alphabet = new Alphabet();
     try {
         assert_cmpstr (
             "отодногопорченогояблокавесьвоззагниваеттчк",
@@ -44,7 +42,7 @@ public void test_shenon_ru_dec () {
 
 public static int main (string[] args) {
     Test.init (ref args);
-    Test.add_func ("/encryption/shenon_enc", test_shenon_ru_enc);
-    Test.add_func ("/encryption/shenon_dec", test_shenon_ru_dec);
+    Test.add_func ("/encryption/shenon_enc", test_shenon_enc);
+    Test.add_func ("/encryption/shenon_dec", test_shenon_dec);
     return Test.run ();
 }
