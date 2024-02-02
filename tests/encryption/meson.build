@@ -63,6 +63,9 @@ unit_tests = {
         meson.project_source_root() + '/src/encryption/shenon.vala',
         meson.project_source_root() + '/src/encryption/alphabet.vala',
     ),
+    's_table_magma': files (
+        meson.project_source_root() + '/src/encryption/s_table_magma.vala',
+    ),
 }
 
 foreach name, t_sources : unit_tests

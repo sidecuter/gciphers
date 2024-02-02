@@ -15,4 +15,5 @@ gciphers_sources += files(
     'scrambler.vala',
     'shenon.vala',
     'validation.vala',
+    's_table_magma.vala'
 )
