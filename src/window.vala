@@ -42,6 +42,7 @@ namespace GCiphers {
             _("Playfair"),
             _("Scrambler"),
             _("Shenon"),
+            _("STable"),
         };
 
         private List<Adw.Bin> pages;
@@ -59,7 +60,7 @@ namespace GCiphers {
         private unowned Gtk.ListBox list_rows;
 
         [GtkChild]
-        private unowned Gtk.Switch prettify;
+        public unowned Gtk.Switch prettify;
 
         [GtkCallback]
         private void on_sidebar_button_toggle (Gtk.ToggleButton self) {
@@ -91,6 +92,7 @@ namespace GCiphers {
             pages.append (new GCiphers.Playfair ());
             pages.append (new GCiphers.Scrambler ());
             pages.append (new GCiphers.Shenon ());
+            pages.append (new GCiphers.STable ());
             for (int i = 0; i < labels.length; i++) {
                 list_rows.append (new GCiphers.Menu_entry (labels[i]));
             }

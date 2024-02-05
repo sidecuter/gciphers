@@ -12,4 +12,5 @@ gciphers_sources += files(
     'scrambler.vala',
     'shenon.vala',
     'matrix_grid.vala',
+    's_table.vala'
 )

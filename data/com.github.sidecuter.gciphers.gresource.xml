@@ -19,6 +19,7 @@
     <file compressed="true" preprocess="xml-stripblanks">ui/matrix_grid.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/scrambler.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/shenon.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/s_table.ui</file>
     <file compressed="true">styles/style.css</file>
   </gresource>
 </gresources>

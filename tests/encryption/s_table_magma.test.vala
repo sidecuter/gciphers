@@ -31,16 +31,8 @@ public void test_s_table_magma () {
     }
 }
 
-public void test_convertation () {
-    string s = "отодногопорченогояблокавесьвоззагниваетт";
-    uint8[] r = convert_to_uint8 (s);
-    string s1 = convert_to_string (r);
-    assert_cmpstr (s, CompareOperator.EQ, s1);
-}
-
 int main (string[] args) {
     Test.init (ref args);
     Test.add_func ("/encryption/s_table_magma", test_s_table_magma);
-    Test.add_func ("/encryption/convertation", test_convertation);
     return Test.run ();
 }

@@ -238,4 +238,17 @@ namespace Encryption {
             validate_string (alphabet, text, _("No such letter from key in alphabet"));
         }
     }
+
+    namespace Magma {
+        void validate_hex (string text, bool con = true) throws Error {
+            var validator = new Alphabet.from_str ("0123456789abcdef");
+            if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Hex is empty"));
+            if (con && text.char_count () > 8) throw new ValidateError.EMPTY_STRING (_("Incorrect hex number"));
+            validate_string (validator, text, _("Incorrect hex number"));
+        }
+
+        void validate (string text) throws Error {
+            if (text.length == 0) throw new ValidateError.EMPTY_STRING (_("Text field is empty"));
+        }
+    }
 }
