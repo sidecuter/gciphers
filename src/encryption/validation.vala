@@ -100,7 +100,7 @@ namespace Encryption {
             if (!validate_key (key))
                     throw new ValidateError.WRONG_STRING_LENGTH(_("Key must contain only unique letters"));
             validate_string (alphabet, text, _("No such letter from phrase in alphabet"));
-            validate_string (p_alphabet, text, _("No such letter from key in alphabet"));
+            validate_string (p_alphabet, key, _("No such letter from key in alphabet"));
         }
     }
     
