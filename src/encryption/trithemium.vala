@@ -18,14 +18,14 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-namespace Encryption.Trithemium {
-    string encrypt (string phrase) throws Error {
-        Alphabet alphabet = new Alphabet ();
-        return MultiAlphabetic.encrypt(alphabet, phrase, alphabet.alphabet);
-    }
+    namespace Encryption.Trithemium {
+        string encrypt (string phrase) throws Error {
+            Alphabet alphabet = new Alphabet ();
+            return MultiAlphabetic.encrypt(alphabet, phrase, alphabet.alphabet);
+        }
 
-    string decrypt (string phrase) throws Error {
-        Alphabet alphabet = new Alphabet ();
-        return MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
+        string decrypt (string phrase) throws Error {
+            Alphabet alphabet = new Alphabet ();
+            return MultiAlphabetic.decrypt(alphabet, phrase, alphabet.alphabet);
+        }
     }
-}

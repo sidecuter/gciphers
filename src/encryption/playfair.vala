@@ -108,7 +108,7 @@ namespace Encryption.Playfair {
         string buffer;
         unichar letter1, letter2;
         while (phrase.get_next_char (ref i, out letter1)) {
-            if (!phrase.get_next_char (ref i, out letter2)) letter2 = 1072;
+            if (!phrase.get_next_char (ref i, out letter2)) letter2 = 1092;
             if (letter1 == letter2) {
                 buffer = get_letter_pair(
                     table,
@@ -117,7 +117,7 @@ namespace Encryption.Playfair {
                     rev
                 );
                 r = @"$r$buffer";
-                if (!phrase.get_next_char (ref i, out letter1)) letter1 = 1072;
+                if (!phrase.get_next_char (ref i, out letter1)) letter1 = 1092;
                 buffer = get_letter_pair(
                     table,
                     letter2.to_string (),
