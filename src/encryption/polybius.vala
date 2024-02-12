@@ -33,7 +33,7 @@ namespace Encryption.Polybius {
         public Table (Alphabet alphabet_in, int rows_in, int columns_in) throws Error {
             if (rows_in * columns_in < alphabet_in.length)
                 throw new OOBError.CODE_OUT (_("Columns*Rows must be bigger than length of alphabet"));
-            int last_r = alphabet_in.length / columns_in == 0 ? alphabet_in.length / columns_in : alphabet_in.length / columns_in + 1;
+            int last_r = alphabet_in.length % columns_in == 0 ? alphabet_in.length / columns_in : alphabet_in.length / columns_in + 1;
             int last_c = columns_in - (last_r * columns_in - alphabet_in.length);
             Object (
                 rows: rows_in,
@@ -95,8 +95,7 @@ namespace Encryption.Polybius {
         Alphabet alphabet = new Alphabet ();
         string result = "";
         Indexes indexes;
-        Table table;
-        table = new Table (alphabet, rows, columns);
+        var table = new Table (alphabet, rows, columns);
         int i = 0;
         unichar letter;
         while (phrase.get_next_char (ref i, out letter)) {
